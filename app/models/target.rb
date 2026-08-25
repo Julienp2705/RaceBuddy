@@ -4,5 +4,5 @@ class Target < ApplicationRecord
   has_many :invites
 
   validates :target_hour, presence: true, inclusion: { in: 0..23 }
-  validates :target_minute, presence: true, inclusion: { in: [0, 15, 30, 45] }
+  validates :target_minute, presence: true, inclusion: { in: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55] }
 end
