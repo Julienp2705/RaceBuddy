@@ -1,1 +1,17 @@
 // Specific CSS for your home-page
+
+// Style pour le titre (Header)
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.02em; /* Optionnel : resserre légèrement le titre pour un look premium */
+}
+
+// Style pour le texte (Body)
+body, p, {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #4a4a4a;
+}
