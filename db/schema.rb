@@ -10,9 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_25_094606) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_25_104854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "invite_id", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["invite_id"], name: "index_chats_on_invite_id"
+  end
+
+  create_table "invites", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "status"
+    t.bigint "target_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["target_id"], name: "index_invites_on_target_id"
+    t.index ["user_id"], name: "index_invites_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "races", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.float "distance"
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.string "url"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.bigint "invite_id", null: false
+    t.integer "rating"
+    t.datetime "updated_at", null: false
+    t.index ["invite_id"], name: "index_reviews_on_invite_id"
+  end
 
   create_table "solid_cable_messages", force: :cascade do |t|
     t.binary "channel", null: false
@@ -185,10 +230,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_094606) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
+  create_table "targets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "race_id", null: false
+    t.integer "target_hour"
+    t.integer "target_minute"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["race_id"], name: "index_targets_on_race_id"
+    t.index ["user_id"], name: "index_targets_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.float "latitude"
+    t.float "longitude"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
@@ -197,6 +257,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_094606) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "chats", "invites"
+  add_foreign_key "invites", "targets"
+  add_foreign_key "invites", "users"
+  add_foreign_key "messages", "chats"
+  add_foreign_key "messages", "users"
+  add_foreign_key "reviews", "invites"
   add_foreign_key "solid_queue_batch_executions", "solid_queue_batches", column: "batch_id", on_delete: :cascade
   add_foreign_key "solid_queue_batch_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
@@ -205,4 +271,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_094606) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "targets", "races"
+  add_foreign_key "targets", "users"
 end
