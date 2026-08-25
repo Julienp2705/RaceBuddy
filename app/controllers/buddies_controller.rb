@@ -1,0 +1,2 @@
+class BuddiesController < ApplicationController
+end
