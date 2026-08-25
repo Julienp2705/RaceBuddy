@@ -1,4 +1,5 @@
 class Race < ApplicationRecord
+  has_one_attached :image
   has_many :targets
 
   validates :name, presence: true, length: { minimum: 3, maximum: 20 }
