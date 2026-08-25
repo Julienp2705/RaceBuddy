@@ -24,7 +24,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_104854) do
 
   create_table "invites", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "status"
+    t.string "status", default: "pending"
     t.bigint "target_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
