@@ -1,0 +1,38 @@
+.profile-container {
+  max-width: 530px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-header {
+  text-align: center;
+}
+
+.profile-avatar img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-stats {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.profile-section {
+  margin-top: 20px;
+}
+
+.profile-section h2 {
+  color: #00c896;
+  margin-bottom: 8px;
+}
+
+.profile-box {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 12px;
+}
+

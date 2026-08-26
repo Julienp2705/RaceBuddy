@@ -1,0 +1,116 @@
+<div class="profile-container main">
+
+  <!-- SECTION PROFIL -->
+  <section class="profile-header">
+    <div class="profile-avatar">
+      <%= image_tag "profile-placeholder.jpg", alt: "Photo de profil" %>
+    </div>
+
+    <h1><%= @user.first_name %></h1>
+
+    <div class="profile-stats">
+
+      <div class="profile-stat">
+        <p>NOTE</p>
+        <p>★★★★★</p>
+      </div>
+
+      <div class="profile-stat">
+        <p>👥 6</p>
+        <p>Buddy's</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SECTION DESCRIPTION -->
+  <section class="profile-section">
+    <h2>Ma Description</h2>
+
+    <div class="profile-box">
+      <p>
+        Coureur passionné, je cherche des buddies pour mes prochaines courses.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- SECTION VILLE -->
+  <section class="profile-section">
+    <h2>Ma Ville d'entraînement</h2>
+
+    <div class="profile-box">
+      <p>Lille</p>
+    </div>
+  </section>
+
+
+  <!-- SECTION OBJECTIF EN COURS -->
+  <section class="profile-section">
+    <h2>Mon objectif en cours</h2>
+
+    <div class="race-card">
+
+      <div class="race-image">
+        <%= image_tag "race-placeholder.jpg", alt: "Course" %>
+      </div>
+
+      <div class="race-content">
+        <h3>Nike 10k Lille</h3>
+
+        <p>
+          Quelques informations sur la course...
+        </p>
+
+        <p>🏃 10 km</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SECTION COURSES TERMINÉES -->
+  <section class="profile-section">
+    <h2>Courses terminées</h2>
+
+    <div class="race-card">
+
+      <div class="race-image">
+        <%= image_tag "race-placeholder.jpg", alt: "Course" %>
+      </div>
+
+      <div class="race-content">
+        <h3>HOKA 10k Paris</h3>
+
+        <p>
+          Quelques informations sur la course...
+        </p>
+
+        <p>🏃 10 km</p>
+      </div>
+
+    </div>
+
+
+    <div class="race-card">
+
+      <div class="race-image">
+        <%= image_tag "race-placeholder.jpg", alt: "Course" %>
+      </div>
+
+      <div class="race-content">
+        <h3>Ventoux BY UTMB</h3>
+
+        <p>
+          Quelques informations sur la course...
+        </p>
+
+        <p>🏃 50 km</p>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
