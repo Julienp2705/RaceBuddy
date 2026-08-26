@@ -10,8 +10,10 @@ class TargetsController < ApplicationController
     @target.user = current_user
 
     if @target.save
-      redirect_to @race
+      #redirect_to @race
+      redirect_to root_path
     else
+      puts @target.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
