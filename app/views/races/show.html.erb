@@ -1,0 +1,12 @@
+<h1><%= @race.name %></h1>
+<p><%= @race.distance %> km</p>
+<a href="<%= @race.url %>">Plus d'infos</a>
+<% if @target %>
+  <!-- already has a target -->
+  <h2>Buddies disponibles</h2>
+<% else %>
+  <!-- show "Créer un objectif" button, linking to new -->
+  <%= link_to "Créer un objectif", new_race_target_path(@race) %>
+<% end %>
+
+<!-- TODO add map centered from race location -->
