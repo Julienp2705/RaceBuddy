@@ -1,0 +1,71 @@
+
+.btn-1,
+.btn-2,
+.btn-3,
+.btn-4 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 20px;
+
+  border-radius: 8px;
+  border: 1px solid transparent;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+
+.btn-1 {
+  background-color: $rb-dark;
+  color: $rb-light;
+
+  &:hover {
+    background-color: lighten($rb-dark, 8%);
+    color: $rb-light;
+  }
+}
+
+.btn-2 {
+  background-color: $rb-accent;
+  color: $rb-light;
+
+  &:hover {
+    background-color: darken($rb-accent, 8%);
+    color: $rb-light;
+  }
+}
+
+.btn-3 {
+  background-color: $rb-light;
+  color: $rb-dark;
+
+  border-color: $rb-dark;
+
+  &:hover {
+    background-color: $rb-dark;
+    color: $rb-light;
+  }
+}
+
+.btn-4 {
+  background-color: transparent;
+  color: $rb-accent;
+
+  border-color: $rb-accent;
+
+  &:hover {
+    background-color: $rb-accent;
+    color: $rb-light;
+  }
+}

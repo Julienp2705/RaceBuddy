@@ -53,18 +53,21 @@ puts "Users created!"
 
 
 race1 = Race.create!(
-  name: "Semi-marathon de Lille",
-  distance: 20
+  name: "Semi-marathon de moneteau",
+  distance: 20,
+  url: "https://www.finishers.com/course/semi-marathon-de-moneteau" 
 )
 
 race2 = Race.create!(
   name: "Marathon de Paris",
-  distance: 42
+  distance: 42,
+  url: "https://www.finishers.com/course/marathon-de-paris"
 )
 
 race3 = Race.create!(
   name: "10 km de Lille",
-  distance: 10
+  distance: 10,
+  url: "https://www.finishers.com/course/urban-trail-de-lille"
 )
 
 Target.create!(
@@ -78,7 +81,7 @@ Target.create!(
   user: laurie,
   race: race1,
   target_hour: 1,
-  target_minute: 48
+  target_minute: 50
 )
 
 puts "seed finished"

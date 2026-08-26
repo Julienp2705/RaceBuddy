@@ -1,0 +1,13 @@
+<h1><%= @race.name %></h1>
+
+<%= simple_form_for [@race, @target] do |f| %>
+  <%= f.input :target_hour,
+      collection: 0..23,
+      label: "Heure" %>
+
+  <%= f.input :target_minute,
+      collection: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
+      label: "Minutes" %>
+
+  <%= f.button :submit, "Enregistrer l'objectif" %>
+<% end %>
