@@ -45,9 +45,9 @@
 
       <!-- Rechercher une course -->
       <div class="col-6">
-        <div class="race-card h-100">
+        <div class="race-box h-100">
 
-          <div class="race-card-icon">
+          <div class="race-box-icon">
             <i class="fa-solid fa-magnifying-glass"></i>
             </div>
 
@@ -68,9 +68,9 @@
 
       <!-- Créer une course -->
       <div class="col-6">
-        <div class="race-card h-100 race-card-create">
+        <div class="race-box h-100 race-box-create">
 
-          <div class="race-card-icon">
+          <div class="race-box-icon">
             <i class="fa-solid fa-plus"></i>
           </div>
 
@@ -114,13 +114,13 @@
         </div>
         <div class="races-grid">
           <% @races.each do |race| %>
-            <div class="race-card">
+            <div class="race-box">
 
-              <div class="race-card-icon">
+              <div class="race-box-icon">
                 <i class="fa-solid fa-flag-checkered"></i>
               </div>
 
-              <div class="race-card-content">
+              <div class="race-box-content">
                 <h3><%= race.name %></h3>
 
                 <p class="race-distance">
