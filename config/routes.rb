@@ -9,12 +9,18 @@ Rails.application.routes.draw do
     resources :targets, only: [:update, :destroy]
   end
 
-  resources :invites, only: [:index, :update, :destroy] do
+  resources :invites, only: [:index, :update, :destroy, :create] do #POST  /invites
     resources :reviews, only: [:create]
   end
 
   resources :chats, only: [:show, :index] do
     resources :messages, only: [:create, :destroy, :update]
+  end
+
+  resources :invites do
+    member do
+      patch :accept #PATCH /invites/:id/accept
+    end
   end
 
 

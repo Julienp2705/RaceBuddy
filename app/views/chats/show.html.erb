@@ -1,0 +1,73 @@
+<div class="chat-container">
+
+  <!-- HEADER -->
+
+  <div class="chat-header">
+
+    <div>
+      <h2>
+        <%= @chat.title || "Conversation" %>
+      </h2>
+
+      <p>
+        <%= @other_user.first_name %>
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- MESSAGES -->
+
+  <div class="chat-messages">
+
+    <% @messages.each do |message| %>
+
+      <div class="message <%= message.user == current_user ? "message-own" : "message-other" %>">
+
+        <div class="message-bubble">
+
+          <% unless message.user == current_user %>
+            <div class="message-user">
+              <%= message.user.first_name %>
+            </div>
+          <% end %>
+
+          <div class="message-content">
+            <%= message.content %>
+          </div>
+
+          <div class="message-time">
+            <%= message.created_at.strftime("%H:%M") %>
+          </div>
+
+        </div>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+
+  <!-- FORMULAIRE -->
+
+  <div class="chat-form">
+
+    <%= form_with model: [@chat, @message] do |f| %>
+
+      <%= f.text_field :content,
+          placeholder: "Écrire un message...",
+          class: "form-control",
+          autocomplete: "off" %>
+
+      <%= button_tag type: "submit",
+          class: "btn btn-primary" do %>
+        <i class="fa-solid fa-paper-plane"></i>
+      <% end %>
+
+    <% end %>
+
+  </div>
+
+</div>
