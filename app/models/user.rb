@@ -11,4 +11,7 @@ class User < ApplicationRecord
 
   # validates :first_name, presence: true, length: { minimum: 3, maximum: 20 }
   # validates :last_name, presence: true, length: { minimum: 3, maximum: 20 }
+
+  geocoded_by :address
+  after_validation :geocode, if: ->(record) { record.address.present? && record.address_changed? }
 end
