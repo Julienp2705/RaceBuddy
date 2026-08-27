@@ -19,21 +19,15 @@
   <% if @target %>
     <div class="buddies-section">
       <h2>Buddies disponibles</h2>
-      <!-- placeholder cards — swap for real @buddies loop later -->
-      <div class="buddy-card-placeholder">
+      <% @buddies.each do |buddy| %>
+      <div class="buddy-card">
         <div class="avatar-placeholder"></div>
         <div>
-          <strong>Nom du buddy</strong>
-          <p>Ville · Objectif similaire</p>
+          <strong><%= buddy.user.first_name %> <%= buddy.user.last_name %></strong>
+          <p><%= buddy.address %> · <%= buddy.target_hour %>:<%= buddy.target_minute %></p>
         </div>
       </div>
-      <div class="buddy-card-placeholder">
-        <div class="avatar-placeholder"></div>
-        <div>
-          <strong>Nom du buddy</strong>
-          <p>Ville · Objectif similaire</p>
-        </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 

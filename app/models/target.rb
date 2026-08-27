@@ -9,4 +9,14 @@ class Target < ApplicationRecord
 
   geocoded_by :address
   after_validation :geocode, if: ->(record) { record.address.present? && record.address_changed? }
+
+  def similar(minutes: 15, radius_km: 5)
+    total_min = (target_hour * 60) + target_minute
+
+    Target.where(race_id: race_id)
+          .near([latitude, longitude], radius_km)
+          .where.not(id: id)
+          .where("(target_hour * 60 + target_minute) BETWEEN ? AND ?",
+                total_min - minutes, total_min + minutes)
+  end
 end
