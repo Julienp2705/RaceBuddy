@@ -17,57 +17,83 @@
 
       <div class="profile-stat">
         <p>👥 6</p>
-        <p>Buddy's</p>
+        <p>Buddies</p>
       </div>
 
     </div>
   </section>
 
 
-  <!-- SECTION DESCRIPTION -->
-  <section class="profile-section">
-    <h2>Ma Description</h2>
-
-    <div class="profile-box">
-      <p>
-        Coureur passionné, je cherche des buddies pour mes prochaines courses.
-      </p>
-    </div>
-  </section>
-
-
-  <!-- SECTION VILLE -->
-  <section class="profile-section">
-    <h2>Ma Ville d'entraînement</h2>
-
-    <div class="profile-box">
-      <p>Lille</p>
-    </div>
-  </section>
-
-
   <!-- SECTION OBJECTIF EN COURS -->
-  <section class="profile-section">
-    <h2>Mon objectif en cours</h2>
+<section class="profile-section">
+  <h2>Mon objectif en cours</h2>
 
-    <div class="race-card">
+  <% if @target.present? %>
+
+    <div class="race-card" data-controller="target-edit">
 
       <div class="race-image">
         <%= image_tag "race-placeholder.jpg", alt: "Course" %>
       </div>
 
       <div class="race-content">
-        <h3>Nike 10k Lille</h3>
 
         <p>
-          Quelques informations sur la course...
+          🎯 Objectif :
+          <%= @target.target_hour %>h<%= format("%02d", @target.target_minute) %>
         </p>
 
-        <p>🏃 10 km</p>
+        <div class="target-actions">
+
+          <button
+            type="button"
+            class="btn btn-primary target-btn"
+            data-action="click->target-edit#show">
+            Modifier
+          </button>
+
+          <%= link_to "Supprimer",
+              buddy_target_path(@user, @target),
+              method: :delete,
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
+              },
+              class: "btn btn-outline-danger target-btn" %>
+
+        </div>
+
+        <div class="target-form d-none" data-target-edit-target="form">
+
+          <%= simple_form_for @target,
+              url: buddy_target_path(@user, @target),
+              method: :patch do |f| %>
+
+            <div class="target-time-inputs">
+              <%= f.input :target_hour, label: "Heures" %>
+              <%= f.input :target_minute,
+                          label: "Minutes",
+                          input_html: { min: 0, max: 59, step: 5 } %>
+            </div>
+
+            <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+
+          <% end %>
+
+        </div>
+
       </div>
 
     </div>
-  </section>
+
+  <% else %>
+
+    <div class="profile-box">
+    <p>Aucun objectif en cours.</p>
+  </div>
+
+  <% end %>
+</section>
 
 
   <!-- SECTION COURSES TERMINÉES -->

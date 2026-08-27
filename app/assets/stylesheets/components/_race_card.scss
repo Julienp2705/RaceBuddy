@@ -30,3 +30,35 @@
   margin-top: 0;
   font-size: 17px;
 }
+
+.target-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.target-btn {
+  width: 120px;
+  text-align: center;
+}
+
+.target-form input[type="submit"] {
+  margin-top: 16px;
+}
+
+.target-time-inputs {
+  display: grid;
+  grid-template-columns: 120px 120px;
+  gap: 12px;
+  align-items: end;
+
+  > div {
+    width: 120px;
+    margin-bottom: 0 !important;
+  }
+
+  input {
+    width: 120px;
+    text-align: center;
+  }
+}
