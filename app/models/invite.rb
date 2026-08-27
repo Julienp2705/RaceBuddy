@@ -3,4 +3,6 @@ class Invite < ApplicationRecord
   belongs_to :target
   has_many :reviews
   has_one :chat
+
+  scope :pending, -> { where(status: "pending") }
 end

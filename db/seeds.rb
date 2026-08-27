@@ -150,4 +150,33 @@ Message.create!(
   content: "Moi aussi, ce serait cool de s'entraîner ensemble !"
 )
 
+# 7. Donner un objectif à Julien (le compte de connexion) pour qu'il puisse recevoir des invitations
+target_julien = Target.create!(
+  user: julien,
+  race: race2,
+  target_hour: 3,
+  target_minute: 45
+)
+
+# 8. Trois invitations EN ATTENTE reçues par Julien
+Invite.create!(
+  user: laurie,
+  target: target_julien,
+  status: "pending"
+)
+
+Invite.create!(
+  user: alex,
+  target: target_julien,
+  status: "pending"
+)
+
+Invite.create!(
+  user: robert,
+  target: target_julien,
+  status: "pending"
+)
+
+puts "Julien a #{julien.received_invites.pending.count} invitation(s) en attente"
+
 puts "seed finished"
