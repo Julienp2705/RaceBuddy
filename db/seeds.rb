@@ -22,7 +22,8 @@ laurie = User.create!(
   email: "laurie@racebuddy.com",
   password: "password123",
   latitude: 50.6292,
-  longitude: 3.0573
+  longitude: 3.0573,
+  address: "Bordeaux"
 )
 
 alex = User.create!(
@@ -31,7 +32,8 @@ alex = User.create!(
   email: "alex@racebuddy.com",
   password: "password123",
   latitude: 50.6293,
-  longitude: 3.1444
+  longitude: 3.1444,
+  address: "Pessac"
 )
 
 julien = User.create!(
@@ -40,7 +42,8 @@ julien = User.create!(
   email: "julien@racebuddy.com",
   password: "password123",
   latitude: 50.6927,
-  longitude: 3.1778
+  longitude: 3.1778,
+  address: "Talence"
 )
 
 robert = User.create!(
@@ -49,7 +52,8 @@ robert = User.create!(
   email: "robert@racebuddy.com",
   password: "password123",
   latitude: 50.6704,
-  longitude: 3.1338
+  longitude: 3.1338,
+  address: "Bègles"
 )
 
 puts "Users created!"
@@ -77,14 +81,20 @@ Target.create!(
   user: robert,
   race: race1,
   target_hour: 1,
-  target_minute: 45
+  target_minute: 45,
+  latitude: 50.6704,
+  longitude: 3.1338,
+  address: "Bègles"
 )
 
 Target.create!(
   user: laurie,
   race: race1,
   target_hour: 1,
-  target_minute: 50
+  target_minute: 50,
+  latitude: 50.6704,
+  longitude: 3.1338,
+  address: "Bègles"
 )
 
 # Seeds pour avoir un chat
@@ -93,14 +103,20 @@ user1 = User.create!(
   first_name: "Paul",
   last_name: "Martin",
   email: "paul@test.com",
-  password: "password"
+  password: "password",
+  latitude: 50.6704,
+  longitude: 3.1338,
+  address: "Bègles"
 )
 
 user2 = User.create!(
   first_name: "Marie",
   last_name: "Dupont",
   email: "marie@test.com",
-  password: "password"
+  password: "password",
+  latitude: 50.6704,
+  longitude: 3.1338,
+  address: "Bègles"
 )
 
 # 2. Créer une course
@@ -115,7 +131,10 @@ target = Target.create!(
   user: user1,
   race: race,
   target_hour: 1,
-  target_minute: 45
+  target_minute: 45,
+  latitude: 50.6704,
+  longitude: 3.1338,
+  address: "Bègles"
 )
 
 # 4. Créer une invitation de user2 vers le target de user1
@@ -155,7 +174,10 @@ target_julien = Target.create!(
   user: julien,
   race: race2,
   target_hour: 3,
-  target_minute: 45
+  target_minute: 45,
+  latitude: 50.6704,
+  longitude: 3.1338,
+  address: "Bègles"
 )
 
 # 8. Trois invitations EN ATTENTE reçues par Julien

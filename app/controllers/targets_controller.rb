@@ -9,11 +9,12 @@ class TargetsController < ApplicationController
     @target = @race.targets.new(target_params)
     @target.user = current_user
 
-    # if @target.save
-    # redirect_to @race
-    # else
-    # puts @target.errors.full_messages
-    # render :new, status: :unprocessable_entity
+    if @target.save
+      redirect_to @race
+    else
+      puts @target.errors.full_messages
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def destroy

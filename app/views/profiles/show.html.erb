@@ -97,7 +97,7 @@
           </button>
 
           <%= link_to "Supprimer",
-              buddy_target_path(@user, @target),
+              target_path(@current_target),
               method: :delete,
               data: {
                 turbo_method: :delete,

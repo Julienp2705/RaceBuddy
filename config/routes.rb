@@ -6,8 +6,10 @@ Rails.application.routes.draw do
     resources :targets, only: [:new, :create]
   end
   resources :buddies, only: [:show] do
-    resources :targets, only: [:update, :destroy]
+    resources :targets, only: [:update]
   end
+
+  resources :targets, only: [:destroy]
 
   resources :invites, only: [:index, :update, :destroy, :create] do #POST  /invites
     resources :reviews, only: [:create]
