@@ -20,6 +20,19 @@ class ChatsController < ApplicationController
     end
   end
 
+  def destroy
+    @chat = Chat.find(params[:id])
+    unless chat_users.include?(current_user)
+      redirect_to chats_path, alert: "Vous n'avez pas accès à cette conversation."
+      return
+    end
+    if @chat.destroy
+      redirect_to chats_path, notice: "Conversation supprimée."
+    else
+      redirect_to chats_path, alert: "Impossible de supprimer la conversation."
+    end
+  end
+
   private
 
   def chat_users

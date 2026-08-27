@@ -27,4 +27,13 @@ class InvitesController < ApplicationController
 
     redirect_to chat_path(@chat)
   end
+
+  def destroy
+    @invite = current_user.received_invites.find(params[:id])
+    @invite.destroy
+
+    redirect_to profile_path, notice: "Invitation refusée.", status: :see_other
+  rescue ActiveRecord::RecordNotFound
+    redirect_to profile_path, alert: "Invitation introuvable.", status: :see_other
+  end
 end

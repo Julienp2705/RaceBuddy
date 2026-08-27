@@ -1,25 +1,43 @@
-<div class="my-container">
+<div class="my-container chats-page">
 
-  <h1>Mes conversations</h1>
+  <div class="chats-page-header mb-5 d-flex align-items-top justify-content-between">
+    <div>
+      <h1>Mes conversations</h1>
+      <p><em>Retrouve tes partenaires d'entraînement.</em></p>
+    </div>
 
-  <div class="chats-list mt-5">
-    <% @chats.each do |chat| %>
-
-      <%= link_to chat_path(chat), class: "chat-item" do %>
-
-        <div class="chat-info">
-          <h3>
-            <i class="fa-solid fa-circle-user"></i>
-            <%= chat.other_user(current_user).first_name %>
-            <%= chat.other_user(current_user).last_name %> -
-            <%= chat.title %>
-          </h3>
-        </div>
-
-
-      <% end %>
-
-    <% end %>
+    <div class="chats-count">
+      <h1>
+        <i class="fa-solid fa-comments"></i>
+        <%= @chats.count %>
+      </h1>
+    </div>
   </div>
 
+  <div class="chats-list">
+    <% @chats.each do |chat| %>
+      <% other_user = chat.other_user(current_user) %>
+
+      <div class="chat-item-wrapper">
+        <%= link_to chat_path(chat), class: "chat-item" do %>
+
+          <div class="chat-info">
+            <h3>
+              <i class="fa-solid fa-flag-checkered"></i>
+              <%= chat.invite.target.race.name %> -
+              <i class="fa-solid fa-user"></i>
+              <%= other_user.first_name %>
+              <%= other_user.last_name %>
+            </h3>
+          </div>
+
+        <% end %>
+        <%= link_to chat_path(chat),
+                  data: { turbo_method: :delete, turbo_confirm: "Supprimer cette conversation ?" },
+                  class: "delete-chat" do %>
+                <i class="fa-solid fa-trash"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

@@ -1,4 +1,7 @@
+<div class="container">
+
 <h1><%= @race.name %></h1>
+<div class="container">
 
 <%= simple_form_for [@race, @target] do |f| %>
   <%= f.input :target_hour,
@@ -9,5 +12,10 @@
       collection: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
       label: "Minutes" %>
 
+  <%= f.input :address,
+      label: "Adresse" %>
+
   <%= f.button :submit, "Enregistrer l'objectif" %>
 <% end %>
+</div>
+</div>

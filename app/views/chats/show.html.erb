@@ -1,15 +1,20 @@
 <div class="my-container">
 
   <!-- HEADER -->
-
+  <%= link_to chats_path, class: "back-arrow" do %>
+    <i class="fa-solid fa-arrow-left-long"></i>
+  <% end %>
   <div class="chat-header">
 
     <div>
       <h2>
-        <%= @chat.title %>
+        <i class="fa-solid fa-flag-checkered"></i>
+        <%= @chat.invite.target.race.name %> -
+        <i class="fa-solid fa-user"></i>
+        <%= @other_user.first_name %>
+        <%= @other_user.last_name %>
       </h2>
     </div>
-
   </div>
 
 
@@ -33,6 +38,29 @@
             <%= message.content %>
           </div>
 
+          <% if message.user == current_user %>
+            <div class="message-actions">
+              <button
+                type="button"
+                class="message-action"
+                data-bs-toggle="modal"
+                data-bs-target="#editMessageModal<%= message.id %>">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+
+              <%= link_to chat_message_path(@chat, message),
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Supprimer ce message ?"
+                  },
+                  class: "message-action message-delete" do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+
+            </div>
+
+          <% end %>
+
           <div class="message-time">
             <%= message.created_at.strftime("%H:%M") %>
           </div>
@@ -40,7 +68,7 @@
         </div>
 
       </div>
-
+      <%= render "messages/edit_modal", message: message, edit_error: message.id == @message.id && @message.errors.any? %>
     <% end %>
 
   </div>
@@ -63,7 +91,7 @@
           autocomplete: "off" %>
 
       <%= button_tag type: "submit",
-          class: "btn btn-primary" do %>
+          class: "btn btn-1" do %>
         <i class="fa-solid fa-paper-plane"></i>
       <% end %>
 

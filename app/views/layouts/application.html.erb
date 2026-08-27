@@ -6,6 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Race Buddy">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="mapbox-token" content="<%= ENV.fetch("MAPBOX_ACCESS_TOKEN") %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -22,6 +23,8 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css" rel="stylesheet">
   </head>
 
   <body><%= render "shared/navbar" %>

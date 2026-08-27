@@ -33,6 +33,6 @@ class TargetsController < ApplicationController
   private
 
   def target_params
-    params.require(:target).permit(:target_hour, :target_minute)
+    params.require(:target).permit(:target_hour, :target_minute, :address)
   end
 end

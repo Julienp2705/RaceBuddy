@@ -1,0 +1,29 @@
+<div class="modal fade" id="invite-<%= invite.id %>" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Invitation de <%= invite.user.first_name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="mb-1"><strong>Course :</strong> <%= invite.target.race.name %></p>
+        <p class="mb-1"><strong>Distance :</strong> <%= invite.target.race.distance %> km</p>
+        <p class="text-muted mb-0">Accepter ouvrira un chat avec <%= invite.user.first_name %>.</p>
+      </div>
+
+      <div class="modal-footer">
+        <%= button_to "Refuser", invite_path(invite),
+            method: :delete,
+            class: "btn btn-outline-danger",
+            form: { data: { turbo_confirm: "Refuser cette invitation ?" } } %>
+
+        <%= button_to "Accepter", accept_invite_path(invite),
+            method: :patch,
+            class: "btn btn-primary" %>
+    </div>
+
+    </div>
+  </div>
+</div>
