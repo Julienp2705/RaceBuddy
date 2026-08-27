@@ -48,6 +48,7 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 gem "cloudinary", "~> 2.4"
 gem "pg_search"
+gem "rack-canonical-host"
 
 group :development, :test do
   gem "dotenv-rails"
