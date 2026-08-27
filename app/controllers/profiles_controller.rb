@@ -7,3 +7,7 @@ class ProfilesController < ApplicationController
     @past_targets    = targets - [@current_target]
   end
 end
+
+# def edit
+# @target = Target.find(params[:id])
+# end

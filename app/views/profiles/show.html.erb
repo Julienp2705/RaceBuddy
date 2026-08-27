@@ -17,7 +17,7 @@
 
       <div class="profile-stat">
         <p>👥 6</p>
-        <p>Buddy's</p>
+        <p>Buddies</p>
       </div>
 
     </div>
@@ -72,8 +72,8 @@
   <% end %>
 
   <!-- SECTION OBJECTIF EN COURS -->
-  <section class="profile-section">
-    <h2>Mon objectif en cours</h2>
+<section class="profile-section">
+  <h2>Mon objectif en cours</h2>
 
     <% if @current_target.nil? %>
       <p class="text-muted">Aucun objectif en cours.</p>
@@ -87,6 +87,25 @@
           <h3><%= @current_target.race.name %></h3>
           <p>🏃 <%= @current_target.race.distance %> km</p>
           <p>🎯 <%= @current_target.target_hour %>h<%= format("%02d", @current_target.target_minute) %></p>
+           <div class="target-actions">
+
+          <button
+            type="button"
+            class="btn btn-primary target-btn"
+            data-action="click->target-edit#show">
+            Modifier
+          </button>
+
+          <%= link_to "Supprimer",
+              buddy_target_path(@user, @target),
+              method: :delete,
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
+              },
+              class: "btn btn-outline-danger target-btn" %>
+
+          </div>
         </div>
       </div>
     <% end %>
