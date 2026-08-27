@@ -1,0 +1,25 @@
+<div class="my-container">
+
+  <h1>Mes conversations</h1>
+
+  <div class="chats-list mt-5">
+    <% @chats.each do |chat| %>
+
+      <%= link_to chat_path(chat), class: "chat-item" do %>
+
+        <div class="chat-info">
+          <h3>
+            <i class="fa-solid fa-circle-user"></i>
+            <%= chat.other_user(current_user).first_name %>
+            <%= chat.other_user(current_user).last_name %> -
+            <%= chat.title %>
+          </h3>
+        </div>
+
+
+      <% end %>
+
+    <% end %>
+  </div>
+
+</div>

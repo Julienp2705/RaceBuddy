@@ -10,11 +10,14 @@ class ChatsController < ApplicationController
     @messages = @chat.messages.includes(:user).order(created_at: :asc)
     @message = Message.new
 
-    @other_user = if @chat.invite.user == current_user
-                  @chat.invite.target.user
-                else
-                  @chat.invite.user
-                end
+    @other_user = @chat.other_user(current_user)
+  end
+
+  def index
+    @chats = Chat.includes(invite: { target: :user }).select do |chat|
+      chat.invite.user == current_user ||
+        chat.invite.target.user == current_user
+    end
   end
 
   private

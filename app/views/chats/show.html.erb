@@ -1,4 +1,4 @@
-<div class="chat-container">
+<div class="my-container">
 
   <!-- HEADER -->
 
@@ -6,12 +6,8 @@
 
     <div>
       <h2>
-        <%= @chat.title || "Conversation" %>
+        <%= @chat.title %>
       </h2>
-
-      <p>
-        <%= @other_user.first_name %>
-      </p>
     </div>
 
   </div>
@@ -53,6 +49,11 @@
   <!-- FORMULAIRE -->
 
   <div class="chat-form">
+    <% if @message.errors.any? %>
+      <p class="text-danger">
+        <%= @message.errors.full_messages.first %>
+      </p>
+    <% end %>
 
     <%= form_with model: [@chat, @message] do |f| %>
 
