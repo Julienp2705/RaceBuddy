@@ -9,6 +9,9 @@
 #   end
 puts "seed started"
 
+Message.destroy_all
+Chat.destroy_all
+Invite.destroy_all
 Target.destroy_all
 Race.destroy_all
 User.destroy_all
