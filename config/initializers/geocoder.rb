@@ -1,1 +1,5 @@
-Geocoder.configure(lookup: :mapbox, api_key: ENV.fetch("MAPBOX_ACCESS_TOKEN"))
+Geocoder.configure(
+  lookup: :mapbox,
+  api_key: ENV.fetch("MAPBOX_ACCESS_TOKEN"),
+  units: :km
+)
