@@ -107,3 +107,51 @@
     flex-shrink: 0;
   }
 }
+
+.back-arrow {
+  font-size: 2rem;
+  color: $rb-dark;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $rb-accent;
+    transform: translateX(-4px);
+  }
+}
+
+.message-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.message-delete:hover {
+  color: $rb-dark;
+}
+
+.message-action {
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  color: white;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: $rb-dark;
+    background: transparent;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+  }
+}

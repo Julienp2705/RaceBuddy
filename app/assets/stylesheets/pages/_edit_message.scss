@@ -1,0 +1,128 @@
+.edit-message-modal {
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.edit-message-header {
+  border-bottom: 1px solid rgba($rb-dark, 0.08);
+  padding: 24px 26px 18px;
+  background: $rb_dark;
+}
+
+.edit-message-eyebrow {
+  display: block;
+  margin-bottom: 5px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+
+  color: $rb-accent;
+}
+
+.edit-message-header .modal-title {
+  margin: 0;
+  font-size: 1.35rem;
+  color: white;
+}
+
+.edit-message-close {
+  border: none;
+  background: transparent;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: rgba($rb-dark, 0.5);
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba($rb-dark, 0.06);
+    color: $rb-dark;
+  }
+}
+
+.edit-message-body {
+  padding: 24px 26px 10px;
+}
+
+.edit-message-body .form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $rb-dark;
+}
+
+.edit-message-input {
+  border: 1px solid rgba($rb-dark, 0.15);
+  border-radius: 12px;
+
+  padding: 13px 15px;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+
+  resize: none;
+
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: $rb-accent;
+    box-shadow: 0 0 0 3px rgba($rb-accent, 0.1);
+    outline: none;
+  }
+}
+
+.edit-message-footer {
+  border-top: none;
+  padding: 10px 26px 24px;
+  gap: 10px;
+}
+
+.edit-message-cancel {
+  border: none;
+  color: rgba($rb-dark, 0.65);
+
+  &:hover {
+    color: $rb-dark;
+    background-color: rgba($rb-dark, 0.06);
+  }
+}
+
+.edit-message-submit {
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.message-form-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: -8px;
+  margin-bottom: 10px;
+
+  font-size: 0.8rem;
+  color: $rb-accent;
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+.message-form-error {
+  font-size: 1rem;
+}
+
+.edit-message-body .form-label{
+  font-size: 1rem;
+}

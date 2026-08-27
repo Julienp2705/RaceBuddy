@@ -1,0 +1,61 @@
+<div
+  class="modal fade"
+  id="editMessageModal<%= message.id %>"
+  tabindex="-1"
+  aria-labelledby="editMessageModalLabel<%= message.id %>"
+  aria-hidden="true"
+  data-controller="<%= 'modal' if edit_error %>">
+
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content edit-message-modal">
+
+      <div class="modal-header edit-message-header">
+        <div>
+          <h5
+            class="modal-title"
+            id="editMessageModalLabel<%= message.id %>">
+            Modifie ton message
+          </h5>
+        </div>
+
+      </div>
+
+      <%= simple_form_for [@chat, message] do |f| %>
+
+        <div class="modal-body edit-message-body">
+
+          <%= f.input :content,
+              label: "Ton message",
+              input_html: {
+                rows: 4,
+                class: "edit-message-input"
+              } %>
+
+          <% if edit_error %>
+            <div class="message-form-error">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <%= @message.errors.full_messages.first %>
+            </div>
+          <% end %>
+
+        </div>
+
+        <div class="modal-footer edit-message-footer">
+
+          <button
+            type="button"
+            class="btn edit-message-cancel"
+            data-bs-dismiss="modal">
+            Annuler
+          </button>
+
+          <%= f.submit "Enregistrer",
+              class: "btn btn-1 edit-message-submit" %>
+
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>
