@@ -1,0 +1,53 @@
+.race-show-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.race-info-card {
+  background-color: $rb-light;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+
+.race-distance {
+  font-weight: 600;
+  color: $rb-dark;
+}
+
+.race-link {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: $rb-primary;
+}
+
+.race-map-placeholder {
+  height: 250px;
+  background-color: $rb-sand;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $rb-dark;
+  margin-bottom: 2rem;
+}
+
+.buddy-card-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: $rb-light;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.avatar-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: $rb-sand;
+  flex-shrink: 0;
+}

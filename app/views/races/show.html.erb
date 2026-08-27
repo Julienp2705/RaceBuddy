@@ -1,12 +1,40 @@
-<h1><%= @race.name %></h1>
-<p><%= @race.distance %> km</p>
-<a href="<%= @race.url %>">Plus d'infos</a>
-<% if @target %>
-  <!-- already has a target -->
-  <h2>Buddies disponibles</h2>
-<% else %>
-  <!-- show "Créer un objectif" button, linking to new -->
-  <%= link_to "Créer un objectif", new_race_target_path(@race) %>
-<% end %>
+<div class="race-show-container">
 
-<!-- TODO add map centered from race location -->
+  <div class="race-info-card">
+    <h1><%= @race.name %></h1>
+    <p class="race-distance"><%= @race.distance %> km</p>
+    <a href="<%= @race.url %>" target="_blank" rel="noopener noreferrer" class="race-link">Plus d'infos</a>
+
+    <% if @target %>
+      <span class="badge-cta">Objectif enregistré ✓</span>
+    <% else %>
+      <%= link_to "Créer un objectif", new_race_target_path(@race), class: "btn-2" %>
+    <% end %>
+  </div>
+
+  <div class="race-map-placeholder">
+    <p>🗺️ Carte à venir</p>
+  </div>
+
+  <% if @target %>
+    <div class="buddies-section">
+      <h2>Buddies disponibles</h2>
+      <!-- placeholder cards — swap for real @buddies loop later -->
+      <div class="buddy-card-placeholder">
+        <div class="avatar-placeholder"></div>
+        <div>
+          <strong>Nom du buddy</strong>
+          <p>Ville · Objectif similaire</p>
+        </div>
+      </div>
+      <div class="buddy-card-placeholder">
+        <div class="avatar-placeholder"></div>
+        <div>
+          <strong>Nom du buddy</strong>
+          <p>Ville · Objectif similaire</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>
