@@ -55,7 +55,7 @@ puts "Users created!"
 race1 = Race.create!(
   name: "Semi-marathon de moneteau",
   distance: 20,
-  url: "https://www.finishers.com/course/semi-marathon-de-moneteau" 
+  url: "https://www.finishers.com/course/semi-marathon-de-moneteau"
 )
 
 race2 = Race.create!(
@@ -84,5 +84,67 @@ Target.create!(
   target_minute: 50
 )
 
-puts "seed finished"
+# Seeds pour avoir un chat
+# 1. Récupérer ou créer deux utilisateurs
+user1 = User.create!(
+  first_name: "Paul",
+  last_name: "Martin",
+  email: "paul@test.com",
+  password: "password"
+)
 
+user2 = User.create!(
+  first_name: "Marie",
+  last_name: "Dupont",
+  email: "marie@test.com",
+  password: "password"
+)
+
+# 2. Créer une course
+race = Race.create!(
+  name: "Semi-marathon de Bordeaux",
+  distance: 21.1,
+  url: "https://example.com"
+)
+
+# 3. Créer un objectif pour user1
+target = Target.create!(
+  user: user1,
+  race: race,
+  target_hour: 1,
+  target_minute: 45
+)
+
+# 4. Créer une invitation de user2 vers le target de user1
+invite = Invite.create!(
+  user: user2,
+  target: target,
+  status: "accepted"
+)
+
+# 5. Créer le chat associé à l'invitation
+chat = Chat.create!(
+  invite: invite,
+  title: "Chat de test"
+)
+
+# 6. Créer quelques messages pour tester la vue
+Message.create!(
+  chat: chat,
+  user: user1,
+  content: "Salut ! Tu te prépares aussi pour le semi ?"
+)
+
+Message.create!(
+  chat: chat,
+  user: user2,
+  content: "Oui ! Je vise environ 1h45, et toi ?"
+)
+
+Message.create!(
+  chat: chat,
+  user: user1,
+  content: "Moi aussi, ce serait cool de s'entraîner ensemble !"
+)
+
+puts "seed finished"

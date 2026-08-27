@@ -59,7 +59,7 @@
                 value: params[:query],
                 placeholder: "Ex. Semi-marathon de Bordeaux",
                 class: "form-control" %>
-                <%= button_tag type: "submit", class: "btn btn-primary btn-homepage mt-3" do %>
+                <%= button_tag type: "submit", class: "btn btn-1 btn-homepage mt-3" do %>
                   Rechercher <i class="fa-solid fa-arrow-right"></i>
                 <% end %>
               <% end %>
@@ -92,7 +92,7 @@
 
             <%= f.button :submit,
                 "Créer ma course",
-                class: "btn-primary btn-homepage" %>
+                class: "btn-1 btn-homepage" %>
           <% end %>
         </div>
       </div>
@@ -128,7 +128,7 @@
                   <%= race.distance %> km
                 </p>
 
-                <%= link_to "Voir la course", race_path(race), class: "btn btn-primary" %>
+                <%= link_to "Voir la course", race_path(race), class: "btn btn-1", data: { turbo_frame: "_top" }  %>
               </div>
 
             </div>
