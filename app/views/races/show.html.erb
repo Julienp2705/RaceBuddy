@@ -12,8 +12,10 @@
     <% end %>
   </div>
 
-  <div class="race-map-placeholder">
-    <p>🗺️ Carte à venir</p>
+  <div class="race-map"
+    data-controller="map"
+    data-map-lat-value="<%= current_user.latitude %>"
+    data-map-lng-value="<%= current_user.longitude %>">
   </div>
 
   <% if @target %>
@@ -21,7 +23,7 @@
       <h2>Buddies disponibles</h2>
       <% @buddies.each do |buddy| %>
       <div class="buddy-card">
-        <div class="avatar-placeholder"></div>
+        <div class="avatar"></div>
         <div>
           <strong><%= buddy.user.first_name %> <%= buddy.user.last_name %></strong>
           <p><%= buddy.address %> · <%= buddy.target_hour %>:<%= buddy.target_minute %></p>
