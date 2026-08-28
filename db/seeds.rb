@@ -1,4 +1,3 @@
-```ruby
 # db/seeds.rb
 
 puts "🌱 Nettoyage des données..."
@@ -513,4 +512,3 @@ puts "   Robert  → Semi-Marathon de Bordeaux → 1h45"
 puts "   Julien  → Semi-Marathon de Bordeaux → 1h45"
 puts "   Alex    → aucun objectif (création depuis l'application)"
 puts "======================================"
-```
