@@ -28,6 +28,6 @@ class ProfilesController < ApplicationController
   end
 end
 
-# def edit
-# @target = Target.find(params[:id])
-# end
+def edit
+  @target = Target.find(params[:id])
+end

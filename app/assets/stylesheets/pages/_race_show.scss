@@ -4,13 +4,13 @@
   padding: 2rem 1rem;
 }
 
-.race-info-card {
-  background-color: $rb-light;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin-bottom: 2rem;
-}
+// .race-info-card {
+//   background-color: $rb-light;
+//   border-radius: 16px;
+//   padding: 2rem;
+//   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+//   margin-bottom: 2rem;
+// }
 
 .race-distance {
   font-weight: 600;
@@ -50,4 +50,54 @@
   border-radius: 50%;
   background-color: $rb-sand;
   flex-shrink: 0;
+}
+.race-info-card {
+  max-width: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e3db;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: #fff;
+
+  .row {
+    margin: 0;
+  }
+
+  .col-4 {
+    padding: 0;
+    height: 180px; // fixed height — the anchor the image crops to
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .race-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #4a4a45;
+    }
+  }
+
+  .target-action {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+
+    .btn {
+      border-radius: 8px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+    }
+  }
 }
