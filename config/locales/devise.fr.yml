@@ -22,7 +22,10 @@ fr:
       inactive: "Votre compte n'est pas encore activé."
     sessions:
       signed_in: "Réussite de la connexion."
-      signed_out: "Réussite de la deconnexion."
+      signed_out: "Réussite de la déconnexion."
+      already_signed_out: "Vous êtes déjà déconnecté."
+    user:
+      already_signed_out: "Vous êtes déjà déconnecté."
     passwords:
       send_instructions: "Vous allez recevoir un email avec des instructions pour changer votre mot de passe."
       updated: "Votre mot de passe a été changé. Vous êtes maintenant connecté."

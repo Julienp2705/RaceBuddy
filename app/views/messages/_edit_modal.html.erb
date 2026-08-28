@@ -34,7 +34,7 @@
           <% if edit_error %>
             <div class="message-form-error">
               <i class="fa-solid fa-circle-exclamation"></i>
-              <%= @message.errors.full_messages.first %>
+              <%= @message.errors[:content].first %>
             </div>
           <% end %>
 

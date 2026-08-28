@@ -35,3 +35,25 @@
   border-radius: 10px;
   padding: 12px;
 }
+
+.show-profile-icon {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: $rb-dark;
+  cursor: pointer;
+  line-height: 1;
+
+  &:hover {
+    background: transparent;
+    color: $rb-accent;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+  }
+}
