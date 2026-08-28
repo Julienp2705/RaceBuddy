@@ -12,23 +12,30 @@
     <% end %>
   </div>
 
-  <div class="race-map"
-    data-controller="map"
-    data-map-lat-value="<%= current_user.latitude %>"
-    data-map-lng-value="<%= current_user.longitude %>">
-  </div>
-
   <% if @target %>
+    <div class="race-map"
+      data-controller="map"
+      data-map-lat-value="<%= @target.latitude %>"
+      data-map-lng-value="<%= @target.longitude %>">
+    </div>
+
     <div class="buddies-section">
       <h2>Buddies disponibles</h2>
       <% @buddies.each do |buddy| %>
-      <div class="buddy-card">
-        <div class="avatar"></div>
-        <div>
-          <strong><%= buddy.user.first_name %> <%= buddy.user.last_name %></strong>
-          <p><%= buddy.address %> · <%= buddy.target_hour %>:<%= buddy.target_minute %></p>
-        </div>
-      </div>
+        <%= link_to buddy_path(buddy.user) do %>
+          <div class="buddy-card">
+            <div class="avatar">
+              <% if buddy.user.avatar.attached? %><%= image_tag buddy.user.avatar %><% else %><% end %>
+            </div>
+            <div>
+              <strong><%= buddy.user.first_name %> <%= buddy.user.last_name %></strong>
+              <p><%= buddy.address %> · <%= buddy.target_hour %>:<%= buddy.target_minute %></p>
+            </div>
+            <div>
+              <p>⭐️⭐️⭐️⭐️⭐️</p>
+            </div>
+          </div>
+        <% end %>
       <% end %>
     </div>
   <% end %>
