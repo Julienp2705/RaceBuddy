@@ -31,7 +31,7 @@
   color: $rb-light;
 
   &:hover {
-    background-color: lighten($rb-dark, 8%);
+    background-color: $rb-accent;
     color: $rb-light;
   }
 }
