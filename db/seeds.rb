@@ -1,8 +1,12 @@
+```ruby
 # db/seeds.rb
 
 puts "🌱 Nettoyage des données..."
 
-# On supprime dans l'ordre pour respecter les foreign keys
+# ============================================================
+# NETTOYAGE
+# ============================================================
+
 Message.destroy_all
 Chat.destroy_all
 Invite.destroy_all
@@ -21,7 +25,10 @@ puts "✅ Base nettoyée"
 puts "👤 Création des utilisateurs..."
 
 users_data = [
-  # Bordeaux et alentours
+  # ----------------------------------------------------------
+  # BORDEAUX ET ALENTOURS
+  # ----------------------------------------------------------
+
   {
     first_name: "Alex",
     last_name: "Kerespars",
@@ -83,7 +90,10 @@ users_data = [
     city: "Cenon"
   },
 
-  # Autres villes
+  # ----------------------------------------------------------
+  # AUTRES VILLES
+  # ----------------------------------------------------------
+
   {
     first_name: "Camille",
     last_name: "Lefèvre",
@@ -116,7 +126,6 @@ users_data = [
   }
 ]
 
-# On complète automatiquement jusqu'à 50 utilisateurs
 first_names = [
   "Paul", "Marie", "Arthur", "Léa", "Gabriel",
   "Manon", "Nathan", "Inès", "Jules", "Zoé",
@@ -130,6 +139,15 @@ last_names = [
   "Noël", "Meyer", "Girard", "André", "Mercier"
 ]
 
+cities = [
+  "Paris",
+  "Lyon",
+  "Toulouse",
+  "Nantes",
+  "Nice",
+  "Lille"
+]
+
 while users_data.length < 50
   index = users_data.length
 
@@ -137,7 +155,7 @@ while users_data.length < 50
     first_name: first_names[index % first_names.length],
     last_name: last_names[index % last_names.length],
     email: "runner#{index + 1}@example.com",
-    city: ["Paris", "Lyon", "Toulouse", "Nantes", "Nice", "Lille"].sample
+    city: cities.sample
   }
 end
 
@@ -192,11 +210,11 @@ races_data = [
   ["Gironde Running Challenge", 21.1]
 ]
 
-races = races_data.map.with_index do |(name, distance), index|
+races = races_data.map do |name, distance|
   Race.create!(
     name: name,
     distance: distance,
-    url: "https://example.com/races/#{index + 1}"
+    url: "https://example.com/races/#{name.parameterize}"
   )
 end
 
@@ -204,13 +222,9 @@ puts "✅ #{races.count} courses créées"
 
 
 # ============================================================
-# TARGETS
+# LOCATIONS
 # ============================================================
 
-puts "🎯 Création des objectifs..."
-
-# Coordonnées approximatives
-# afin de ne pas dépendre du géocodage pendant les seeds.
 locations = {
   "Bordeaux" => [44.8378, -0.5792],
   "Mérignac" => [44.8378, -0.6435],
@@ -223,59 +237,64 @@ locations = {
   "Toulouse" => [43.6047, 1.4442],
   "Nantes" => [47.2184, -1.5536],
   "Nice" => [43.7102, 7.2620],
-  "Lille" => [50.6292, 3.0573]
+  "Lille" => [50.6292, 3.0573],
+  "Montpellier" => [43.6108, 3.8767]
 }
+
+
+# ============================================================
+# TARGETS
+# ============================================================
+
+puts "🎯 Création des objectifs..."
 
 targets = []
 
+
 # ============================================================
 # OBJECTIFS BORDEAUX
+# Laurie + Robert + Julien
+# Alex est volontairement exclu.
 # ============================================================
 
 bordeaux_race = races.find do |race|
-  race.name == "Semi-marathon de Bordeaux"
+  race.name == "Semi-Marathon de Bordeaux"
 end
 
-unless bordeaux_race
-  raise "❌ La course 'Semi-marathon de Bordeaux' n'existe pas dans les seeds."
-end
+raise "❌ Semi-Marathon de Bordeaux introuvable !" unless bordeaux_race
 
-# Laurie, Robert et Julien uniquement.
-# Alex créera son objectif directement dans l'application.
-bordeaux_users = users.select do |user|
-  ["Laurie", "Robert", "Julien"].include?(user.first_name)
-end
-
-# Même objectif pour les trois utilisateurs
-target_hour = 1
-target_minute = 45
-
-# Coordonnées toutes situées à moins de 5 km environ
-# du centre de Bordeaux.
-bordeaux_locations = {
-  "Laurie" => [44.8378, -0.5792], # Bordeaux
-  "Robert" => [44.8085, -0.5505], # Bègles
-  "Julien" => [44.8558, -0.5238]  # Cenon
+bordeaux_users = {
+  "Laurie" => "Bordeaux",
+  "Robert" => "Pessac",
+  "Julien" => "Talence"
 }
 
-bordeaux_users.each do |user|
+# Même objectif pour les trois
+bordeaux_target_hour = 1
+bordeaux_target_minute = 45
 
-  latitude, longitude = bordeaux_locations[user.first_name]
+bordeaux_users.each do |first_name, city|
+
+  user = users.find { |u| u.first_name == first_name }
+
+  latitude, longitude = locations[city]
 
   target = Target.create!(
     user: user,
     race: bordeaux_race,
-    target_hour: target_hour,
-    target_minute: target_minute,
-    address: "Bordeaux",
+    target_hour: bordeaux_target_hour,
+    target_minute: bordeaux_target_minute,
+    address: city,
     latitude: latitude,
     longitude: longitude
   )
 
   targets << target
+
+  puts "   🎯 #{first_name} → #{bordeaux_race.name} → 1h45 → #{city}"
 end
 
-puts "🏃 #{bordeaux_users.count} objectifs Bordeaux créés"
+puts "✅ #{bordeaux_users.count} objectifs Bordeaux créés"
 
 
 # ============================================================
@@ -284,15 +303,14 @@ puts "🏃 #{bordeaux_users.count} objectifs Bordeaux créés"
 
 users.each_with_index do |user, index|
 
-  # Ces utilisateurs ont déjà leur objectif Bordeaux
-  # Alex est volontairement exclu pour qu'il puisse
-  # créer son objectif depuis l'application.
-  next if ["Laurie", "Robert", "Julien", "Alex"].include?(user.first_name)
-
-  race = races[index % races.length]
+  # Alex ne reçoit aucun objectif.
+  # Laurie, Robert et Julien ont déjà leur objectif Bordeaux.
+  next if ["Alex", "Laurie", "Robert", "Julien"].include?(user.first_name)
 
   city = users_data[index][:city]
   latitude, longitude = locations[city]
+
+  race = races[index % races.length]
 
   target = Target.create!(
     user: user,
@@ -309,26 +327,29 @@ users.each_with_index do |user, index|
 
   targets << target
 
-  # Certains utilisateurs ont un deuxième objectif
+  # Un deuxième objectif pour certains utilisateurs
   if index % 4 == 0
 
-    race = races[(index + 7) % races.length]
+    second_race = races[(index + 7) % races.length]
 
-    target = Target.create!(
+    second_target = Target.create!(
       user: user,
-      race: race,
+      race: second_race,
       target_hour: [2, 3, 4].sample,
-      target_minute: [0, 10, 20, 30, 40, 50].sample,
+      target_minute: [
+        0, 10, 20, 30, 40, 50
+      ].sample,
       address: city,
       latitude: latitude,
       longitude: longitude
     )
 
-    targets << target
+    targets << second_target
   end
 end
 
 puts "✅ #{targets.count} objectifs créés"
+
 
 # ============================================================
 # INVITES
@@ -338,17 +359,14 @@ puts "🤝 Création des invitations..."
 
 invites = []
 
-# Chaque target reçoit quelques invitations
-targets.each_with_index do |target, index|
+targets.each do |target|
 
   possible_users = users.reject do |user|
     user.id == target.user_id
   end
 
-  # Entre 1 et 3 invitations par objectif
-  number_of_invites = [1, 2, 3].sample
-
-  possible_users.sample(number_of_invites).each do |user|
+  # Entre 1 et 3 invitations
+  possible_users.sample(rand(1..3)).each do |user|
 
     invite = Invite.create!(
       user: user,
@@ -371,10 +389,11 @@ puts "💬 Création des conversations..."
 
 chats = []
 
-# On crée surtout des conversations pour les invitations acceptées
-accepted_invites = invites.select { |invite| invite.status == "accepted" }
+accepted_invites = invites.select do |invite|
+  invite.status == "accepted"
+end
 
-accepted_invites.each_with_index do |invite, index|
+accepted_invites.each do |invite|
 
   chat = Chat.create!(
     invite: invite,
@@ -414,30 +433,59 @@ messages_content = [
   "Merci, toi aussi ! 💪"
 ]
 
-chats.each_with_index do |chat, chat_index|
+chats.each do |chat|
 
-  # Les conversations récentes ont entre 4 et 12 messages
-  number_of_messages = rand(4..12)
-
-  # Les deux utilisateurs de la conversation
   user_one = chat.invite.user
   user_two = chat.invite.target.user
+
+  number_of_messages = rand(4..12)
 
   number_of_messages.times do |message_index|
 
     sender = message_index.even? ? user_one : user_two
 
+    # On crée un historique progressif
+    created_at = rand(1..30).days.ago + rand(0..12).hours
+
     Message.create!(
       chat: chat,
       user: sender,
       content: messages_content.sample,
-      created_at: (number_of_messages - message_index).days.ago + rand(1..12).hours,
-      updated_at: (number_of_messages - message_index).days.ago + rand(1..12).hours
+      created_at: created_at,
+      updated_at: created_at
     )
   end
 end
 
 puts "✅ #{Message.count} messages créés"
+
+
+# ============================================================
+# REVIEWS
+# ============================================================
+
+puts "⭐ Création des avis..."
+
+accepted_invites = invites.select do |invite|
+  invite.status == "accepted"
+end
+
+accepted_invites.sample([accepted_invites.length, 15].min).each do |invite|
+
+  Review.create!(
+    invite: invite,
+    rating: rand(3..5),
+    comment: [
+      "Super partenaire de course, très sympa !",
+      "Une très bonne rencontre pour préparer la course.",
+      "Très motivé et agréable pendant les entraînements.",
+      "Une sortie vraiment sympa, je recommande !",
+      "Excellent partenaire pour courir ensemble."
+    ].sample
+  )
+end
+
+puts "✅ #{Review.count} avis créés"
 
 
 # ============================================================
@@ -454,4 +502,15 @@ puts "🎯 Targets  : #{Target.count}"
 puts "🤝 Invites  : #{Invite.count}"
 puts "💬 Chats    : #{Chat.count}"
 puts "✉️ Messages : #{Message.count}"
+puts "⭐ Reviews  : #{Review.count}"
 puts "======================================"
+puts ""
+puts "🔐 Mot de passe des utilisateurs : password"
+puts ""
+puts "🏃 Groupe Bordeaux :"
+puts "   Laurie  → Semi-Marathon de Bordeaux → 1h45"
+puts "   Robert  → Semi-Marathon de Bordeaux → 1h45"
+puts "   Julien  → Semi-Marathon de Bordeaux → 1h45"
+puts "   Alex    → aucun objectif (création depuis l'application)"
+puts "======================================"
+```
