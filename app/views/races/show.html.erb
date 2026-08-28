@@ -24,7 +24,8 @@
     <div class="race-map"
       data-controller="map"
       data-map-lat-value="<%= @target.latitude %>"
-      data-map-lng-value="<%= @target.longitude %>">
+      data-map-lng-value="<%= @target.longitude %>"
+      data-map-buddies-value="<%= @buddy_pins.to_json %>">
     </div>
 
     <div class="buddies-section">
