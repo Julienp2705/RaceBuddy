@@ -43,12 +43,12 @@
     <ul class="list-group">
       <% @pending_invites.each do |invite| %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <div>
-            <%= link_to buddy_path(invite.user) do %>
-              <strong><%= invite.user.first_name %> <%= invite.user.last_name.first %>.</strong> — <%= invite.target.race.name %>
-            <% end %>
-            <div class="text-muted small"><%= time_ago_in_words(invite.created_at) %></div>
-          </div>
+          <%= link_to buddy_path(invite.user), class:"invite-card" do %>
+            <div>
+                <strong><%= invite.user.first_name %> <%= invite.user.last_name.first %>.</strong> — <%= invite.target.race.name %>
+              <div class="text-muted small"><%= time_ago_in_words(invite.created_at) %></div>
+            </div>
+          <% end %>
 
           <button type="button"
                   class="btn btn-outline-primary btn-sm"
