@@ -3,7 +3,12 @@
   <!-- SECTION PROFIL -->
   <section class="profile-header">
     <div class="profile-avatar">
-      <%= image_tag "profile-placeholder.jpg", alt: "Photo de profil" %>
+      <%= image_tag @user.avatar_url, alt: "Photo de profil", id: "current_avatar" %>
+      <% if @user == current_user %>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#avatarModal">
+          Modifier la photo
+        </button>
+      <% end %>
     </div>
 
     <h1><%= @user.first_name %></h1>
@@ -135,3 +140,19 @@
     <% end %>
   </section>
 </div>
+
+<% if @user == current_user %>
+  <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="avatarModalLabel">Modifier l'avatar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body" id="avatar_modal_body">
+          <%= render "shared/avatar_form", user: current_user %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

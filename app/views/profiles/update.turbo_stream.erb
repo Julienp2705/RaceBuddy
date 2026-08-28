@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "current_avatar" do %>
+  <%= image_tag current_user.avatar_url, alt: "Photo de profil", id: "current_avatar" %>
+<% end %>
+
+<%= turbo_stream.replace "avatar_modal_body" do %>
+  <%= render "shared/avatar_form", user: current_user %>
+<% end %>
