@@ -6,10 +6,10 @@ Rails.application.routes.draw do
     resources :targets, only: [:create]
   end
   resources :buddies, only: [:show] do
-    resources :targets, only: [:update]
+    resources :targets, only: [:update,]
   end
 
-  resources :targets, only: [:destroy]
+  resources :targets, only: [:edit, :update, :destroy]
 
   resources :invites, only: [:index, :update, :destroy, :create] do #POST  /invites
     resources :reviews, only: [:create]
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
   get "/profile", to: "profiles#show"
+  patch "profile", to: "profiles#update"
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

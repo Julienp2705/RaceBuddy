@@ -3,7 +3,12 @@
   <!-- SECTION PROFIL -->
   <section class="profile-header">
     <div class="profile-avatar">
-      <%= image_tag "profile-placeholder.jpg", alt: "Photo de profil" %>
+      <%= image_tag @user.avatar_url, alt: "Photo de profil", id: "current_avatar" %>
+      <% if @user == current_user %>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#avatarModal">
+          Modifier la photo
+        </button>
+      <% end %>
     </div>
 
     <h1><%= @user.first_name %></h1>
@@ -35,16 +40,6 @@
     </div>
   </section>
 
-
-  <!-- SECTION VILLE -->
-  <section class="profile-section">
-    <h2>Ma Ville d'entraînement</h2>
-
-    <div class="profile-box">
-      <p>Lille</p>
-    </div>
-  </section>
-
   <h2>Invitations en attente (<%= @pending_invites.size %>)</h2>
 
   <% if @pending_invites.empty? %>
@@ -53,10 +48,12 @@
     <ul class="list-group">
       <% @pending_invites.each do |invite| %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <div>
-            <strong><%= invite.user.first_name %></strong> — <%= invite.target.race.name %>
-            <div class="text-muted small"><%= time_ago_in_words(invite.created_at) %></div>
-          </div>
+          <%= link_to buddy_path(invite.user), class:"invite-card" do %>
+            <div>
+                <strong><%= invite.user.first_name %> <%= invite.user.last_name.first %>.</strong> — <%= invite.target.race.name %>
+              <div class="text-muted small"><%= time_ago_in_words(invite.created_at) %></div>
+            </div>
+          <% end %>
 
           <button type="button"
                   class="btn btn-outline-primary btn-sm"
@@ -78,36 +75,52 @@
     <% if @current_target.nil? %>
       <p class="text-muted">Aucun objectif en cours.</p>
     <% else %>
-      <div class="race-card">
-        <div class="race-image">
+      <div class="race-info-card" data-controller="target-edit">
+        <div data-target-edit-target="display" class="row g-0">
+        <div class="col-4">
           <%= image_tag "race-placeholder.jpg", alt: @current_target.race.name %>
         </div>
 
-        <div class="race-content">
-          <h3><%= @current_target.race.name %></h3>
+        <div class="race-content col-8 p-3">
+          <p><%= @current_target.race.name %></p>
           <p>🏃 <%= @current_target.race.distance %> km</p>
           <p>🎯 <%= @current_target.target_hour %>h<%= format("%02d", @current_target.target_minute) %></p>
-           <div class="target-actions">
+          <p>📍<%= @current_target.address %> </p>
+          <div class="taget-action d-flex gap-2 mt-2">
+            <button
+              type="button"
+              class="btn btn-primary target-btn"
+              data-action="click->target-edit#show">
+              Modifier
+            </button>
 
           <button
             type="button"
-            class="btn btn-primary target-btn"
+            class="show-profile-icon"
             data-action="click->target-edit#show">
-            Modifier
+            <i class="fa-solid fa-pen"></i>
           </button>
 
-          <%= link_to "Supprimer",
-              target_path(@current_target),
-              method: :delete,
-              data: {
-                turbo_method: :delete,
-                turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
-              },
-              class: "btn btn-outline-danger target-btn" %>
-
+          <%= link_to target_path(@current_target),
+            data: {
+              turbo_method: :delete,
+              turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
+            },
+            class: "show-profile-icon" do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
           </div>
+          </div>
+          </div>
+          <div data-target-edit-target="form" class="d-none mt-3">
+              <%= simple_form_for @current_target do |f| %>
+                <%= f.input :target_hour, collection: 0..23, label: "Heures" %>
+                <%= f.input :target_minute, collection: [0,5,10,15,20,25,30,35,40,45,50,55], label: "Minutes" %>
+                <%= f.input :address, label: "Ville d'entraînement" %>
+                <%= f.button :submit, "Enregistrer" %>
+              <% end %>
+            </div>
         </div>
-      </div>
     <% end %>
   </section>
 
@@ -135,3 +148,19 @@
     <% end %>
   </section>
 </div>
+
+<% if @user == current_user %>
+  <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="avatarModalLabel">Modifier l'avatar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body" id="avatar_modal_body">
+          <%= render "shared/avatar_form", user: current_user %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

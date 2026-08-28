@@ -12,4 +12,27 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true, length: { minimum: 3, maximum: 20 }, allow_blank: true
   validates :last_name, presence: true, length: { minimum: 3, maximum: 20 }, allow_blank: true
+
+  DEFAULT_AVATAR_URL = "https://res.cloudinary.com/en57d7v3/image/upload/v1787911056/default_avatar.png".freeze
+  ALLOWED_AVATAR_TYPES = %w[image/jpeg image/png image/webp].freeze
+  MAX_AVATAR_SIZE = 5.megabytes
+
+  has_one_attached :avatar
+
+  validate :avatar_valid, if: -> { avatar.attached? && avatar.blob.present? }
+
+  def avatar_url
+    avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : DEFAULT_AVATAR_URL
+  end
+
+  private
+
+  def avatar_valid
+    unless ALLOWED_AVATAR_TYPES.include?(avatar.blob.content_type)
+      errors.add(:avatar, "doit être une image JPEG, PNG ou WebP")
+    end
+    if avatar.blob.byte_size > MAX_AVATAR_SIZE
+      errors.add(:avatar, "doit faire moins de 5 Mo")
+    end
+  end
 end
