@@ -78,23 +78,25 @@
     <% if @current_target.nil? %>
       <p class="text-muted">Aucun objectif en cours.</p>
     <% else %>
-      <div class="race-card">
-        <div class="race-image">
+      <div class="race-info-card" data-controller="target-edit">
+        <div data-target-edit-target="display" class="row g-0">
+        <div class="col-4">
           <%= image_tag "race-placeholder.jpg", alt: @current_target.race.name %>
         </div>
 
-        <div class="race-content">
-          <h3><%= @current_target.race.name %></h3>
+        <div class="race-content col-8 p-3">
+          <p><%= @current_target.race.name %></p>
           <p>🏃 <%= @current_target.race.distance %> km</p>
           <p>🎯 <%= @current_target.target_hour %>h<%= format("%02d", @current_target.target_minute) %></p>
-           <div class="target-actions">
+          <p>📍<%= @current_target.address %> </p>
+          <div class="taget-action d-flex gap-2 mt-2">
+            <button
+              type="button"
+              class="btn btn-primary target-btn"
+              data-action="click->target-edit#show">
+              Modifier
+            </button>
 
-          <button
-            type="button"
-            class="btn btn-primary target-btn"
-            data-action="click->target-edit#show">
-            Modifier
-          </button>
 
           <%= link_to "Supprimer",
               target_path(@current_target),
@@ -104,10 +106,18 @@
                 turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
               },
               class: "btn btn-outline-danger target-btn" %>
-
           </div>
+          </div>
+          </div>
+          <div data-target-edit-target="form" class="d-none mt-3">
+              <%= simple_form_for @current_target do |f| %>
+                <%= f.input :target_hour, collection: 0..23, label: "Heures" %>
+                <%= f.input :target_minute, collection: [0,5,10,15,20,25,30,35,40,45,50,55], label: "Minutes" %>
+                <%= f.input :address, label: "Ville d'entraînement" %>
+                <%= f.button :submit, "Enregistrer" %>
+              <% end %>
+            </div>
         </div>
-      </div>
     <% end %>
   </section>
 
