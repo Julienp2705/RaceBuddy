@@ -26,8 +26,8 @@ class RacesController < ApplicationController
     @buddies = @target.similar if @target
     @buddy_pins = @buddies.map do |buddy|
   {
-    lat: buddy.latitude,
-    lng: buddy.longitude,
+    lat: buddy.latitude.round(2),
+    lng: buddy.longitude.round(2),
     avatar_url: buddy.user.avatar.attached? ? url_for(buddy.user.avatar) : nil,
     initials: "#{buddy.user.first_name.first}#{buddy.user.last_name.first}"
   }
