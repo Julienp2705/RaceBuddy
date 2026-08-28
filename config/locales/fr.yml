@@ -1,10 +1,89 @@
 fr:
-  errors:
-    format: "%{message}"
-    
-  devise:
-    sessions:
-      signed_in: "Connexion réussie."
-      signed_out: "Vous êtes maintenant déconnecté."
-      user:
-        already_signed_out: "Vous êtes déjà déconnecté."
+
+activerecord:
+
+attributes:
+user:
+first_name: "Prénom"
+last_name: "Nom"
+email: "Adresse e-mail"
+password: "Mot de passe"
+
+race:
+  name: "Nom de la course"
+  distance: "Distance"
+  url: "Lien de la course"
+
+review:
+  comment: "Commentaire"
+  rating: "Note"
+
+target:
+  target_hour: "Heures"
+  target_minute: "Minutes"
+  address: "Ville et code postal"
+
+message:
+  content: "Message"
+
+errors:
+  models:
+    user:
+      attributes:
+        first_name:
+          blank: "Ton prénom est obligatoire"
+          too_short: "Ton prénom doit contenir au moins %{count} caractères"
+        last_name:
+          blank: "Ton nom est obligatoire"
+          too_short: "Ton nom doit contenir au moins %{count} caractères"
+        email:
+          blank: "Ton adresse e-mail est obligatoire"
+          invalid: "Ton adresse e-mail n'est pas valide"
+        password:
+          blank: "Ton mot de passe est obligatoire"
+          too_short: "Ton mot de passe doit contenir au moins %{count} caractères"
+
+    race:
+      attributes:
+        name:
+          blank: "Le nom de la course est obligatoire"
+          too_short: "Le nom de la course doit contenir au moins %{count} caractères"
+          too_long: "Le nom de la course ne peut pas dépasser %{count} caractères"
+
+        distance:
+          blank: "La distance est obligatoire"
+          greater_than: "La distance doit être supérieure à %{count}"
+
+        url:
+          blank: "Le lien de la course est obligatoire"
+          invalid: "Le lien de la course n'est pas valide"
+
+    review:
+      attributes:
+        comment:
+          blank: "Ton commentaire est obligatoire"
+          too_short: "Ton commentaire doit contenir au moins %{count} caractères"
+
+        rating:
+          blank: "La note est obligatoire"
+          inclusion: "La note doit être comprise entre 1 et 5"
+
+    target:
+      attributes:
+        target_hour:
+          blank: "L'heure cible est obligatoire"
+          inclusion: "L'heure doit être comprise entre 0 et 23"
+
+        target_minute:
+          blank: "Les minutes sont obligatoires"
+          inclusion: "Les minutes doivent être comprises entre 0 et 55, par tranche de 5 minutes"
+
+        address:
+          blank: "La ville d'entraînement est obligatoire"
+          invalid: "L'adresse n'est pas valide"
+
+    message:
+      attributes:
+        content:
+          blank: "Écris un message avant de l'envoyer"
+          too_short: "Ton message doit contenir au moins %{count} caractères"
