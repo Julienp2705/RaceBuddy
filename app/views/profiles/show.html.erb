@@ -87,28 +87,22 @@
           <p>🎯 <%= @current_target.target_hour %>h<%= format("%02d", @current_target.target_minute) %></p>
           <p>📍<%= @current_target.address %> </p>
           <div class="taget-action d-flex gap-2 mt-2">
+
             <button
               type="button"
-              class="btn btn-primary target-btn"
+              class="show-profile-icon"
               data-action="click->target-edit#show">
-              Modifier
+              <i class="fa-solid fa-pen"></i>
             </button>
 
-          <button
-            type="button"
-            class="show-profile-icon"
-            data-action="click->target-edit#show">
-            <i class="fa-solid fa-pen"></i>
-          </button>
-
-          <%= link_to target_path(@current_target),
-            data: {
-              turbo_method: :delete,
-              turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
-            },
-            class: "show-profile-icon" do %>
-          <i class="fa-solid fa-trash"></i>
-        <% end %>
+            <%= link_to target_path(@current_target),
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
+              },
+              class: "show-profile-icon" do %>
+            <i class="fa-solid fa-trash"></i>
+            <% end %>
           </div>
           </div>
           </div>

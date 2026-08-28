@@ -66,8 +66,6 @@
 
           </div>
 
-          <% end %>
-
           <div class="message-time">
             <%= message.created_at.strftime("%H:%M") %>
           </div>
@@ -97,11 +95,9 @@
           class: "form-control",
           autocomplete: "off" %>
 
-      <%= button_tag type: "submit",
-          class: "btn btn-1" do %>
+      <%= button_tag type: "submit", class: "btn btn-1" do %>
         <i class="fa-solid fa-paper-plane"></i>
       <% end %>
-
     <% end %>
 
   </div>
