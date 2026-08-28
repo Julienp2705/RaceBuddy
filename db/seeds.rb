@@ -209,8 +209,6 @@ puts "✅ #{races.count} courses créées"
 
 puts "🎯 Création des objectifs..."
 
-# Quelques coordonnées approximatives pour éviter de dépendre
-# du géocodage pendant les seeds.
 locations = {
   "Bordeaux" => [44.8378, -0.5792],
   "Mérignac" => [44.8378, -0.6435],
@@ -228,9 +226,56 @@ locations = {
 
 targets = []
 
+# ============================================================
+# OBJECTIFS SPÉCIFIQUES — GROUPE BORDEAUX
+# ============================================================
+
+bordeaux_race = races.find { |race| race.name == "Semi-marathon de Bordeaux" }
+
+bordeaux_users = users.select do |user|
+  ["Laurie", "Robert", "Julien"].include?(user.first_name)
+end
+
+# Même objectif pour les 3 utilisateurs
+target_hour = 1
+target_minute = 45
+
+# Différents points autour de Bordeaux, tous à moins de 5 km
+bordeaux_locations = {
+  "Laurie" => [44.8378, -0.5792], # Bordeaux
+  "Robert" => [44.8085, -0.5505], # Bègles
+  "Julien" => [44.8558, -0.5238]  # Cenon
+}
+
+bordeaux_users.each do |user|
+
+  latitude, longitude = bordeaux_locations[user.first_name]
+
+  targets << Target.create!(
+    user: user,
+    race: bordeaux_race,
+    target_hour: target_hour,
+    target_minute: target_minute,
+    address: "Bordeaux",
+    latitude: latitude,
+    longitude: longitude
+  )
+
+end
+
+puts "🏃 #{bordeaux_users.count} objectifs Bordeaux créés"
+
+
+# ============================================================
+# AUTRES OBJECTIFS
+# ============================================================
+
 users.each_with_index do |user, index|
 
-  # Tous les utilisateurs ont au moins un objectif
+  # Laurie, Robert et Julien ont déjà leur objectif Bordeaux.
+  # Alex est volontairement laissé de côté pour le créer depuis l'app.
+  next if ["Laurie", "Robert", "Julien", "Alex"].include?(user.first_name)
+
   race = races[index % races.length]
 
   city = users_data[index][:city]
