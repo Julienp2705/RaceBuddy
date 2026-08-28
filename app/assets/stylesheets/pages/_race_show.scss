@@ -33,15 +33,35 @@
   color: $rb-dark;
   margin-bottom: 2rem;
 }
-
+.buddy-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 .buddy-card {
   display: flex;
   align-items: center;
   gap: 1rem;
   background-color: $rb-light;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   margin-bottom: 0.75rem;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+  }
+}
+.buddy-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex-grow: 1;
+}
+.buddy-rating {
+  color: $rb-accent;
+  margin: 0;
 }
 
 .avatar {

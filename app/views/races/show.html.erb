@@ -31,17 +31,23 @@
     <div class="buddies-section">
       <h2>Buddies disponibles</h2>
       <% @buddies.each do |buddy| %>
-        <%= link_to buddy_path(buddy.user) do %>
+        <%= link_to buddy_path(buddy.user), class: "buddy-card-link" do %>
           <div class="buddy-card">
             <div class="avatar">
               <% if buddy.user.avatar.attached? %><%= image_tag buddy.user.avatar %><% else %><% end %>
             </div>
-            <div>
+            <div class="buddy-info">
               <strong><%= buddy.user.first_name %> <%= buddy.user.last_name.first %>.</strong>
               <p><%= buddy.address %> · <%= buddy.target_hour %>:<%= buddy.target_minute %></p>
             </div>
             <div>
-              <p>⭐️⭐️⭐️⭐️⭐️</p>
+              <p class="buddy-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </p>
             </div>
           </div>
         <% end %>
