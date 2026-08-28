@@ -4,13 +4,13 @@
   padding: 2rem 1rem;
 }
 
-// .race-info-card {
-//   background-color: $rb-light;
-//   border-radius: 16px;
-//   padding: 2rem;
-//   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-//   margin-bottom: 2rem;
-// }
+.race-info-card {
+  background-color: $rb-light;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
 
 .race-distance {
   font-weight: 600;
@@ -90,6 +90,8 @@
   justify-content: center;
   font-size: 11px;
   font-weight: 600;
+}
+
 .race-info-card {
   max-width: 600px;
   border-radius: 12px;
