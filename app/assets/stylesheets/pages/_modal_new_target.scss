@@ -1,0 +1,151 @@
+.target-modal {
+  border: none;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.target-modal-header {
+  padding: 28px 30px 22px;
+  border-bottom: 1px solid rgba($rb-dark, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.target-modal-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: $rb-accent;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  margin-bottom: 8px;
+}
+
+.target-modal-title {
+  margin: 0;
+  color: $rb-dark;
+}
+
+.target-modal-close {
+  border: none;
+  background: transparent;
+  color: $rb-dark;
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  opacity: 0.7;
+  cursor: pointer;
+
+  &:hover {
+    color: $rb-accent;
+    opacity: 1;
+  }
+}
+
+.target-modal-body {
+  padding: 28px 30px 30px;
+}
+
+.target-form-section {
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba($rb-dark, 0.08);
+}
+
+.target-location-section {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 10px;
+}
+
+.target-section-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+
+  > i {
+    color: $rb-accent;
+    font-size: 1.2rem;
+    margin-top: 4px;
+  }
+
+  h3 {
+    margin: 0 0 4px;
+    color: $rb-dark;
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba($rb-dark, 0.65);
+    font-size: 0.9rem;
+  }
+}
+
+.target-time-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.target-modal {
+  .form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $rb-dark;
+    margin-bottom: 8px;
+  }
+
+  .form-control,
+  .form-select {
+    border: 1px solid rgba($rb-dark, 0.15);
+    border-radius: 12px;
+    padding: 11px 14px;
+    box-shadow: none;
+
+    &:focus {
+      border-color: $rb-accent;
+      box-shadow: 0 0 0 3px rgba($rb-accent, 0.12);
+    }
+  }
+}
+
+.target-modal-footer {
+  border: none;
+  padding: 25px 0 0;
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.target-modal-cancel {
+  border: 1px solid rgba($rb-dark, 0.15);
+  color: $rb-dark;
+  background: transparent;
+
+  &:hover {
+    background: rgba($rb-dark, 0.05);
+  }
+}
+
+.target-modal-submit {
+  margin-left: auto;
+}
+
+@media (max-width: 576px) {
+  .target-modal-header,
+  .target-modal-body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .target-time-inputs {
+    grid-template-columns: 1fr;
+  }
+}

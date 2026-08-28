@@ -1,0 +1,17 @@
+<%= form_with model: user, url: profile_path, method: :patch do |f| %>
+  <% if user.errors[:avatar].any? %>
+    <div class="alert alert-danger" role="alert">
+      <%= user.errors[:avatar].join(", ") %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :avatar, "Photo de profil", class: "form-label" %>
+    <%= f.file_field :avatar, accept: "image/png,image/jpeg,image/webp", class: "form-control" %>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+    <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+  </div>
+<% end %>

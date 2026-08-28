@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: "races#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :races, only: [:create, :index, :show] do
-    resources :targets, only: [:new, :create]
+    resources :targets, only: [:create]
   end
   resources :buddies, only: [:show] do
     resources :targets, only: [:update,]
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
   get "/profile", to: "profiles#show"
+  patch "profile", to: "profiles#update"
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
