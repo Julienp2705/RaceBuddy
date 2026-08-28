@@ -8,9 +8,17 @@
     <% if @target %>
       <span class="badge-cta">Objectif enregistré ✓</span>
     <% else %>
-      <%= link_to "Créer un objectif", new_race_target_path(@race), class: "btn-2" %>
+      <button
+        type="button"
+        class="btn btn-2"
+        data-bs-toggle="modal"
+        data-bs-target="#targetModal">
+        Créer un objectif
+      </button>
     <% end %>
   </div>
+
+  <%= render "targets/target_modal", race: @race, target: @new_target %>
 
   <% if @target %>
     <div class="race-map"
