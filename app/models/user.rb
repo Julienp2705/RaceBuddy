@@ -10,6 +10,6 @@ class User < ApplicationRecord
   has_many :messages
   has_many :received_invites, through: :targets, source: :invites
 
-  validates :first_name, presence: true, length: { minimum: 3, maximum: 20 }
-  validates :last_name, presence: true, length: { minimum: 3, maximum: 20 }
+  validates :first_name, presence: true, length: { minimum: 3, maximum: 20 }, allow_blank: true
+  validates :last_name, presence: true, length: { minimum: 3, maximum: 20 }, allow_blank: true
 end
