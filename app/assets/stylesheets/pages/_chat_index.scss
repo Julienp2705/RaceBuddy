@@ -68,3 +68,48 @@
 .chats-count {
   color: $rb-dark;
 }
+
+.message-content-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.message-content {
+  flex: 1;
+}
+
+.message-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.chat-item-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.chat-item {
+  flex: 1;
+}
+
+.delete-chat {
+  width: 40px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: $rb-dark;
+  text-decoration: none;
+
+  &:hover {
+    color: $rb-accent;
+  }
+}

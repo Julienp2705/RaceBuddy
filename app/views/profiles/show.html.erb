@@ -40,16 +40,6 @@
     </div>
   </section>
 
-
-  <!-- SECTION VILLE -->
-  <section class="profile-section">
-    <h2>Ma Ville d'entraînement</h2>
-
-    <div class="profile-box">
-      <p>Lille</p>
-    </div>
-  </section>
-
   <h2>Invitations en attente (<%= @pending_invites.size %>)</h2>
 
   <% if @pending_invites.empty? %>
@@ -58,10 +48,12 @@
     <ul class="list-group">
       <% @pending_invites.each do |invite| %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <div>
-            <strong><%= invite.user.first_name %></strong> — <%= invite.target.race.name %>
-            <div class="text-muted small"><%= time_ago_in_words(invite.created_at) %></div>
-          </div>
+          <%= link_to buddy_path(invite.user), class:"invite-card" do %>
+            <div>
+                <strong><%= invite.user.first_name %> <%= invite.user.last_name.first %>.</strong> — <%= invite.target.race.name %>
+              <div class="text-muted small"><%= time_ago_in_words(invite.created_at) %></div>
+            </div>
+          <% end %>
 
           <button type="button"
                   class="btn btn-outline-primary btn-sm"
@@ -96,20 +88,19 @@
 
           <button
             type="button"
-            class="btn btn-primary target-btn"
+            class="show-profile-icon"
             data-action="click->target-edit#show">
-            Modifier
+            <i class="fa-solid fa-pen"></i>
           </button>
 
-          <%= link_to "Supprimer",
-              target_path(@current_target),
-              method: :delete,
-              data: {
-                turbo_method: :delete,
-                turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
-              },
-              class: "btn btn-outline-danger target-btn" %>
-
+          <%= link_to target_path(@current_target),
+            data: {
+              turbo_method: :delete,
+              turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
+            },
+            class: "show-profile-icon" do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
           </div>
         </div>
       </div>
