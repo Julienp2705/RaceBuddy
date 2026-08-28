@@ -12,7 +12,7 @@
         <%= @chat.invite.target.race.name %> -
         <i class="fa-solid fa-user"></i>
         <%= @other_user.first_name %>
-        <%= @other_user.last_name %>
+        <%= @other_user.last_name.first %>.
       </h2>
     </div>
   </div>
@@ -31,6 +31,7 @@
           <% unless message.user == current_user %>
             <div class="message-user">
               <%= message.user.first_name %>
+              <%= @other_user.last_name.first %>.
             </div>
           <% end %>
 
