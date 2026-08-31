@@ -252,49 +252,89 @@ targets = []
 
 # ============================================================
 # OBJECTIFS BORDEAUX
-# Laurie + Robert + Julien
-# Alex est volontairement exclu.
+#.
 # ============================================================
-
 bordeaux_race = races.find do |race|
-  race.name == "Semi-Marathon de Bordeaux"
+  race.name == "Marathon de Bordeaux"
 end
 
-raise "❌ Semi-Marathon de Bordeaux introuvable !" unless bordeaux_race
+raise "❌ Marathon de Bordeaux introuvable !" unless bordeaux_race
 
-bordeaux_users = {
-  "Laurie" => "Bordeaux",
-  "Robert" => "Pessac",
-  "Julien" => "Talence"
-}
+bordeaux_buddies = [
+  {
+    first_name: "Laurie",
+    address: "Bordeaux Centre",
+    latitude: 44.8378,
+    longitude: -0.5792,
+    target_hour: 3,
+    target_minute: 15
+  },
+  {
+    first_name: "Alex",
+    address: "Bordeaux",
+    latitude: 44.8400,
+    longitude: -0.5850,
+    target_hour: 3,
+    target_minute: 20
+  },
+  {
+    first_name: "Julien",
+    address: "Talence",
+    latitude: 44.8250,
+    longitude: -0.5870,
+    target_hour: 3,
+    target_minute: 25
+  },
+  {
+    first_name: "Emma",
+    address: "Bordeaux Saint-Augustin",
+    latitude: 44.8320,
+    longitude: -0.6040,
+    target_hour: 3,
+    target_minute: 30
+  },
+  {
+    first_name: "Hugo",
+    address: "Bordeaux Chartrons",
+    latitude: 44.8550,
+    longitude: -0.5730,
+    target_hour: 3,
+    target_minute: 35
+  },
+  {
+    first_name: "Clara",
+    address: "Bordeaux Bastide",
+    latitude: 44.8425,
+    longitude: -0.5520,
+    target_hour: 3,
+    target_minute: 40
+  },
+  {
+    first_name: "Chloé",
+    address: "Bordeaux Caudéran",
+    latitude: 44.8460,
+    longitude: -0.6100,
+    target_hour: 3,
+    target_minute: 45
+  }
+]
 
-# Même objectif pour les trois
-bordeaux_target_hour = 1
-bordeaux_target_minute = 45
-
-bordeaux_users.each do |first_name, city|
-
-  user = users.find { |u| u.first_name == first_name }
-
-  latitude, longitude = locations[city]
+bordeaux_buddies.each do |buddy_data|
+  user = users.find { |u| u.first_name == buddy_data[:first_name] }
 
   target = Target.create!(
     user: user,
     race: bordeaux_race,
-    target_hour: bordeaux_target_hour,
-    target_minute: bordeaux_target_minute,
-    address: city,
-    latitude: latitude,
-    longitude: longitude
+    target_hour: buddy_data[:target_hour],
+    target_minute: buddy_data[:target_minute],
+    address: buddy_data[:address],
+    latitude: buddy_data[:latitude],
+    longitude: buddy_data[:longitude]
   )
-
   targets << target
-
-  puts "   🎯 #{first_name} → #{bordeaux_race.name} → 1h45 → #{city}"
 end
 
-puts "✅ #{bordeaux_users.count} objectifs Bordeaux créés"
-
+puts "✅ #{bordeaux_buddies.count} buddies Marathon de Bordeaux créés"
 
 # ============================================================
 # AUTRES OBJECTIFS
@@ -302,9 +342,8 @@ puts "✅ #{bordeaux_users.count} objectifs Bordeaux créés"
 
 users.each_with_index do |user, index|
 
-  # Alex ne reçoit aucun objectif.
-  # Laurie, Robert et Julien ont déjà leur objectif Bordeaux.
-  next if ["Alex", "Laurie", "Robert", "Julien"].include?(user.first_name)
+  # 
+  next if ["Robert","Laurie","Alex","Julien","Emma","Hugo","Clara","Chloé"].include?(user.first_name)
 
   city = users_data[index][:city]
   latitude, longitude = locations[city]
@@ -506,9 +545,15 @@ puts "======================================"
 puts ""
 puts "🔐 Mot de passe des utilisateurs : password"
 puts ""
-puts "🏃 Groupe Bordeaux :"
-puts "   Laurie  → Semi-Marathon de Bordeaux → 1h45"
-puts "   Robert  → Semi-Marathon de Bordeaux → 1h45"
-puts "   Julien  → Semi-Marathon de Bordeaux → 1h45"
-puts "   Alex    → aucun objectif (création depuis l'application)"
+puts "🏃 Démo Marathon de Bordeaux :"
+puts "   Laurie  → 3h15"
+puts "   Alex    → 3h20"
+puts "   Julien  → 3h25"
+puts "   Emma    → 3h30"
+puts "   Hugo    → 3h35"
+puts "   Clara   → 3h40"
+puts "   Chloé   → 3h45"
+puts ""
+puts "   Robert  → aucun objectif"
+puts "   👉 À créer pendant la démo : Marathon de Bordeaux → 3h30"
 puts "======================================"
