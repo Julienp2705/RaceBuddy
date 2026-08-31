@@ -9,7 +9,7 @@ export default class extends Controller {
 
     const map = new mapboxgl.Map({
       container: this.element,
-      style: "mapbox://styles/mapbox/streets-v12",
+      style: "mapbox://styles/racebuddy/cmthg3j2h008z01sg8xe88bp8",
       center: [this.lngValue, this.latValue],
       zoom: 11
     })
