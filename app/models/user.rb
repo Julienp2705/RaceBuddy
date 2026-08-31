@@ -36,6 +36,11 @@ class User < ApplicationRecord
     avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : DEFAULT_AVATAR_URL
   end
 
+  def initials
+    first = first_name.present? ? first_name.first : "?"
+    last  = last_name.present? ? last_name.first : ""
+    "#{first}#{last}".upcase
+  end
   def votes_count
     received_ratings.count
   end

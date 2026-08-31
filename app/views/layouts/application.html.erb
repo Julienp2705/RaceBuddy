@@ -27,9 +27,10 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css" rel="stylesheet">
   </head>
 
-  <body><%= render "shared/navbar" %>
-<%= render "shared/flashes" %>
-
+  <body>
+    <%= render "shared/top_header" %>      <%# mobile only %>
+    <%= render "shared/flashes" %>
     <%= yield %>
+    <%= render "shared/bottom_navbar" %>   <%# mobile only, fixed to bottom %>
   </body>
 </html>

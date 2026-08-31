@@ -1,0 +1,98 @@
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  background: $rb-light;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-family: $headers-font;
+}
+
+.link-logo {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  color: $rb-primary;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+
+  &__buddies {
+    position: relative;
+    width: 2.2rem;
+    height: 2.2rem;
+    flex-shrink: 0;
+  }
+
+  &__buddy {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &--back {
+      left: 0;
+      color: $rb-primary;
+    }
+
+    &--front {
+      left: 0.8rem;
+      color: $rb-accent;
+    }
+  }
+
+  &__text {
+    color: $rb-primary;
+  }
+
+  &__accent {
+    color: $rb-accent;
+  }
+}
+
+.top-header__account {
+  flex-shrink: 0;
+}
+
+.top-header__avatar-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 0;
+}
+
+.top-header__avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid $rb-primary;
+}
+
+.top-header__monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: $rb-primary;
+  color: $rb-light;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.top-header__auth-link {
+  color: $rb-primary;
+  font-weight: 600;
+  text-decoration: none;
+}

@@ -1,14 +1,13 @@
 // Import Google fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
-@import url("https://googleapis.com");
+@import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap');
 
 // Define fonts for body and headers
-$body-font: 'Plus Jakarta Sans', sans-serif;
-$headers-font: 'Playfair Display', serif;
+$body-font: 'Exo', sans-serif;
+$headers-font: 'Orbitron', sans-serif;;
 
 // Style pour le titre (Header)
 h1, h2, h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: $headers-font;
   font-weight: 700;
   color: #1a1a1a;
   letter-spacing: -0.02em; /* Optionnel : resserre légèrement le titre pour un look premium */
@@ -16,7 +15,7 @@ h1, h2, h3 {
 
 // Style pour le texte (Body)
 body, p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $body-font;
   font-weight: 400;
   line-height: 1.6;
   color: #4a4a4a;
