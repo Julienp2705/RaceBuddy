@@ -1,2 +1,141 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="my-container">
+
+  <!-- Présenter l'app en quelques mots -->
+  <div class="racebuddy-presentation mb-5">
+    <div class="racebuddy-intro-content">
+      <div class="racebuddy-tag d-flex gap-2 align-items-center">
+        <i class="fa-solid fa-person-running"></i>
+        PLUS FORTS ENSEMBLE
+      </div>
+
+      <h1>
+        Tu n'es plus seul dans
+        <span>ta préparation.</span>
+      </h1>
+
+      <p>
+        <strong>Une course, un objectif, un buddy.</strong>
+      </p>
+
+      <p>
+        RaceBuddy t'aide à trouver des partenaires d'entraînement près de chez toi,
+        qui préparent la même course et partagent un objectif similaire au tien.
+      </p>
+
+      <p>
+        Parce qu'une préparation peut parfois être longue et difficile,
+        autant partager l'aventure avec quelqu'un qui vit la même expérience.
+      </p>
+
+      <div class="racebuddy-message d-flex gap-2 align-items-center">
+        <i class="fa-solid fa-heart"></i>
+        <span>
+          Trouve ton RaceBuddy. Entraînez-vous ensemble.
+          Franchissez la ligne d'arrivée ensemble.
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Cherche ta course -->
+  <div class="race-search-section mb-5">
+
+    <div class="row justify-content-center g-4">
+
+      <!-- Rechercher une course -->
+      <div class="col-6">
+        <div class="race-box h-100">
+
+          <div class="race-box-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+              <h2>Trouve ta course</h2>
+              <p>Recherche ta prochaine course par son nom.</p>
+
+              <%= form_with url: races_path, method: :get, data: { turbo_frame: "races_list" }, class: "race-search-form" do |f| %>
+                <%= f.search_field :query,
+                value: params[:query],
+                placeholder: "Ex. Semi-marathon de Bordeaux",
+                class: "form-control" %>
+                <%= button_tag type: "submit", class: "btn btn-1 btn-homepage mt-3" do %>
+                  Rechercher <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+      <!-- Créer une course -->
+      <div class="col-6">
+        <div class="race-box h-100 race-box-create">
+
+          <div class="race-box-icon">
+            <i class="fa-solid fa-plus"></i>
+          </div>
+
+          <h2>Tu ne trouves pas ta course ?</h2>
+          <p>Ajoute-la à RaceBuddy et commence à trouver tes partenaires.</p>
+
+          <%= simple_form_for @race do |f| %>
+            <%= f.input :name,
+                label: false,
+                placeholder: "Nom de la course" %>
+            <%= f.input :distance,
+                label: false,
+                placeholder: "Distance (km)" %>
+            <%= f.date_select :race_date, order: [:day, :month, :year],
+            start_year: Date.current.year,
+            end_year: Date.current.year + 3 %>
+            <%= f.input :url,
+                label: false,
+                placeholder: "Lien de la course" %>
+            <%= f.button :submit,
+                "Créer ma course",
+                class: "btn-1 btn-homepage" %>
+          <% end %>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Affiches les courses -->
+  <%= turbo_frame_tag "races_list" do %>
+    <div class="races-section">
+        <div class="races-header">
+          <h2>Les courses RaceBuddy</h2>
+            <% if params[:query].present? %>
+              Résultas pour <%= params[:query] %>...
+            <% else %>
+              Choisis une course et trouve des coureurs qui partagent ton objectif.
+            <% end %>
+          </p>
+        </div>
+        <div class="races-grid">
+          <% @races.each do |race| %>
+            <div class="race-box">
+
+              <div class="race-box-icon">
+                <i class="fa-solid fa-flag-checkered"></i>
+              </div>
+
+              <div class="race-box-content">
+                <h3><%= race.name %></h3>
+
+                <p class="race-distance">
+                  <i class="fa-solid fa-route"></i>
+                  <%= race.distance %> km
+                </p>
+
+                <%= link_to "Voir la course", race_path(race), class: "btn btn-1", data: { turbo_frame: "_top" }  %>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+    </div>
+  <% end %>
+
+</div>

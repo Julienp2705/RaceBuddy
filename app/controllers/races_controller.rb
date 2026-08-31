@@ -2,6 +2,7 @@ class RacesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
 
   def index
+    @race = Race.new
     if params[:query].present?
       @races = Race.search_by_name(params[:query]).limit(10)
     else
