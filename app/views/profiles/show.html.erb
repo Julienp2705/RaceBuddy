@@ -30,13 +30,64 @@
 
 
   <!-- SECTION DESCRIPTION -->
-  <section class="profile-section">
+  <section class="profile-section" data-controller="description-edit">
     <h2>Ma Description</h2>
 
     <div class="profile-box">
-      <p>
-        Coureur passionné, je cherche des buddies pour mes prochaines courses.
-      </p>
+
+      <!-- AFFICHAGE -->
+      <div
+        class="d-flex justify-content-between align-items-start"
+        data-description-edit-target="display">
+
+        <p
+          class="mb-0 text-muted"
+          data-description-edit-target="text">
+          Renseignez votre description...
+        </p>
+
+        <% if @user == current_user %>
+          <button
+            type="button"
+            class="show-profile-icon"
+            data-action="click->description-edit#show">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        <% end %>
+
+      </div>
+
+      <!-- FORMULAIRE CACHÉ -->
+      <div
+        class="d-none"
+        data-description-edit-target="form">
+
+        <textarea
+          class="form-control"
+          rows="4"
+          placeholder="Écrivez votre description..."
+          data-description-edit-target="input"></textarea>
+
+        <div class="d-flex gap-2 mt-3">
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-action="click->description-edit#save">
+            Enregistrer
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-action="click->description-edit#hide">
+            Annuler
+          </button>
+
+        </div>
+
+      </div>
+
     </div>
   </section>
 
