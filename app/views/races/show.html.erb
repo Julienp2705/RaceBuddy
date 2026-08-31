@@ -3,6 +3,7 @@
   <div class="race-info-card">
     <h1><%= @race.name %></h1>
     <p class="race-distance"><%= @race.distance %> km</p>
+    <p class="race-date"><%= l @race.race_date, format: :long %></p>
     <a href="<%= @race.url %>" target="_blank" rel="noopener noreferrer" class="race-link">Plus d'infos</a>
 
     <% if @target %>

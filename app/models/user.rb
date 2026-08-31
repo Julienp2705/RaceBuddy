@@ -9,6 +9,16 @@ class User < ApplicationRecord
   has_many :targets
   has_many :messages
   has_many :received_invites, through: :targets, source: :invites
+  # les notes que cet utilisateur a données
+  has_many :given_ratings, class_name: "BuddyRating",
+           foreign_key: :user_id, dependent: :destroy
+
+  # les notes que cet utilisateur a reçues
+  has_many :received_ratings, class_name: "BuddyRating",
+           foreign_key: :buddy_id, dependent: :destroy
+
+  has_many :rated_buddies, through: :given_ratings, source: :buddy
+  has_many :raters, through: :received_ratings, source: :user
 
   validates :first_name, presence: true, length: { minimum: 3, maximum: 20 }, allow_blank: true
   validates :last_name, presence: true, length: { minimum: 3, maximum: 20 }, allow_blank: true
@@ -18,11 +28,22 @@ class User < ApplicationRecord
   MAX_AVATAR_SIZE = 5.megabytes
 
   has_one_attached :avatar
+  has_many :races, through: :targets
 
   validate :avatar_valid, if: -> { avatar.attached? && avatar.blob.present? }
 
   def avatar_url
     avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) : DEFAULT_AVATAR_URL
+  end
+
+  def votes_count
+    received_ratings.count
+  end
+
+  def thumbs_up_percentage
+    return 0 if votes_count.zero?
+
+    (received_ratings.where(rating: 1).count * 100.0 / votes_count).round
   end
 
   private

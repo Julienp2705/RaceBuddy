@@ -2,33 +2,50 @@
 
   <!-- SECTION PROFIL -->
   <section class="profile-header">
-  <div class="profile-avatar">
-    <%= image_tag "profile-placeholder.jpg", alt: "Photo de profil" %>
-  </div>
-
-  <h1><%= @buddie.first_name %></h1>
-
-  <%= link_to "Ajouter en buddy", "#", class: "btn-2" %>
-
-  <div class="profile-stats">
-
-    <div class="profile-stat">
-      <p>NOTE</p>
-      <p>★★★★★</p>
+    <div class="profile-avatar">
+      <%= image_tag "profile-placeholder.jpg", alt: "Photo de profil" %>
     </div>
 
-    <div class="profile-stat">
-      <p>👥 6</p>
-      <p>Buddy's</p>
+    <h1><%= @buddie.first_name %> <%= @buddie.last_name.first %>.</h1>
+
+    <%= link_to "Ajouter en buddy", "#", class: "btn-2" %>
+
+    <div class="profile-stats mb-4">
+
+      <div class="profile-stat">
+        👍 <%= @buddie.thumbs_up_percentage %>% (👥 <%= @buddie.votes_count %>)
+      </div>
     </div>
 
-  </div>
-</section>
+    <% if @invite.present? && @buddy_rating.nil? %>
+      <div class="buddy-rating">
+        <p>Comment s'est passée votre rencontre ?</p>
+
+        <div class="rating-buttons">
+          <%= form_with url: user_buddy_rating_path(@buddie), method: :post do |f| %>
+            <%= f.hidden_field :rating, value: 1 %>
+            <button type="submit" class="rating-button rating-up">
+              <i class="fa-solid fa-thumbs-up"></i>
+            </button>
+          <% end %>
+
+          <%= form_with url: user_buddy_rating_path(@buddie), method: :post do |f| %>
+            <%= f.hidden_field :rating, value: -1 %>
+            <button type="submit" class="rating-button rating-down">
+              <i class="fa-solid fa-thumbs-down"></i>
+            </button>
+          <% end %>
+
+        </div>
+      </div>
+    <% end %>
+
+  </section>
 
 
   <!-- SECTION DESCRIPTION -->
   <section class="profile-section">
-    <h2>Ma Description</h2>
+    <h2>Description de <%= @buddie.first_name %></h2>
 
     <div class="profile-box">
       <p>
@@ -37,48 +54,87 @@
     </div>
   </section>
 
-    <!-- SECTION OBJECTIF EN COURS -->
-  <section class="profile-section">
-    <h2>Son objectif en cours</h2>
 
-    <% if @current_target.nil? %>
+  <!-- SECTION OBJECTIFS À VENIR -->
+  <section class="profile-section">
+    <h2>Ses objectifs à venir</h2>
+
+    <% if @upcoming_targets.empty? %>
       <p class="text-muted">Aucun objectif en cours.</p>
     <% else %>
-      <div class="race-card">
-        <div class="race-image">
-          <%= image_tag "race-placeholder.jpg", alt: @current_target.race.name %>
+      <% @upcoming_targets.each do |target| %>
+
+        <div class="race-info-card" data-controller="target-edit">
+
+          <div data-target-edit-target="display" class="row g-0">
+            <div class="col-4">
+              <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
+            </div>
+
+            <div class="race-content col-8 p-3">
+              <p><%= target.race.name %></p>
+              <p>🏃 <%= target.race.distance %> km</p>
+              <p>📅 <%= l target.race.race_date, format: :long %></p>
+              <p>🎯 <%= target.target_hour %>h<%= format("%02d", target.target_minute) %></p>
+              <p>📍 <%= target.address %></p>
+
+              <div class="target-action d-flex gap-2 mt-2">
+                <button type="button" class="show-profile-icon"
+                        data-action="click->target-edit#show">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <%= link_to target_path(target),
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
+                    },
+                    class: "show-profile-icon" do %>
+                  <i class="fa-solid fa-trash"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div data-target-edit-target="form" class="d-none mt-3">
+            <%= simple_form_for target do |f| %>
+              <%= f.input :target_hour, collection: 0..23, label: "Heures" %>
+              <%= f.input :target_minute,
+                    collection: [0,5,10,15,20,25,30,35,40,45,50,55],
+                    label: "Minutes" %>
+              <%= f.input :address, label: "Ville d'entraînement" %>
+              <%= f.button :submit, "Enregistrer" %>
+            <% end %>
+          </div>
+
         </div>
 
-        <div class="race-content">
-          <h3><%= @current_target.race.name %></h3>
-          <p>🏃 <%= @current_target.race.distance %> km</p>
-          <p>🎯 <%= @current_target.target_hour %>h<%= format("%02d", @current_target.target_minute) %></p>
-        </div>
-      </div>
+      <% end %>
     <% end %>
   </section>
 
+    <!-- SECTION COURSES TERMINÉES -->
+    <section class="profile-section">
+      <h2>Ses précédents objectifs</h2>
 
-  <!-- SECTION COURSES TERMINÉES -->
-  <section class="profile-section">
-    <h2>Ses précédents objectifs</h2>
+      <% if @past_targets.empty? %>
+        <p class="text-muted">Aucun objectif précédent.</p>
+      <% else %>
+        <% @past_targets.each do |target| %>
+          <div class="race-info-card">
+            <div class="race-image">
+              <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
+            </div>
 
-    <% if @past_targets.empty? %>
-      <p class="text-muted">Aucun objectif précédent.</p>
-    <% else %>
-      <% @past_targets.each do |target| %>
-        <div class="race-card">
-          <div class="race-image">
-            <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
+            <div class="race-content">
+              <h3><%= target.race.name %></h3>
+              <p>🏃 <%= target.race.distance %> km</p>
+              <p>📅 <%= l target.race.race_date, format: :long %></p>
+              <p>🎯 <%= target.target_hour %>h<%= format("%02d", target.target_minute) %></p>
+              <p>📍 <%= target.address %></p>
+            </div>
           </div>
-
-          <div class="race-content">
-            <h3><%= target.race.name %></h3>
-            <p>🏃 <%= target.race.distance %> km</p>
-            <p>🎯 <%= target.target_hour %>h<%= format("%02d", target.target_minute) %></p>
-          </div>
-        </div>
+        <% end %>
       <% end %>
-    <% end %>
   </section>
 </div>

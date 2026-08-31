@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_28_091404) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_122338) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,6 +40,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_28_091404) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "buddy_ratings", force: :cascade do |t|
+    t.bigint "buddy_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "rating", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["buddy_id"], name: "index_buddy_ratings_on_buddy_id"
+    t.index ["user_id"], name: "index_buddy_ratings_on_user_id"
   end
 
   create_table "chats", force: :cascade do |t|
@@ -74,17 +84,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_28_091404) do
     t.datetime "created_at", null: false
     t.float "distance"
     t.string "name"
+    t.date "race_date"
     t.datetime "updated_at", null: false
     t.string "url"
-  end
-
-  create_table "reviews", force: :cascade do |t|
-    t.text "comment"
-    t.datetime "created_at", null: false
-    t.bigint "invite_id", null: false
-    t.integer "rating"
-    t.datetime "updated_at", null: false
-    t.index ["invite_id"], name: "index_reviews_on_invite_id"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -288,12 +290,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_28_091404) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "buddy_ratings", "users"
+  add_foreign_key "buddy_ratings", "users", column: "buddy_id"
   add_foreign_key "chats", "invites"
   add_foreign_key "invites", "targets"
   add_foreign_key "invites", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
-  add_foreign_key "reviews", "invites"
   add_foreign_key "solid_queue_batch_executions", "solid_queue_batches", column: "batch_id", on_delete: :cascade
   add_foreign_key "solid_queue_batch_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
