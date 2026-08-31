@@ -1,0 +1,21 @@
+<nav class="bottom-navbar">
+  <%= link_to root_path, class: "bottom-navbar__item #{'bottom-navbar__item--active' if current_page?(root_path)}" do %>
+  <i class="fa-solid fa-house"></i>
+  <span>Accueil</span>
+  <% end %>
+
+  <%= link_to chats_path, class: "bottom-navbar__item #{'bottom-navbar__item--active' if current_page?(chats_path)}" do %>
+  <i class="fa-solid fa-comments"></i>
+  <span>Messages</span>
+  <% end %>
+
+  <%= link_to profile_path, class: "bottom-navbar__item #{'bottom-navbar__item--active' if current_page?(profile_path)}" do %>
+  <i class="fa-solid fa-user"></i>
+  <span>Profil</span>
+  <% end %>
+
+  <%= link_to races_path, class: "bottom-navbar__item #{'bottom-navbar__item--active' if current_page?(races_path)}" do %>
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <span>Courses</span>
+  <% end %>
+</nav>
