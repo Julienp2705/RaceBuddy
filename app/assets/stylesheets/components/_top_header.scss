@@ -1,0 +1,51 @@
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.link-logo {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  color: $rb-primary;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+
+  &__buddies {
+    position: relative;
+    width: 2.8rem;
+    height: 2.8rem;
+    flex-shrink: 0;
+  }
+
+  &__buddy {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &--back {
+      left: 0;
+      color: $rb-primary;
+    }
+    &--front {
+      left: 1rem;
+      color: $rb-accent;
+    }
+  }
+
+  &__text {
+    color: $rb-primary;
+  }
+
+  &__accent {
+    color: $rb-accent;
+  }
+}
