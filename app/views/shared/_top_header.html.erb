@@ -1,4 +1,4 @@
-<div class="logo-container">
+<div class="top-header">
   <%= link_to "/", class: "link-logo" do %>
     <div class="brand-logo">
       <span class="brand-logo__buddies" aria-hidden="true">
@@ -9,6 +9,37 @@
       <span class="brand-logo__text">
         Race<span class="brand-logo__accent">Buddy</span>
       </span>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <div class="dropdown top-header__account">
+      <button
+        class="top-header__avatar-btn"
+        type="button"
+        id="topHeaderDropdown"
+        data-bs-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar_url, class: "top-header__avatar", alt: "Photo de profil" %>
+        <% else %>
+          <span class="top-header__monogram"><%= current_user.initials %></span>
+        <% end %>
+      </button>
+
+      <div class="dropdown-menu dropdown-menu-end" aria-labelledby="topHeaderDropdown">
+        <%= link_to "Profil", profile_path, class: "dropdown-item" %>
+        <%= link_to "Se déconnecter",
+            destroy_user_session_path,
+            data: { turbo_method: :delete },
+            class: "dropdown-item" %>
+      </div>
+    </div>
+  <% else %>
+    <div class="top-header__account">
+      <%= link_to "Se connecter", new_user_session_path, class: "top-header__auth-link" %>
     </div>
   <% end %>
 </div>
