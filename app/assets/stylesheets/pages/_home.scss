@@ -1,13 +1,15 @@
 // Specific CSS for your home-page
 .my-container {
-  width: 70vw;
+  width: 100%;
   margin: 0 auto;
   min-height: 100vh;
-  padding: 60px 0;
+  padding: 20px 16px;
 }
-@media (max-width: 768px) {
-  .homepage {
-    width: 100vw;
+
+@media (min-width: 769px) {
+  .my-container {
+    width: 70vw;
+    padding: 60px 0;
   }
 }
 

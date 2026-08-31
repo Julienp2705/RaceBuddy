@@ -45,7 +45,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_122338) do
   create_table "buddy_ratings", force: :cascade do |t|
     t.bigint "buddy_id", null: false
     t.datetime "created_at", null: false
-    t.integer "rating", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["buddy_id"], name: "index_buddy_ratings_on_buddy_id"
