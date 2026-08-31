@@ -7,7 +7,6 @@ class RacesController < ApplicationController
     else
       @races = Race.order(created_at: :desc).limit(10)
     end
-    @race = Race.new
   end
 
   def create
