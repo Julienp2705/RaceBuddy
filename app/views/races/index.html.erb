@@ -81,19 +81,20 @@
             <%= f.input :name,
                 label: false,
                 placeholder: "Nom de la course" %>
-
             <%= f.input :distance,
                 label: false,
                 placeholder: "Distance (km)" %>
-
+            <%= f.date_select :race_date, order: [:day, :month, :year],
+            start_year: Date.current.year,
+            end_year: Date.current.year + 3 %>
             <%= f.input :url,
                 label: false,
                 placeholder: "Lien de la course" %>
-
             <%= f.button :submit,
                 "Créer ma course",
                 class: "btn-1 btn-homepage" %>
           <% end %>
+
         </div>
       </div>
 
