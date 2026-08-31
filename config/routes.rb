@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "races#index"
+  root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :races, only: [:create, :index, :show] do
     resources :targets, only: [:create]
@@ -11,9 +11,7 @@ Rails.application.routes.draw do
 
   resources :targets, only: [:edit, :update, :destroy]
 
-  resources :invites, only: [:index, :update, :destroy, :create] do #POST  /invites
-    resources :reviews, only: [:create]
-  end
+  resources :invites, only: [:index, :update, :destroy, :create] #POST  /invites
 
   resources :chats, only: [:show, :index, :destroy] do
     resources :messages, only: [:create, :destroy, :update]
@@ -23,6 +21,10 @@ Rails.application.routes.draw do
     member do
       patch :accept #PATCH /invites/:id/accept
     end
+  end
+
+  resources :users do
+    resource :buddy_rating, only: [:create]
   end
 
 

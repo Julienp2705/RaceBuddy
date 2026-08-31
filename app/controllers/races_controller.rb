@@ -7,7 +7,6 @@ class RacesController < ApplicationController
     else
       @races = Race.order(created_at: :desc).limit(10)
     end
-    @race = Race.new
   end
 
   def create
@@ -37,7 +36,7 @@ class RacesController < ApplicationController
   private
 
   def race_params
-    params.require(:race).permit(:name, :distance, :url)
+    params.require(:race).permit(:name, :distance, :race_date, :url)
   end
 
 end
