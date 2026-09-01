@@ -1,25 +1,4 @@
-<div class="my-container" data-controller="chat-scroll">
-
-  <!-- HEADER -->
-  <%= link_to chats_path, class: "back-arrow" do %>
-    <i class="fa-solid fa-arrow-left-long"></i>
-  <% end %>
-
-  <div class="chat-header">
-    <div>
-      <h2>
-        <i class="fa-solid fa-flag-checkered"></i>
-        <%= @chat.invite.target.race.name %> -
-        <i class="fa-solid fa-user"></i>
-        <%= @other_user.first_name %>
-        <%= @other_user.last_name.first %>.
-      </h2>
-    </div>
-  </div>
-
-
-  <!-- MESSAGES -->
-
+<%= turbo_stream.replace "messages" do %>
   <%= turbo_frame_tag "messages" do %>
 
     <div class="chat-messages">
@@ -85,40 +64,4 @@
     </div>
 
   <% end %>
-
-
-  <!-- FORMULAIRE -->
-
-  <div class="chat-form">
-
-    <% if @message.errors.any? %>
-      <p class="text-danger">
-        <%= @message.errors[:content].first %>
-      </p>
-    <% end %>
-
-    <%= form_with model: [@chat, @message],
-        data: {
-          controller: "reset-form",
-          action: "turbo:submit-end->reset-form#reset"
-        } do |f| %>
-
-      <%= f.text_field :content,
-          placeholder: "Écrire un message...",
-          class: "form-control",
-          autocomplete: "off" %>
-
-      <%= button_tag type: "submit", class: "btn btn-1" do %>
-        <i class="fa-solid fa-paper-plane"></i>
-      <% end %>
-
-    <% end %>
-
-  </div>
-
-
-  <!-- REPÈRE POUR LE SCROLL EN BAS DU CHAT -->
-
-  <div data-chat-scroll-target="bottom"></div>
-
-</div>
+<% end %>
