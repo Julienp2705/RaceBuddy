@@ -82,6 +82,57 @@
   </div>
 
   <!-- ########## CAROUSEL RACES PREVIEW ########## -->
+
+<div class="race-carousel-section">
+  <h2 class="race-carousel-section__title">
+    <i class="fa-solid fa-flag"></i> Course à la une
+  </h2>
+
+  <div id="raceCarousel" class="carousel slide" data-bs-ride="false">
+    <div class="carousel-inner">
+      <% @races.each_with_index do |race, index| %>
+        <div class="carousel-item <%= "active" if index.zero? %>">
+          <div class="race-carousel-card">
+            <div class="race-carousel-card__image-wrap">
+              <% if race.image.attached? %>
+                <%= image_tag race.image, class: "race-carousel-card__image" %>
+              <% else %>
+                <%= image_tag "race-placeholder.jpg", class: "race-carousel-card__image" %>
+              <% end %>
+              <span class="race-carousel-card__badge"><%= race_category_label(race.distance) %></span>
+            </div>
+
+            <div class="race-carousel-card__body">
+              <div class="race-carousel-card__row">
+                <span class="race-carousel-card__distance"><%= race.distance %> km</span>
+                <%= link_to "Rejoindre", race_path(race), class: "btn-2" %>
+              </div>
+
+              <h3 class="race-carousel-card__title"><%= race.name %></h3>
+              <p class="race-carousel-card__date">
+                <i class="fa-regular fa-calendar"></i> <%= l(race.race_date, format: :long) %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#raceCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#raceCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+  <!-- ########## OLD STUFF ########## -->
   <!-- Affiches les courses -->
   <%= turbo_frame_tag "races_list" do %>
     <div class="races-section">
