@@ -8,103 +8,86 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content target-modal">
 
-```
-  <div class="modal-header target-modal-header">
-
-    <div>
-      <span class="target-modal-eyebrow">
-        <i class="fa-solid fa-bullseye"></i>
-        Mon objectif
-      </span>
-
-      <h2
-        class="modal-title target-modal-title"
-        id="targetModalLabel">
-        <%= race.name %>
-      </h2>
-    </div>
-
-    <button
-      type="button"
-      class="target-modal-close"
-      data-bs-dismiss="modal"
-      aria-label="Fermer">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-
-  </div>
-
-  <div class="modal-body target-modal-body">
-
-    <%= simple_form_for [race, target] do |f| %>
-
-      <div class="target-form-section">
-
-        <div class="target-section-title">
-          <i class="fa-regular fa-clock"></i>
-
-          <div>
-            <h3>Temps cible</h3>
-            <p>
-              Quel est votre objectif de temps pour cette course ?
-            </p>
+      <div class="modal-header target-modal-header">
+        <div>
+          <h2 class="modal-title target-modal-title" id="targetModalLabel">
+            Mon objectif
+          </h2>
+          <div class="modal-subtitle">
+            <i class="fa-solid fa-trophy"></i>
+            <%= race.name %>
           </div>
         </div>
-
-        <div class="target-time-inputs">
-
-          <%= f.input :target_hour,
-              collection: 0..23,
-              label: "Heures" %>
-
-          <%= f.input :target_minute,
-              collection: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
-              label: "Minutes" %>
-
-        </div>
-
-      </div>
-
-      <div class="target-form-section target-location-section">
-
-        <div class="target-section-title">
-          <i class="fa-solid fa-location-dot"></i>
-
-          <div>
-            <h3>Lieu d'entraînement</h3>
-            <p>
-              Dans quelle ville souhaitez-vous vous entraîner ?
-            </p>
-          </div>
-        </div>
-
-        <%= f.input :address,
-            label: "Ville",
-            placeholder: "Ex. Paris" %>
-
-      </div>
-
-      <div class="modal-footer target-modal-footer">
 
         <button
           type="button"
-          class="btn target-modal-cancel"
-          data-bs-dismiss="modal">
-          Annuler
+          class="target-modal-close"
+          data-bs-dismiss="modal"
+          aria-label="Fermer">
+          <i class="fa-solid fa-xmark"></i>
         </button>
-
-        <%= f.button :submit,
-            "Enregistrer",
-            class: "btn btn-1 target-modal-submit" %>
-
       </div>
 
-    <% end %>
+      <div class="modal-body target-modal-body">
+        <%= simple_form_for [race, target] do |f| %>
 
-  </div>
+          <div class="target-form-section">
+            <div class="target-section-title">
+              <i class="fa-regular fa-clock"></i>
+              <div>
+                <h3>Temps cible</h3>
+              </div>
+            </div>
 
-</div>
-```
+            <div class="white-card-modal-target">
+              <p>Quel est votre objectif de temps pour cette course ?</p>
 
+              <div class="target-time-inputs">
+                <%= f.input :target_hour,
+                    collection: 0..23,
+                    label: "Heures" %>
+
+                <%= f.input :target_minute,
+                    collection: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
+                    label: "Minutes" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="target-form-section target-location-section">
+            <div class="target-section-title">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <h3>Lieu d'entraînement</h3>
+              </div>
+            </div>
+
+            <div class="white-card-modal-target">
+
+              <p>Dans quelle ville souhaitez-vous vous entraîner ?</p>
+
+              <%= f.input :address,
+                  label: "Ville",
+                  placeholder: "Ex. Paris" %>
+            </div>
+          </div>
+          <div class="modal-footer target-modal-footer">
+            <button
+              type="button"
+              class="btn btn-cancel target-modal-cancel"
+              data-bs-dismiss="modal">
+              Annuler
+            </button>
+
+            <%= f.button :button, type: "submit",
+                class: "btn btn-2 target-modal-submit" do %>
+              <i class="fa-regular fa-circle-check"></i> Enregistrer
+            <% end %>
+          </div>
+
+        <% end %>
+      </div>
+
+    </div>
   </div>
 </div>

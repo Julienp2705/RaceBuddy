@@ -1,30 +1,36 @@
-.race-show-container {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+.race-show-info-card {
+  position: relative;
+  margin: -110px 0 3rem;
+  padding: 28px 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e3db;
+  box-sizing: border-box;
+  max-width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: rgba($rb-sand, 0.9);
+
+  .row {
+    margin: 0;
+  }
 }
 
-.race-info-card {
-  background-color: $rb-light;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin-bottom: 2rem;
-}
-
-.race-distance {
-  font-weight: 600;
+.race-show-info-card-title {
+  margin: 0 0 18px;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
   color: $rb-dark;
 }
 
-.race-link {
+.race-show-link {
   display: block;
   margin-bottom: 1.5rem;
   color: $rb-primary;
 }
 
-.race-map {
-  height: 250px;
+.race-show-map {
+  height: 250px !important;
   background-color: $rb-sand;
   border-radius: 16px;
   display: flex;
@@ -32,113 +38,279 @@
   justify-content: center;
   color: $rb-dark;
   margin-bottom: 2rem;
+  width: 100%;
+  margin-top: 24px;
 }
-.buddy-card-link {
+
+.show-buddy-card-link {
   text-decoration: none;
   color: inherit;
   display: block;
 }
-.buddy-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background-color: $rb-light;
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 0.75rem;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
 
-  &:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transform: translateY(-1px);
-  }
-}
-.buddy-info {
+.show-buddy-info {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   flex-grow: 1;
 }
-.buddy-rating {
-  color: $rb-accent;
-  margin: 0;
-}
-
-.avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: $rb-sand;
-  flex-shrink: 0;
-}
-
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
 
 .buddy-pin-fallback {
-  border-radius: 999px;
-  background-color: $rb-accent;
+border-radius: 999px;
+  background-color: $rb-primary;
   color: $rb-light;
-  width: 28px;
-  height: 28px;
+
+  width: 32px;
+  height: 32px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-size: 11px;
   font-weight: 600;
+
+  border: 3px solid $rb-light;
+  box-shadow: 0 2px 6px rgba($rb-dark, 0.35);
 }
 
-.race-info-card {
-  max-width: 600px;
+.col-4 {
+  padding: 0;
+  height: 180px; // fixed height — the anchor the image crops to
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+
+.race-show-hero {
+  line-height: 0;
+}
+
+.race-show-hero img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.race-show-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 5px 0 20px;
+  font-size: 15px;
+  color: $rb-grey;
+}
+
+.race-show-meta i {
+  font-size: 14px;
+}
+
+.race-show-distance {
+  margin: 40px 0 20px;
+  font-size: 30px;
+  font-weight: 600;
+  font-family: $body-font;
+  color: $rb-accent;
+}
+
+.race-show-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .3px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.race-show-btn-outline {
+  background: $rb-light;
+  border: 1px solid $rb-grey;
+  color: $rb-grey;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: darken($rb-light, 4%);
+    border-color: darken($rb-grey, 15%);
+    color: darken($rb-grey, 15%);
+    box-shadow: 0 4px 14px rgba($rb-grey, 0.18);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+}
+
+.race-show-btn-filled {
+  background: $rb-accent;
+  border: 1px solid $rb-accent;
+  color: #fff;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: darken($rb-accent, 8%);
+    border-color: darken($rb-accent, 8%);
+    box-shadow: 0 4px 14px rgba($rb-accent, 0.35);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+}
+
+.race-show-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .3px;
+
+  background: rgba($rb-accent, 0.1);
+  border: 1px solid rgba($rb-accent, 0.35);
+  color: $rb-accent;
+  cursor: default;
+}
+
+.show-buddies-section-header {
+  display:flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  margin-top: 3rem;
+
+  i {
+    color: $rb-accent;
+    font-size: 25px;
+  }
+}
+
+.show-buddies-empty {
+  padding: 20px;
+  border: 1px dashed $rb-grey;
   border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #e5e3db;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  background: #fff;
+  color: $rb-grey;
+  text-align: center;
+  font-size: 15px;
+}
 
-  .row {
-    margin: 0;
-  }
+.show-buddy-card-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid $rb-sand;
 
-  .col-4 {
-    padding: 0;
-    height: 180px; // fixed height — the anchor the image crops to
+}
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-  }
+.show-buddy-card-avatar {
+  flex-shrink: 0;
+  width: 90px;
+  height: 90px;
+  padding: 5px;
+  border-radius: 16px;
 
-  .race-content {
-    padding: 16px;
+  img,
+  span {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 4px;
-
-    p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: #4a4a45;
-    }
+    width: 100%;
+    height: 100%;
+    border-radius: 11px;
+    object-fit: cover;
   }
 
-  .target-action {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
+  span {
+    background: $rb-primary;
+    color: $rb-light;
+    font-weight: 600;
+  }
+}
 
-    .btn {
-      border-radius: 8px;
-      padding: 6px 16px;
-      font-size: 0.85rem;
-    }
+.show-buddy-card{
+  margin-bottom: 20px;
+  background: $rb-light;
+  border: 2px solid $rb-sand;
+  border-radius: 10px;
+  display: block;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.show-buddy-card-info {
+  strong {
+    display: block;
+    font-size: 18px;
+    color: $rb-dark;
+  }
+
+  strong {
+  display: block;
+  font-size: 1.5rem;
+  color: $rb-dark;
+  }
+
+  p {
+    margin: 4px 0 0;
+    font-size: 1.20rem;
+    font-weight: 500;
+    color: $rb-grey;
+  }
+}
+
+.show-buddy-card-btn {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  background: $rb-accent;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: .3px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: darken($rb-accent, 8%);
+    box-shadow: 0 4px 14px rgba($rb-accent, 0.35);
+    transform: translateY(-1px);
+    color: #fff;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+}
+
+.show-buddy-card-rating {
+  i {
+    color: $rb-accent;
+    margin-right: 4px;
   }
 }
