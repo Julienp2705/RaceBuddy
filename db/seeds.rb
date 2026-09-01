@@ -8,8 +8,8 @@ puts "🌱 Nettoyage des données..."
 
 Message.destroy_all
 Chat.destroy_all
+BuddyRating.destroy_all
 Invite.destroy_all
-Review.destroy_all
 Target.destroy_all
 Race.destroy_all
 User.destroy_all
@@ -209,11 +209,12 @@ races_data = [
   ["Gironde Running Challenge", 21.1]
 ]
 
-races = races_data.map do |name, distance|
+races = races_data.each_with_index.map do |(name, distance), index|
   Race.create!(
     name: name,
     distance: distance,
-    url: "https://example.com/races/#{name.parameterize}"
+    url: "https://example.com/races/#{name.parameterize}",
+    race_date: Date.current + (index + 1).months
   )
 end
 
@@ -499,10 +500,12 @@ puts "✅ #{Message.count} messages créés"
 
 
 # ============================================================
-# REVIEWS
+# BUDDY RATINGS
 # ============================================================
 
-puts "⭐ Création des avis..."
+puts "👍 Création des évaluations des buddies..."
+
+buddy_ratings = []
 
 accepted_invites = invites.select do |invite|
   invite.status == "accepted"
@@ -510,21 +513,22 @@ end
 
 accepted_invites.sample([accepted_invites.length, 15].min).each do |invite|
 
-  Review.create!(
-    invite: invite,
-    rating: rand(3..5),
-    comment: [
-      "Super partenaire de course, très sympa !",
-      "Une très bonne rencontre pour préparer la course.",
-      "Très motivé et agréable pendant les entraînements.",
-      "Une sortie vraiment sympa, je recommande !",
-      "Excellent partenaire pour courir ensemble."
-    ].sample
+  user = invite.target.user
+  buddy = invite.user
+
+  next if user == buddy
+  next if BuddyRating.exists?(user: user, buddy: buddy)
+
+  buddy_rating = BuddyRating.create!(
+    user: user,
+    buddy: buddy,
+    rating: [1, 1, 1, 1, -1].sample
   )
+
+  buddy_ratings << buddy_rating
 end
 
-puts "✅ #{Review.count} avis créés"
-
+puts "✅ #{buddy_ratings.count} évaluations créées"
 
 # ============================================================
 # RÉCAPITULATIF
@@ -540,7 +544,7 @@ puts "🎯 Targets  : #{Target.count}"
 puts "🤝 Invites  : #{Invite.count}"
 puts "💬 Chats    : #{Chat.count}"
 puts "✉️ Messages : #{Message.count}"
-puts "⭐ Reviews  : #{Review.count}"
+puts "👍 Ratings  : #{BuddyRating.count}"
 puts "======================================"
 puts ""
 puts "🔐 Mot de passe des utilisateurs : password"
