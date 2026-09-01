@@ -1,0 +1,55 @@
+.hero {
+  position: relative;
+  min-height: 380px;
+  border-radius: $border-radius-xl;
+  overflow: hidden;
+  background-image: url("https://res.cloudinary.com/en57d7v3/image/upload/v1788192101/racebuddy-running.png");
+
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba($rb-dark, 0.2) 0%, rgba($rb-dark, 0.85) 100%);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    padding: 1.75rem;
+    color: $rb-light;
+  }
+
+  &__title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+
+    &--accent {
+      color: $rb-accent;
+    }
+  }
+
+  &__subtitle {
+    color: $rb-sand;
+    margin-bottom: 1.25rem;
+    max-width: 32ch;
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: $rb-accent;
+    color: $rb-light;
+    font-weight: 600;
+    padding: 0.7rem 1.3rem;
+    border-radius: $border-radius-xl;
+    text-decoration: none;
+  }
+}
