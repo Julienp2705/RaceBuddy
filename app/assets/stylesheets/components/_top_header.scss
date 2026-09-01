@@ -69,20 +69,20 @@
 }
 
 .top-header__avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 64px;
+  aspect-ratio: 1;
   object-fit: cover;
-  border: 2px solid $rb-primary;
+  border-radius: 30%;
 }
 
 .top-header__monogram {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 64px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 30%;
   background: $rb-primary;
   color: $rb-light;
   font-weight: 700;
