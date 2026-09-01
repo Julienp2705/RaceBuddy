@@ -35,7 +35,7 @@
 
     <div class="form-panel active toggle-card__panel" data-toggle-target="panel">
       <!-- search form -->
-      <%= form_with url: races_path, method: :get, data: { turbo_frame: "races_list" }, class: "race-search-form toggle-card__search-row" do |f| %>
+      <%= form_with url: races_path, method: :get, class: "race-search-form toggle-card__search-row" do |f| %>
         <i class="fa-solid fa-magnifying-glass toggle-card__search-icon"></i>
         <%= f.search_field :query,
         value: params[:query],
@@ -82,13 +82,12 @@
   </div>
 
   <!-- ########## CAROUSEL RACES PREVIEW ########## -->
-
 <div class="race-carousel-section">
   <h2 class="race-carousel-section__title">
     <i class="fa-solid fa-flag"></i> Course à la une
   </h2>
 
-  <div id="raceCarousel" class="carousel slide" data-bs-ride="false">
+  <div id="raceCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <% @races.each_with_index do |race, index| %>
         <div class="carousel-item <%= "active" if index.zero? %>">
@@ -97,7 +96,7 @@
               <% if race.image.attached? %>
                 <%= image_tag race.image, class: "race-carousel-card__image" %>
               <% else %>
-                <%= image_tag "race-placeholder.jpg", class: "race-carousel-card__image" %>
+                <%= image_tag race_category_image(race.distance), class: "race-carousel-card__image" %>
               <% end %>
               <span class="race-carousel-card__badge"><%= race_category_label(race.distance) %></span>
             </div>
@@ -126,48 +125,4 @@
     </button>
   </div>
 </div>
-
-
-
-
-
-
-  <!-- ########## OLD STUFF ########## -->
-  <!-- Affiches les courses -->
-  <%= turbo_frame_tag "races_list" do %>
-    <div class="races-section">
-        <div class="races-header">
-          <h2>Les courses RaceBuddy</h2>
-            <% if params[:query].present? %>
-              Résultas pour <%= params[:query] %>...
-            <% else %>
-              Choisis une course et trouve des coureurs qui partagent ton objectif.
-            <% end %>
-          </p>
-        </div>
-        <div class="races-grid">
-          <% @races.each do |race| %>
-            <div class="race-box">
-
-              <div class="race-box-icon">
-                <i class="fa-solid fa-flag-checkered"></i>
-              </div>
-
-              <div class="race-box-content">
-                <h3><%= race.name %></h3>
-
-                <p class="race-distance">
-                  <i class="fa-solid fa-route"></i>
-                  <%= race.distance %> km
-                </p>
-
-                <%= link_to "Voir la course", race_path(race), class: "btn btn-1", data: { turbo_frame: "_top" }  %>
-              </div>
-
-            </div>
-          <% end %>
-        </div>
-    </div>
-  <% end %>
-
 </div>

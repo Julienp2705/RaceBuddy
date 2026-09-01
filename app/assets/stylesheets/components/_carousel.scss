@@ -3,7 +3,7 @@
 }
 
 .race-carousel-section__title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-bottom: 1rem;
   color: $rb-dark;
 
@@ -17,6 +17,7 @@
   border-radius: $border-radius-xl;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgb(224, 225, 221);
 }
 
 .race-carousel-card__image-wrap {
