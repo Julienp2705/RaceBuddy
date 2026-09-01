@@ -21,118 +21,67 @@
   </div>
 
   <!-- ########## TOGGLE SEARCH CARD ########## -->
-  <div data-controller="toggle">
-  <div class="card-toggle">
-    <button class="toggle-option active"
-            data-action="toggle#show"
-            data-toggle-index-param="0"
-            data-toggle-target="option">Rechercher une course</button>
-    <button class="toggle-option"
-            data-action="toggle#show"
-            data-toggle-index-param="1"
-            data-toggle-target="option">Créer une course</button>
-  </div>
+  <div data-controller="toggle" class="toggle-card">
+    <div class="card-toggle toggle-card__tabs">
+      <button class="toggle-option active toggle-card__tab"
+              data-action="toggle#show"
+              data-toggle-index-param="0"
+              data-toggle-target="option">Rechercher une course</button>
+      <button class="toggle-option toggle-card__tab"
+              data-action="toggle#show"
+              data-toggle-index-param="1"
+              data-toggle-target="option">Créer une course</button>
+    </div>
 
-  <div class="form-panel active" data-toggle-target="panel">
-    <!-- search form -->
-    <%= form_with url: races_path, method: :get, data: { turbo_frame: "races_list" }, class: "race-search-form" do |f| %>
-      <%= f.search_field :query,
-      value: params[:query],
-      placeholder: "Ex. Semi-marathon de Bordeaux",
-      class: "form-control" %>
-      <%= button_tag type: "submit", class: "btn btn-1 btn-homepage mt-3" do %>
-        <i class="fa-solid fa-arrow-right"></i>
+    <div class="form-panel active toggle-card__panel" data-toggle-target="panel">
+      <!-- search form -->
+      <%= form_with url: races_path, method: :get, data: { turbo_frame: "races_list" }, class: "race-search-form toggle-card__search-row" do |f| %>
+        <i class="fa-solid fa-magnifying-glass toggle-card__search-icon"></i>
+        <%= f.search_field :query,
+        value: params[:query],
+        placeholder: "Ex. Semi-marathon de Bordeaux",
+        class: "form-control toggle-card__search-input" %>
+        <%= button_tag type: "submit", class: "btn btn-1 btn-homepage toggle-card__search-submit" do %>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-  <div class="form-panel" data-toggle-target="panel">
-    <!-- create form -->
-    <%= simple_form_for @race do |f| %>
-      <%= f.input :name,
-          label: false,
-          placeholder: "Nom de la course" %>
-      <%= f.input :distance,
-          label: false,
-          placeholder: "Distance (km)" %>
-      <%= f.date_select :race_date, order: [:day, :month, :year],
-      start_year: Date.current.year,
-      end_year: Date.current.year + 3 %>
-      <%= f.input :url,
-          label: false,
-          placeholder: "Lien de la course" %>
-      <%= f.button :submit,
-          "Créer ma course",
-          class: "btn-1 btn-homepage" %>
-    <% end %>
-  </div>
-</div>
-
-
-  <!-- ########## OLD STUFF BELOW ########## -->
-
-  <!-- Cherche ta course -->
-  <div class="race-search-section mb-5">
-
-    <div class="row justify-content-center g-4">
-
-      <!-- Rechercher une course -->
-      <div class="col-6">
-        <div class="race-box h-100">
-
-          <div class="race-box-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-
-              <h2>Trouve ta course</h2>
-              <p>Recherche ta prochaine course par son nom.</p>
-
-              <%= form_with url: races_path, method: :get, data: { turbo_frame: "races_list" }, class: "race-search-form" do |f| %>
-                <%= f.search_field :query,
-                value: params[:query],
-                placeholder: "Ex. Semi-marathon de Bordeaux",
-                class: "form-control" %>
-                <%= button_tag type: "submit", class: "btn btn-1 btn-homepage mt-3" do %>
-                  Rechercher <i class="fa-solid fa-arrow-right"></i>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-
-      <!-- Créer une course -->
-      <div class="col-6">
-        <div class="race-box h-100 race-box-create">
-
-          <div class="race-box-icon">
-            <i class="fa-solid fa-plus"></i>
-          </div>
-
-          <h2>Tu ne trouves pas ta course ?</h2>
-          <p>Ajoute-la à RaceBuddy et commence à trouver tes partenaires.</p>
-
-          <%= simple_form_for @race do |f| %>
-            <%= f.input :name,
-                label: false,
-                placeholder: "Nom de la course" %>
-            <%= f.input :distance,
-                label: false,
-                placeholder: "Distance (km)" %>
-            <%= f.date_select :race_date, order: [:day, :month, :year],
-            start_year: Date.current.year,
-            end_year: Date.current.year + 3 %>
-            <%= f.input :url,
-                label: false,
-                placeholder: "Lien de la course" %>
-            <%= f.button :submit,
-                "Créer ma course",
-                class: "btn-1 btn-homepage" %>
-          <% end %>
-
-        </div>
+      <!--
+      <div class="toggle-card__chips">
+        <button type="button" class="toggle-card__chip active">5k</button>
+        <button type="button" class="toggle-card__chip">10k</button>
+        <button type="button" class="toggle-card__chip">Semi</button>
+        <button type="button" class="toggle-card__chip">Marathon</button>
       </div>
+      -->
+    </div>
+    <div class="form-panel toggle-card__panel" data-toggle-target="panel">
+      <!-- create form -->
+      <%= simple_form_for @race do |f| %>
+        <%= f.input :name,
+            label: false,
+            placeholder: "Nom de la course" %>
+        <%= f.input :distance,
+            label: false,
+            placeholder: "Distance (km)" %>
+        <div class="toggle-card__date-field">
 
+          <%= f.date_select :race_date,
+              { order: [:day, :month, :year],
+                start_year: Date.current.year,
+                end_year: Date.current.year + 3 },
+              { class: "form-select" } %>
+        </div>
+        <%= f.input :url,
+            label: false,
+            placeholder: "Lien de la course" %>
+        <%= f.button :submit,
+            "Créer ma course",
+            class: "btn-1 w-100 btn-homepage" %>
+      <% end %>
     </div>
   </div>
 
+  <!-- ########## CAROUSEL RACES PREVIEW ########## -->
   <!-- Affiches les courses -->
   <%= turbo_frame_tag "races_list" do %>
     <div class="races-section">
