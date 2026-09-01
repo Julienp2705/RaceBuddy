@@ -1,17 +1,40 @@
 <%= form_with model: user, url: profile_path, method: :patch do |f| %>
+
   <% if user.errors[:avatar].any? %>
-    <div class="alert alert-danger" role="alert">
+    <p class="avatar-modal-error" role="alert">
+      <i class="fa-solid fa-circle-exclamation"></i>
       <%= user.errors[:avatar].join(", ") %>
-    </div>
+    </p>
   <% end %>
 
-  <div class="mb-3">
-    <%= f.label :avatar, "Photo de profil", class: "form-label" %>
-    <%= f.file_field :avatar, accept: "image/png,image/jpeg,image/webp", class: "form-control" %>
+  <!-- Aperçu de la photo actuelle -->
+  <div class="profile-avatar">
+    <%= image_tag user.avatar_url, alt: "Photo de profil actuelle" %>
   </div>
 
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-    <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+  <!-- Le champ fichier est masqué : c'est le label qui sert de bouton -->
+  <%= f.label :avatar, class: "btn btn-3 avatar-modal-choose" do %>
+    <i class="fa-regular fa-image"></i>
+    Choisir une image
+  <% end %>
+
+  <%= f.file_field :avatar,
+        accept: "image/png,image/jpeg,image/webp",
+        class: "avatar-modal-input" %>
+
+  <div class="avatar-modal-confirm">
+    <%= f.submit "Enregistrer", class: "btn btn-2 avatar-modal-submit" %>
   </div>
+<% end %>
+
+<!-- Hors du form_with : button_to génère son propre formulaire -->
+<% if user.avatar.attached? %>
+  <%= button_to profile_path,
+        method: :patch,
+        params: { remove_avatar: true },
+        class: "avatar-modal-remove",
+        form: { data: { turbo_confirm: "Supprimer votre photo de profil ?" } } do %>
+    <i class="fa-regular fa-trash-can"></i>
+    Supprimer la photo actuelle
+  <% end %>
 <% end %>
