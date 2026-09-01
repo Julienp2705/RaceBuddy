@@ -20,7 +20,7 @@
 
       </div>
 
-      <%= simple_form_for [@chat, message] do |f| %>
+      <%= simple_form_for [@chat, message], data: { turbo: false } do |f| %>
 
         <div class="modal-body edit-message-body">
 
