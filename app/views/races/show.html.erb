@@ -63,6 +63,11 @@
               <div class="show-buddy-card-info">
                 <h1><strong><%= buddy.user.first_name %> <%= buddy.user.last_name.first %>.</strong></h1>
                 <p>Temps visé : <%= buddy.target_hour %>h<%= format("%02d", buddy.target_minute) %></p>
+                <p class="show-buddy-card-rating">
+                  <i class="fa-solid fa-thumbs-up"></i>
+                  <%= buddy.user.thumbs_up_percentage %>%
+                  <span>(<%= buddy.user.votes_count %>)</span>
+                </p>
               </div>
             </div>
 

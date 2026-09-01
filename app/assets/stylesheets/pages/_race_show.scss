@@ -307,3 +307,10 @@ border-radius: 999px;
     box-shadow: none;
   }
 }
+
+.show-buddy-card-rating {
+  i {
+    color: $rb-accent;
+    margin-right: 4px;
+  }
+}
