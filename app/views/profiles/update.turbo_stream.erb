@@ -5,3 +5,5 @@
 <%= turbo_stream.replace "avatar_modal_body" do %>
   <%= render "shared/avatar_form", user: current_user %>
 <% end %>
+
+<%= turbo_stream.action :redirect, profile_path %>
