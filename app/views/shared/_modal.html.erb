@@ -15,13 +15,13 @@
 
       <div class="modal-footer">
         <%= button_to "Refuser", invite_path(invite),
-            method: :delete,
-            class: "btn btn-outline-danger",
-            form: { data: { turbo_confirm: "Refuser cette invitation ?" } } %>
+        method: :delete,
+        class: "btn btn-outline-danger",
+        form: { data: { turbo_confirm: "Refuser cette invitation ?" } } %>
 
         <%= button_to "Accepter", accept_invite_path(invite),
-            method: :patch,
-            class: "btn btn-primary" %>
+        method: :patch,
+        class: "btn btn-primary" %>
       </div>
 
     </div>
