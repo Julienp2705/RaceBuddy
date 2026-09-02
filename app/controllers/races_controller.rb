@@ -1,6 +1,4 @@
 class RacesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
-
   def index
     @race = Race.new
     if params[:query].present?

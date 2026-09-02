@@ -37,7 +37,7 @@
   box-shadow: 0 1px 3px rgba($rb-dark, 0.15);
 }
 
-.message {
+.message-row {
   display: flex;
   max-width: 70%;
 }
@@ -47,7 +47,7 @@
   flex-direction: column;
 }
 
-.message-own {
+.message-row-mine {
   align-self: flex-end;
 
   .message-wrapper {
@@ -71,7 +71,7 @@
   }
 }
 
-.message-other {
+.message-row-other {
   align-self: flex-start;
   align-items: center;
   gap: 8px;
