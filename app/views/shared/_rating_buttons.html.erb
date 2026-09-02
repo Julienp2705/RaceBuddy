@@ -1,0 +1,34 @@
+<section class="profile-section profile-rating">
+  <div class="profile-section-header">
+    <h2 class="profile-section-title">
+      <i class="fa-solid fa-star" aria-hidden="true"></i>
+      Ton avis sur <%= buddie.first_name %>
+    </h2>
+  </div>
+
+  <p class="profile-rating-help">
+    <% if my_rating %>
+      Tu as noté ce buddy. Tu peux changer ton vote à tout moment.
+    <% else %>
+      Recommanderais-tu <%= buddie.first_name %> comme partenaire d'entraînement ?
+    <% end %>
+  </p>
+
+  <div class="profile-rating-actions">
+    <%= button_to user_buddy_rating_path(buddie),
+          params: { rating: 1 },
+          class: "profile-rating-btn profile-rating-btn--up #{'is-active' if my_rating&.rating == 1}",
+          aria: { pressed: my_rating&.rating == 1, label: "Recommander #{buddie.first_name}" } do %>
+      <i class="fa-solid fa-thumbs-up" aria-hidden="true"></i>
+      <span>Je recommande</span>
+    <% end %>
+
+    <%= button_to user_buddy_rating_path(buddie),
+          params: { rating: -1 },
+          class: "profile-rating-btn profile-rating-btn--down #{'is-active' if my_rating&.rating == -1}",
+          aria: { pressed: my_rating&.rating == -1, label: "Ne pas recommander #{buddie.first_name}" } do %>
+      <i class="fa-solid fa-thumbs-down" aria-hidden="true"></i>
+      <span>Je ne recommande pas</span>
+    <% end %>
+  </div>
+</section>
