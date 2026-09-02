@@ -20,12 +20,12 @@
 
     <% if @invite.present? %>
       <p class="profile-invite-status">
-        <%= @invite.status=="accepted" ? "Vous êtes buddies" : "Invitation en attente" %>
+        <%= @invite.status == "accepted" ? "Vous êtes buddies" : "Invitation en attente" %>
       </p>
-    <% else %>
-      <%= link_to "Envoyer une invitation",
-            invite_path(target_id: @upcoming_targets.first&.id),
-            data: [turbo_method: :post],
+      <% else %>
+      <%= button_to "Envoyer une invitation",
+            invites_path,
+            params: { target_id: @target.id },
             class: "btn btn-2 profile-cta" %>
     <% end %>
 

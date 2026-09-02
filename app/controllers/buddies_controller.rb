@@ -12,5 +12,6 @@ class BuddiesController < ApplicationController
       user: current_user,
       buddy: @buddie
     )
+    @target = @buddie.targets.joins(:race).merge(Race.upcoming).first
   end
 end
