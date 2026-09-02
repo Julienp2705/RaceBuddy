@@ -26,9 +26,10 @@
 
 .race-carousel-card__image {
   width: 100%;
-  height: 220px;
+  height: 130px;
   object-fit: cover;
   display: block;
+  object-position: center 15%;
 }
 
 .race-carousel-card__badge {
@@ -44,7 +45,7 @@
 }
 
 .race-carousel-card__body {
-  padding: 1.5rem;
+  padding: 1rem 1.5rem 0 1.5rem;
 }
 
 .race-carousel-card__row {
