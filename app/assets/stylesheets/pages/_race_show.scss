@@ -89,13 +89,27 @@ border-radius: 999px;
 
 
 .race-show-hero {
-  line-height: 0;
+  font-size: 0;
+  position: relative;
 }
 
 .race-show-hero img {
   width: 100%;
   height: 320px;
   object-fit: cover;
+}
+
+.race-show-badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: $rb-accent;
+  color: $rb-light;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+  display: inline-block;
 }
 
 .race-show-meta {

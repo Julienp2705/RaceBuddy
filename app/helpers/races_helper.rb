@@ -1,13 +1,12 @@
 module RacesHelper
   def race_category_label(distance)
     case distance
-    when 0...10 then "Courte"
-    when 10...21.1 then "Moyenne"
-    when 21.1...42.2 then "Longue"
+    when 0..10 then "Courte"
+    when 10..22 then "Moyenne"
+    when 22..59 then "Longue"
     else "Ultra"
     end
   end
-end
 
   def race_category_image(distance)
     seed = race_category_label(distance).parameterize
@@ -21,3 +20,4 @@ end
   # }
   # [category]
   end
+end
