@@ -1,0 +1,55 @@
+.profile-rating-help {
+  margin: 0 0 16px;
+  max-width: 65ch;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.profile-rating-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.profile-rating-actions form { margin: 0; }
+
+.profile-rating-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease, color .15s ease;
+}
+
+.profile-rating-btn:hover { border-color: #9ca3af; background: #f9fafb; }
+
+.profile-rating-btn:focus-visible {
+  outline: 2px solid #1f2937;
+  outline-offset: 2px;
+}
+
+.profile-rating-btn--up.is-active {
+  border-color: #15803d;
+  background: #ecfdf5;
+  color: #14532d;
+}
+
+.profile-rating-btn--down.is-active {
+  border-color: #b91c1c;
+  background: #fef2f2;
+  color: #7f1d1d;
+}
+
+.profile-rating-btn i { font-size: 1.05rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-rating-btn { transition: none; }
+}
