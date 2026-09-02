@@ -6,17 +6,15 @@
   <% end %>
 
   <div class="chat-header">
-    <div>
-      <h2>
-        <i class="fa-solid fa-flag-checkered"></i>
-        <%= @chat.invite.target.race.name %> -
-        <i class="fa-solid fa-user"></i>
-        <%= @other_user.first_name %>
-        <%= @other_user.last_name.first %>.
-      </h2>
-    </div>
-  </div>
+    <h2>
+      <%= @other_user.first_name %>
+      <%= @other_user.last_name.first %>.
+    </h2>
 
+    <p>
+      <%= @chat.invite.target.race.name %>
+    </p>
+  </div>
 
   <!-- MESSAGES -->
 
@@ -26,7 +24,17 @@
 
       <% @messages.each do |message| %>
 
-        <div class="message <%= message.user == current_user ? "message-own" : "message-other" %>">
+        <% unless message.user == current_user %>
+          <div class="avatar">
+            <% if message.user.avatar.attached? %>
+              <%= image_tag message.user.avatar,
+                  class: "chat-avatar",
+                  alt: "Avatar de #{message.user.first_name}" %>
+            <% end %>
+      </div>
+      <% end %>
+
+        <div class="message-wrapper">
 
           <div class="message-bubble">
 
@@ -37,11 +45,9 @@
               </div>
             <% end %>
 
-            <div class="message-content-row">
-
-              <div class="message-content">
-                <%= message.content %>
-              </div>
+            <div class="message-time">
+              <%= message.created_at.strftime("%H:%M") %>
+            </div>
 
               <% if message.user == current_user %>
                 <div class="message-actions">
@@ -72,20 +78,46 @@
               <%= message.created_at.strftime("%H:%M") %>
             </div>
 
-          </div>
+          <% if message.user == current_user %>
+
+            <div class="message-actions">
+
+              <button
+                type="button"
+                class="message-action"
+                data-bs-toggle="modal"
+                data-bs-target="#editMessageModal<%= message.id %>">
+                <i class="fa-solid fa-pencil"></i>
+              </button>
+
+              <%= link_to chat_message_path(@chat, message),
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Supprimer ce message ?"
+                  },
+                  class: "message-action message-delete" do %>
+                <i class="fa-regular fa-trash-can"></i>
+              <% end %>
+
+            </div>
+
+          <% end %>
 
         </div>
 
-        <%= render "messages/edit_modal",
-            message: message,
-            edit_error: message.id == @message.id && @message.errors.any? %>
+      </div>
+
+      <%= render "messages/edit_modal",
+          message: message,
+          edit_error: message.id == @message.id && @message.errors.any? %>
+
+    <% end %>
 
       <% end %>
 
     </div>
 
   <% end %>
-
 
   <!-- FORMULAIRE -->
 
@@ -108,10 +140,9 @@
           class: "form-control",
           autocomplete: "off" %>
 
-      <%= button_tag type: "submit", class: "btn btn-1" do %>
-        <i class="fa-solid fa-paper-plane"></i>
-      <% end %>
-
+        <%= button_tag type: "submit", class: "btn chat-send-button" do %>
+          <i class="fa-solid fa-paper-plane"></i>
+        <% end %>
     <% end %>
 
   </div>
