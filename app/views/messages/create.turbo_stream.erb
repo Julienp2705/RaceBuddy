@@ -1,5 +1,5 @@
 <%= turbo_stream.replace "messages" do %>
   <%= turbo_frame_tag "messages" do %>
-  <%= render "messages/messages" %>
+  <%= render "messages/messages", messages: @messages, other_user: @other_user, chat: @chat, message: @message %>
   <% end %>
 <% end %>
