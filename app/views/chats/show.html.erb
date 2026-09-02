@@ -18,65 +18,7 @@
 
   <!-- MESSAGES -->
   <%= turbo_frame_tag "messages" do %>
-    <div class="chat-messages">
-
-      <% @messages.each do |message| %>
-        <% mine = message.user == current_user %>
-
-        <div class="message-row <%= mine ? "message-row-mine" : "message-row-other" %>">
-          <% unless mine %>
-              <div class="chat-message-avatar">
-                <% if @other_user.avatar.attached? %>
-                  <%= image_tag @other_user.avatar %>
-                <% else %>
-                  <span><%= @other_user.first_name.first %><%= @other_user.last_name.first %></span>
-                <% end %>
-              </div>
-          <% end %>
-          <div class="message-wrapper">
-
-            <div class="message-bubble">
-
-              <div class="message-content">
-                <%= message.content %>
-              </div>
-
-            </div>
-            <% if !mine %>
-              <div class="message-time">
-                <%= message.created_at.strftime("%H:%M") %>
-              </div>
-            <% end %>
-            <% if mine %>
-              <div class="message-actions">
-                <button
-                  type="button"
-                  class="message-action"
-                  data-bs-toggle="modal"
-                  data-bs-target="#editMessageModal<%= message.id %>">
-                  <i class="fa-solid fa-pencil"></i>
-                </button>
-
-                <%= link_to chat_message_path(@chat, message),
-                    data: {
-                      turbo_method: :delete,
-                      turbo_confirm: "Supprimer ce message ?"
-                    },
-                    class: "message-action message-delete" do %>
-                  <i class="fa-regular fa-trash-can"></i>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-        </div>
-
-        <%= render "messages/edit_modal",
-            message: message,
-            edit_error: message.id == @message.id && @message.errors.any? %>
-      <% end %>
-
-    </div>
+    <%= render "messages/messages" %>
   <% end %>
 
   <!-- FORMULAIRE -->
