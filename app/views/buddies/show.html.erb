@@ -41,6 +41,11 @@
     </ul>
   </section>
 
+  <!-- SECTION NOTATION DU BUDDY -->
+  <% if @invite&.status == "accepted" && current_user != @buddie %>
+  <%= render "shared/rating_buttons", buddie: @buddie, my_rating: @my_rating %>
+  <% end %>
+
   <!-- SECTION DESCRIPTION -->
   <section class="profile-section profile-description">
     <div class="profile-section-header">

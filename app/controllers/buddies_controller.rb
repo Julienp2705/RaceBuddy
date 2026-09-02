@@ -13,5 +13,6 @@ class BuddiesController < ApplicationController
       buddy: @buddie
     )
     @target = @buddie.targets.joins(:race).merge(Race.upcoming).first
+    @my_rating = BuddyRating.find_by(user: current_user, buddy: @buddie)
   end
 end
