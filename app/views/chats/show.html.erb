@@ -25,13 +25,16 @@
 
         <div class="message-row <%= mine ? "message-row-mine" : "message-row-other" %>">
           <% unless mine %>
-              <div class="chat-message-avatar">
+            <%= link_to buddy_path(@other_user), data: { turbo_frame: "_top" } do %>
+              <div class="chat-card-avatar">
                 <% if @other_user.avatar.attached? %>
                   <%= image_tag @other_user.avatar %>
                 <% else %>
                   <span><%= @other_user.first_name.first %><%= @other_user.last_name.first %></span>
                 <% end %>
+                <i class="fa-solid fa-eye"></i>
               </div>
+          <% end %>
           <% end %>
           <div class="message-wrapper">
 
@@ -88,7 +91,7 @@
     <%= form_with model: [@chat, @message],
         data: {
           controller: "reset-form",
-          action: "turbo:submit-end->reset-form#reset"
+          action: "turbo:submit-end->reset-form#reset",
         } do |f| %>
 
       <%= f.text_field :content,

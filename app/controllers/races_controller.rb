@@ -13,7 +13,11 @@ class RacesController < ApplicationController
     if @race.save
       redirect_to race_path(@race)
     else
-      render :new, status: :unprocessable_entity
+      @races = Race.all
+      redirect_back(
+        fallback_location: root_path,
+        alert: "Impossible de créer l'objectif."
+  )
     end
   end
 

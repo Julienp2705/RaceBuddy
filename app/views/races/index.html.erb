@@ -75,7 +75,7 @@
         <div class="race-carousel-card__body">
           <div class="race-carousel-card__row">
             <span class="race-carousel-card__distance"><%= race.distance %> km</span>
-            <%= link_to "Voir la course", race_path(race), class: "btn-2", data: { turbo_frame: "_top" } %>
+            <%= link_to "Voir la course", race_path(race), class: "btn-2 rejoindre", data: { turbo_frame: "_top" } %>
           </div>
           <h3 class="race-carousel-card__title"><%= race.name %></h3>
           <p class="race-carousel-card__date"><i class="fa-regular fa-calendar"></i> <%= l(race.race_date, format: :long) %></p>
