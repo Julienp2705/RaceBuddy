@@ -1,30 +1,33 @@
 <div class="chat-messages">
 
-      <% @messages.each do |message| %>
-        <% mine = message.user == current_user %>
+      <% messages.each do |mes| %>
+        <% mine = mes.user == current_user %>
 
         <div class="message-row <%= mine ? "message-row-mine" : "message-row-other" %>">
           <% unless mine %>
-              <div class="chat-message-avatar">
-                <% if @other_user.avatar.attached? %>
-                  <%= image_tag @other_user.avatar %>
+            <%= link_to buddy_path(other_user), data: { turbo_frame: "_top" } do %>
+              <div class="chat-card-avatar">
+                <% if other_user.avatar.attached? %>
+                  <%= image_tag other_user.avatar %>
                 <% else %>
-                  <span><%= @other_user.first_name.first %><%= @other_user.last_name.first %></span>
+                  <span><%= other_user.first_name.first %><%= other_user.last_name.first %></span>
                 <% end %>
+                <i class="fa-solid fa-eye"></i>
               </div>
+            <% end %>
           <% end %>
           <div class="message-wrapper">
 
             <div class="message-bubble">
 
               <div class="message-content">
-                <%= message.content %>
+                <%= mes.content %>
               </div>
 
             </div>
             <% if !mine %>
               <div class="message-time">
-                <%= message.created_at.strftime("%H:%M") %>
+                <%= mes.created_at.strftime("%H:%M") %>
               </div>
             <% end %>
             <% if mine %>
@@ -33,11 +36,11 @@
                   type="button"
                   class="message-action"
                   data-bs-toggle="modal"
-                  data-bs-target="#editMessageModal<%= message.id %>">
+                  data-bs-target="#editMessageModal<%= mes.id %>">
                   <i class="fa-solid fa-pencil"></i>
                 </button>
 
-                <%= link_to chat_message_path(@chat, message),
+                <%= link_to chat_message_path(chat, mes),
                     data: {
                       turbo_method: :delete,
                       turbo_confirm: "Supprimer ce message ?"
@@ -52,8 +55,8 @@
         </div>
 
         <%= render "messages/edit_modal",
-            message: message,
-            edit_error: message.id == @message.id && @message.errors.any? %>
+            message: mes,
+            edit_error: mes.id == message.id && message.errors.any? %>
       <% end %>
 
     </div>
