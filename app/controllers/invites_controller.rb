@@ -36,4 +36,6 @@ class InvitesController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     redirect_to profile_path, alert: "Invitation introuvable.", status: :see_other
   end
+
+  
 end

@@ -16,7 +16,7 @@
       <% end %>
     </div>
 
-    <h1 class="profile-name"><%= @user.first_name %></h1>
+    <h1 class="profile-name">Mon profil</h1>
 
     <% training_address = @upcoming_targets.first&.address %>
     <% if training_address.present? %>
@@ -39,7 +39,9 @@
   </section>
 
   <!-- SECTION DESCRIPTION -->
-  <section class="profile-section profile-description" data-controller="description-edit">
+  <section class="profile-section profile-description"
+         data-controller="description-edit"
+         data-description-edit-url-value="<%= profile_path %>">
 
     <!-- AFFICHAGE -->
     <div data-description-edit-target="display">
@@ -63,7 +65,7 @@
       </div>
 
       <p class="profile-description-text" data-description-edit-target="text">
-        Renseignez votre description...
+        <%= @user.description.presence || "Renseignez votre description..." %>
       </p>
     </div>
 
@@ -72,7 +74,7 @@
       <textarea class="form-control"
                 rows="4"
                 placeholder="Écrivez votre description..."
-                data-description-edit-target="input"></textarea>
+                data-description-edit-target="input"><%= @user.description %></textarea>
 
       <div class="d-flex gap-2 mt-3">
         <button type="button"
@@ -91,14 +93,11 @@
   </section>
 
   <!-- SECTION INVITATIONS -->
+  <h2 class="profile-section-title">
+      <i class="fa-solid fa-user-plus"></i>
+      Invitations en attente (<%= @pending_invites.size %>)
+    </h2>
   <section class="profile-section profile-invites">
-    <div class="profile-section-header">
-      <h2 class="profile-section-title">
-        <i class="fa-solid fa-user-plus"></i>
-        Invitations en attente (<%= @pending_invites.size %>)
-      </h2>
-    </div>
-
     <% if @pending_invites.empty? %>
       <p class="text-muted">Aucune invitation pour le moment.</p>
     <% else %>
@@ -135,120 +134,129 @@
 
   <!-- SECTION OBJECTIF ACTUEL -->
   <section class="profile-section profile-target-now">
-    <div class="profile-section-header">
-      <h2 class="profile-section-title">
-        <i class="fa-solid fa-flag"></i>
-        Objectif actuel
-      </h2>
-    </div>
+  <div class="profile-section-header">
+    <h2 class="profile-section-title">
+      <i class="fa-solid fa-flag"></i>
+      Objectif actuel
+    </h2>
+  </div>
 
-    <% if @upcoming_targets.empty? %>
-      <p class="text-muted">Aucun objectif en cours.</p>
-    <% else %>
-      <% @upcoming_targets.each do |target| %>
+  <% if @upcoming_targets.empty? %>
+    <p class="text-muted">Aucun objectif en cours.</p>
+  <% else %>
+    <% @upcoming_targets.each do |target| %>
 
-        <article class="profile-target" data-controller="target-edit">
+      <article class="profile-target" data-controller="target-edit">
 
-          <div data-target-edit-target="display">
-            <div class="profile-target-image">
-              <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
-            </div>
-
-            <div class="profile-target-body">
-              <span class="profile-target-distance"><%= target.race.distance %> km</span>
-
-              <h3 class="profile-target-title">
-                <%= link_to target.race.name, race_path(target.race), class: "profile-target-link" %>
-              </h3>
-
-              <p class="profile-target-time">
-                Temps visé : <%= target.target_hour %>h<%= format("%02d", target.target_minute) %>
-              </p>
-
-              <p class="profile-target-date">
-                <i class="fa-regular fa-calendar"></i>
-                <%= l target.race.race_date, format: :long %>
-              </p>
-
-              <p class="profile-target-place">
-                <i class="fa-solid fa-location-dot"></i>
-                <%= target.address %>
-              </p>
-
-              <% if @user == current_user %>
-                <div class="profile-target-actions">
-                  <button type="button"
-                          class="btn btn-2 profile-target-button"
-                          data-action="click->target-edit#show">
-                    <i class="fa-solid fa-pen"></i>
-                    Modifier
-                  </button>
-
-                  <%= link_to target_path(target),
-                        class: "btn btn-3 profile-target-button",
-                        data: {
-                          turbo_method: :delete,
-                          turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
-                        } do %>
-                    <i class="fa-solid fa-trash"></i>
-                    Supprimer
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
+        <div data-target-edit-target="display">
+          <div class="profile-target-image">
+            <% if target.race.image.attached? %>
+              <%= image_tag target.race.image, alt: target.race.name %>
+            <% else %>
+              <%= image_tag race_category_image(target.race.distance), alt: target.race.name %>
+            <% end %>
+            <span class="profile-target-badge"><%= race_category_label(target.race.distance) %></span>
           </div>
 
-          <div class="d-none profile-target-form" data-target-edit-target="form">
-            <%= simple_form_for target do |f| %>
-              <%= f.input :target_hour, collection: 0..23, label: "Heures" %>
-              <%= f.input :target_minute,
-                    collection: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
-                    label: "Minutes" %>
-              <%= f.input :address, label: "Ville d'entraînement" %>
-              <%= f.button :submit, "Enregistrer", class: "btn btn-2" %>
+          <div class="profile-target-body">
+            <span class="profile-target-distance"><%= target.race.distance %> km</span>
+
+            <h3 class="profile-target-title">
+              <%= link_to target.race.name, race_path(target.race), class: "profile-target-link" %>
+            </h3>
+
+            <p class="profile-target-time">
+              Temps visé : <%= target.target_hour %>h<%= format("%02d", target.target_minute) %>
+            </p>
+
+            <p class="profile-target-date">
+              <i class="fa-regular fa-calendar"></i>
+              <%= l target.race.race_date, format: :long %>
+            </p>
+
+            <p class="profile-target-place">
+              <i class="fa-solid fa-location-dot"></i>
+              <%= target.address %>
+            </p>
+
+            <% if @user == current_user %>
+              <div class="profile-target-actions">
+                <button type="button"
+                        class="btn btn-2 profile-target-button"
+                        data-action="click->target-edit#show">
+                  <i class="fa-solid fa-pen"></i>
+                  Modifier
+                </button>
+
+                <%= link_to target_path(target),
+                      class: "btn btn-3 profile-target-button",
+                      data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
+                      } do %>
+                  <i class="fa-solid fa-trash"></i>
+                  Supprimer
+                <% end %>
+              </div>
             <% end %>
           </div>
+        </div>
 
-        </article>
+        <div class="d-none profile-target-form" data-target-edit-target="form">
+          <%= simple_form_for target do |f| %>
+            <%= f.input :target_hour, collection: 0..23, label: "Heures" %>
+            <%= f.input :target_minute,
+                  collection: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
+                  label: "Minutes" %>
+            <%= f.input :address, label: "Ville d'entraînement" %>
+            <%= f.button :submit, "Enregistrer", class: "btn btn-2" %>
+          <% end %>
+        </div>
 
-      <% end %>
+      </article>
+
     <% end %>
+  <% end %>
   </section>
 
   <!-- SECTION PRÉCÉDENTS OBJECTIFS -->
   <section class="profile-section profile-past-targets">
-    <div class="profile-section-header">
-      <h2 class="profile-section-title">
-        <i class="fa-solid fa-clock-rotate-left"></i>
-        Précédents objectifs
-      </h2>
+  <div class="profile-section-header">
+    <h2 class="profile-section-title">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      Précédents objectifs
+    </h2>
+  </div>
+
+  <% if @past_targets.empty? %>
+    <p class="text-muted">Aucun objectif précédent.</p>
+  <% else %>
+    <div class="profile-target-list">
+      <% @past_targets.each do |target| %>
+        <article class="profile-target">
+          <div class="profile-target-image">
+            <% if target.race.image.attached? %>
+              <%= image_tag target.race.image, alt: target.race.name %>
+            <% else %>
+              <%= image_tag race_category_image(target.race.distance), alt: target.race.name %>
+            <% end %>
+            <span class="profile-target-badge"><%= race_category_label(target.race.distance) %></span>
+          </div>
+
+          <div class="profile-target-body">
+            <span class="profile-target-distance"><%= target.race.distance %> km</span>
+
+            <h3 class="profile-target-title"><%= target.race.name %></h3>
+
+            <p class="profile-target-date">
+              <i class="fa-regular fa-calendar"></i>
+              <%= l target.race.race_date, format: :long %>
+            </p>
+          </div>
+        </article>
+      <% end %>
     </div>
-
-    <% if @past_targets.empty? %>
-      <p class="text-muted">Aucun objectif précédent.</p>
-    <% else %>
-      <div class="profile-target-list">
-        <% @past_targets.each do |target| %>
-          <article class="profile-target">
-            <div class="profile-target-image">
-              <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
-              <span class="profile-target-badge"><%= target.race.category %></span>
-            </div>
-
-            <div class="profile-target-body">
-              <span class="profile-target-distance"><%= target.race.distance %> km</span>
-
-              <h3 class="profile-target-title"><%= target.race.name %></h3>
-
-              <p class="profile-target-date">
-                <i class="fa-regular fa-calendar"></i>
-                <%= l target.race.race_date, format: :long %>
-              </p>
-            </div>
-          </article>
-        <% end %>
-      </div>
-    <% end %>
+  <% end %>
   </section>
 
 </div>

@@ -1,10 +1,18 @@
 class ProfilesController < ApplicationController
   def show
     @user = current_user
-    @pending_invites = current_user.received_invites.pending.includes(:user, target: :race).order(created_at: :desc)
+    @pending_invites = current_user.received_invites
+                                   .pending
+                                   .includes(:user, target: :race)
+                                   .order(created_at: :desc)
+
     targets = @user.targets.joins(:race).includes(:race)
     @upcoming_targets = targets.merge(Race.upcoming)
     @past_targets     = targets.merge(Race.past)
+  end
+
+  def edit
+    @target = Target.find(params[:id])
   end
 
   def update
@@ -15,9 +23,16 @@ class ProfilesController < ApplicationController
     end
 
     if current_user.update(profile_params)
-      redirect_to profile_path, notice: "Avatar mis à jour."
+      respond_to do |format|
+        format.json { render json: { description: current_user.description } }
+        format.html { redirect_to profile_path, notice: "Profil mis à jour." }
+      end
     else
       respond_to do |format|
+        format.json do
+          render json: { errors: current_user.errors.full_messages },
+                 status: :unprocessable_entity
+        end
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
             "avatar_modal_body",
@@ -25,7 +40,7 @@ class ProfilesController < ApplicationController
             locals: { user: current_user }
           ), status: :unprocessable_entity
         end
-        format.html { render :show, status: :unprocessable_entity }
+        format.html { redirect_to profile_path, alert: current_user.errors.full_messages.to_sentence }
       end
     end
   end
@@ -33,10 +48,6 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:user).permit(:avatar)
+    params.require(:user).permit(:avatar, :description)
   end
-end
-
-def edit
-  @target = Target.find(params[:id])
 end
