@@ -10,7 +10,10 @@
       <%= @other_user.first_name %>
       <%= @other_user.last_name.first %>.
     </h2>
-    <p><%= @chat.invite.target.race.name %></p>
+
+    <p class="chat-race-name">
+      <%= @chat.invite.target.race.name %>
+    </p>
   </div>
 
   <!-- MESSAGES -->
@@ -21,37 +24,29 @@
         <% mine = message.user == current_user %>
 
         <div class="message-row <%= mine ? "message-row-mine" : "message-row-other" %>">
-
           <% unless mine %>
-            <div class="avatar">
-              <% if message.user.avatar.attached? %>
-                <%= image_tag message.user.avatar,
-                    class: "chat-avatar",
-                    alt: "Avatar de #{message.user.first_name}" %>
-              <% end %>
-            </div>
+              <div class="chat-message-avatar">
+                <% if @other_user.avatar.attached? %>
+                  <%= image_tag @other_user.avatar %>
+                <% else %>
+                  <span><%= @other_user.first_name.first %><%= @other_user.last_name.first %></span>
+                <% end %>
+              </div>
           <% end %>
-
           <div class="message-wrapper">
-            <div class="message-bubble">
 
-              <% unless mine %>
-                <div class="message-user">
-                  <%= message.user.first_name %>
-                  <%= message.user.last_name.first %>.
-                </div>
-              <% end %>
+            <div class="message-bubble">
 
               <div class="message-content">
                 <%= message.content %>
               </div>
 
+            </div>
+            <% if !mine %>
               <div class="message-time">
                 <%= message.created_at.strftime("%H:%M") %>
               </div>
-
-            </div>
-
+            <% end %>
             <% if mine %>
               <div class="message-actions">
                 <button
