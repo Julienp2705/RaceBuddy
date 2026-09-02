@@ -43,7 +43,6 @@
   padding: 0.4rem 1rem;
   border-radius: 0.5rem;
 }
-
 .race-carousel-card__body {
   padding: 1rem 1.5rem 0 1.5rem;
 }
@@ -58,9 +57,15 @@
 .race-carousel-card__distance {
   border: 1px solid $rb-grey;
   border-radius: 0.75rem;
-  padding: 0.6rem 1.25rem;
+  padding: 0.5rem 1.05rem;
   font-weight: 700;
   color: $rb-dark;
+}
+
+.rejoindre {
+  padding: 0.5rem 1.05rem;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .race-carousel-card__title {

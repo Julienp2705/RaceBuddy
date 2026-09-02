@@ -80,13 +80,13 @@
             <% else %>
               <%= image_tag race_category_image(target.race.distance), alt: target.race.name %>
             <% end %>
-            <span class="profile-target-badge"><%= race_category_label(target.race.distance) %></span>
+            <span class="race-carousel-card__badge"><%= race_category_label(target.race.distance) %></span>
           </div>
 
           <div class="profile-target-body">
-            <span class="profile-target-distance"><%= target.race.distance %> km</span>
+            <span class="race-carousel-card__distance"><%= target.race.distance %> km</span>
 
-            <h3 class="profile-target-title">
+            <h3 class="profile-target-title mt-3">
               <%= link_to target.race.name, race_path(target.race), class: "profile-target-link" %>
             </h3>
 
@@ -125,13 +125,13 @@
               <% else %>
                 <%= image_tag race_category_image(target.race.distance), alt: target.race.name %>
               <% end %>
-              <span class="profile-target-badge"><%= race_category_label(target.race.distance) %></span>
+              <span class="race-carousel-card__badge"><%= race_category_label(target.race.distance) %></span>
             </div>
 
             <div class="profile-target-body">
-              <span class="profile-target-distance"><%= target.race.distance %> km</span>
+              <span class="race-carousel-card__distance"><%= target.race.distance %> km</span>
 
-              <h3 class="profile-target-title"><%= target.race.name %></h3>
+              <h3 class="profile-target-title mt-3"><%= target.race.name %></h3>
 
               <p class="profile-target-date">
                 <i class="fa-regular fa-calendar"></i>

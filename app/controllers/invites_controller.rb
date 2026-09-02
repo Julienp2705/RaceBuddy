@@ -2,6 +2,14 @@ class InvitesController < ApplicationController
   def create
     @target = Target.find(params[:target_id])
 
+    reverse = Invite.where(user: @target.user, target: current_user.targets).first
+
+    if reverse
+      chat = reverse.accept!
+      redirect_to chat_path(chat), notice: "Vous êtes maintenant buddies !"
+      return
+    end
+
     @invite = Invite.new(
       user: current_user,
       target: @target,
@@ -17,15 +25,9 @@ class InvitesController < ApplicationController
 
   def accept
     @invite = Invite.find(params[:id])
+    chat = @invite.accept!
 
-    @invite.update!(status: "accepted")
-
-    @chat = @invite.chat || Chat.create!(
-      invite: @invite,
-      title: @invite.target.race.name
-    )
-
-    redirect_to chat_path(@chat)
+    redirect_to chat_path(chat)
   end
 
   def destroy
@@ -37,5 +39,5 @@ class InvitesController < ApplicationController
     redirect_to profile_path, alert: "Invitation introuvable.", status: :see_other
   end
 
-  
+
 end
