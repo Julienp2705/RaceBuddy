@@ -82,47 +82,88 @@
   </div>
 
   <!-- ########## CAROUSEL RACES PREVIEW ########## -->
-<div class="race-carousel-section">
-  <h2 class="race-carousel-section__title">
-    <i class="fa-solid fa-flag"></i> Course à la une
-  </h2>
+  <div class="race-carousel-section">
+    <h2 class="race-carousel-section__title">
+      <i class="fa-solid fa-flag"></i> Course à la une
+    </h2>
 
-  <div id="raceCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <% @races.each_with_index do |race, index| %>
-        <div class="carousel-item <%= "active" if index.zero? %>">
-          <div class="race-carousel-card">
-            <div class="race-carousel-card__image-wrap">
-              <% if race.image.attached? %>
-                <%= image_tag race.image, class: "race-carousel-card__image" %>
-              <% else %>
-                <%= image_tag race_category_image(race.distance), class: "race-carousel-card__image" %>
-              <% end %>
-              <span class="race-carousel-card__badge"><%= race_category_label(race.distance) %></span>
-            </div>
-
-            <div class="race-carousel-card__body">
-              <div class="race-carousel-card__row">
-                <span class="race-carousel-card__distance"><%= race.distance %> km</span>
-                <%= link_to "Rejoindre", race_path(race), class: "btn-2" %>
+    <div id="raceCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% @races.each_with_index do |race, index| %>
+          <div class="carousel-item <%= "active" if index.zero? %>">
+            <div class="race-carousel-card">
+              <div class="race-carousel-card__image-wrap">
+                <% if race.image.attached? %>
+                  <%= image_tag race.image, class: "race-carousel-card__image" %>
+                <% else %>
+                  <%= image_tag race_category_image(race.distance), class: "race-carousel-card__image" %>
+                <% end %>
+                <span class="race-carousel-card__badge"><%= race_category_label(race.distance) %></span>
               </div>
 
-              <h3 class="race-carousel-card__title"><%= race.name %></h3>
-              <p class="race-carousel-card__date">
-                <i class="fa-regular fa-calendar"></i> <%= l(race.race_date, format: :long) %>
-              </p>
+              <div class="race-carousel-card__body">
+                <div class="race-carousel-card__row">
+                  <span class="race-carousel-card__distance"><%= race.distance %> km</span>
+                  <%= link_to "Rejoindre", race_path(race), class: "btn-2" %>
+                </div>
+
+                <h3 class="race-carousel-card__title"><%= race.name %></h3>
+                <p class="race-carousel-card__date">
+                  <i class="fa-regular fa-calendar"></i> <%= l(race.race_date, format: :long) %>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#raceCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#raceCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
+      <button class="carousel-control-prev" type="button" data-bs-target="#raceCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#raceCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
   </div>
-</div>
+
+    <!-- ########## ARTICLES ########## -->
+    <div class="articles-section">
+      <h2 class="articles-section__title"><i class="fa-solid fa-book-open"></i> Les tips RaceBuddy</h2>
+
+      <div class="articles-grid">
+        <% [
+          { id: "safety",    icon: "fa-shield-heart", badge: "Sécurité",    title: "Rencontre en sécurité" },
+          { id: "injury",    icon: "fa-user-injured", badge: "Préparation", title: "Éviter les blessures" },
+          { id: "nutrition", icon: "fa-apple-whole",   badge: "Nutrition",   title: "Nutrition et course à pied" }
+        ].each do |article| %>
+          <button type="button" class="article-card" data-bs-toggle="modal" data-bs-target="#article-<%= article[:id] %>">
+            <%= image_tag article_category_image(article[:id]), class: "article-card__image" %>
+            <div class="article-card__overlay">
+              <span class="article-card__badge">
+                <i class="fa-solid <%= article[:icon] %>"></i>
+                <%= article[:badge] %>
+              </span>
+              <h3 class="article-card__title"><%= article[:title] %></h3>
+            </div>
+          </button>
+        <% end %>
+      </div>
+    </div>
+    <%= render "pages/article_modal",
+      id: "safety",
+      title: "Sécurité",
+      icon: "fa-shield-heart",
+      body: "Choisis toujours un lieu public et fréquenté pour ta première rencontre — parc, piste d'athlétisme, boucle connue. Préviens un proche du lieu et de l'heure de ton run. Pour le premier run, reste sur un parcours court et familier, quitte à le rallonger une fois la confiance installée." %>
+
+    <%= render "pages/article_modal",
+      id: "injury",
+      title: "Blessures",
+      icon: "fa-user-injured",
+      body: "Respecte la règle des 10% : n'augmente jamais ton volume hebdomadaire de plus de 10% d'une semaine à l'autre. Échauffe-toi systématiquement avant de courir — 5 à 10 minutes de marche rapide ou de mobilité articulaire suffisent. Et surtout, programme au moins un jour de repos complet par semaine : c'est pendant le repos que le corps s'adapte, pas pendant l'effort." %>
+
+    <%= render "pages/article_modal",
+      id: "nutrition",
+      title: "Nutrition",
+      icon: "fa-apple-whole",
+      body: "Mange un repas riche en glucides 2 à 3h avant une sortie longue pour arriver avec des réserves pleines. Après l'effort, vise des protéines dans les 1 à 2h qui suivent pour la récupération musculaire — tofu, tempeh, seitan ou une dose de protéine en poudre font parfaitement l'affaire. Et bois régulièrement dans la journée, pas seulement pendant la course." %>
 </div>
