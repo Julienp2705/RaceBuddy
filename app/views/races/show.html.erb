@@ -1,5 +1,6 @@
 <div class="race-show-hero">
-  <%= image_tag "race-placeholder.jpg", alt: @race.name %>
+  <%= image_tag race_category_image(@race.distance) %>
+  <span class="race-show-badge"><%= race_category_label(@race.distance) %></span>
 </div>
 
 <div class="my-container">
