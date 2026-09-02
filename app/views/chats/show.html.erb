@@ -1,4 +1,4 @@
-<div class="my-container">
+<div class="my-container" data-controller="chat-scroll">
 
   <!-- HEADER -->
   <%= link_to chats_path, class: "back-arrow" do %>
@@ -18,11 +18,11 @@
 
   <!-- MESSAGES -->
 
-  <div class="chat-messages">
+  <%= turbo_frame_tag "messages" do %>
 
-    <% @messages.each do |message| %>
+    <div class="chat-messages">
 
-      <div class="message <%= message.user == current_user ? "message-own" : "message-other" %>">
+      <% @messages.each do |message| %>
 
         <% unless message.user == current_user %>
           <div class="avatar">
@@ -38,15 +38,45 @@
 
           <div class="message-bubble">
 
-            <div class="message-content">
-              <%= message.content %>
-            </div>
+            <% unless message.user == current_user %>
+              <div class="message-user">
+                <%= message.user.first_name %>
+                <%= @other_user.last_name.first %>.
+              </div>
+            <% end %>
 
             <div class="message-time">
               <%= message.created_at.strftime("%H:%M") %>
             </div>
 
-          </div>
+              <% if message.user == current_user %>
+                <div class="message-actions">
+
+                  <button
+                    type="button"
+                    class="message-action"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editMessageModal<%= message.id %>">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+
+                  <%= link_to chat_message_path(@chat, message),
+                      data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Supprimer ce message ?"
+                      },
+                      class: "message-action message-delete" do %>
+                    <i class="fa-solid fa-trash"></i>
+                  <% end %>
+
+                </div>
+              <% end %>
+
+            </div>
+
+            <div class="message-time">
+              <%= message.created_at.strftime("%H:%M") %>
+            </div>
 
           <% if message.user == current_user %>
 
@@ -83,18 +113,27 @@
 
     <% end %>
 
-  </div>
+      <% end %>
+
+    </div>
+
+  <% end %>
 
   <!-- FORMULAIRE -->
 
   <div class="chat-form">
+
     <% if @message.errors.any? %>
       <p class="text-danger">
         <%= @message.errors[:content].first %>
       </p>
     <% end %>
 
-    <%= form_with model: [@chat, @message] do |f| %>
+    <%= form_with model: [@chat, @message],
+        data: {
+          controller: "reset-form",
+          action: "turbo:submit-end->reset-form#reset"
+        } do |f| %>
 
       <%= f.text_field :content,
           placeholder: "Écrire un message...",
@@ -107,5 +146,10 @@
     <% end %>
 
   </div>
+
+
+  <!-- REPÈRE POUR LE SCROLL EN BAS DU CHAT -->
+
+  <div data-chat-scroll-target="bottom"></div>
 
 </div>

@@ -1,20 +1,28 @@
-<div class="race-show-container">
+<div class="race-show-hero">
+  <%= image_tag "race-placeholder.jpg", alt: @race.name %>
+</div>
 
-  <div class="race-info-card">
-    <h1><%= @race.name %></h1>
-    <p class="race-distance"><%= @race.distance %> km</p>
-    <p class="race-date"><%= l @race.race_date, format: :long %></p>
-    <a href="<%= @race.url %>" target="_blank" rel="noopener noreferrer" class="race-link">Plus d'infos</a>
+<div class="my-container">
+
+  <div class="race-show-info-card">
+    <h1 class="race-show-info-card-title"><%= @race.name %></h1>
+    <p class="race-show-meta">
+      <i class="fa-regular fa-calendar"></i>
+      <%= l @race.race_date, format: :long %>
+    </p>
+
+    <p class="race-show-distance"><%= @race.distance %> km</p>
+
+    <a href="<%= @race.url %>" target="_blank" rel="noopener noreferrer" class="race-show-btn race-show-btn-outline">
+      <i class="fa-solid fa-globe"></i> Voir le site officiel
+    </a>
 
     <% if @target %>
-      <span class="badge-cta">Objectif enregistré ✓</span>
+      <span class="race-show-status">Objectif enregistré ✓</span>
     <% else %>
-      <button
-        type="button"
-        class="btn btn-2"
-        data-bs-toggle="modal"
-        data-bs-target="#targetModal">
-        Créer un objectif
+      <button type="button" class="race-show-btn race-show-btn-filled"
+              data-bs-toggle="modal" data-bs-target="#targetModal">
+        <i class="fa-solid fa-flag"></i> Trouver un buddy
       </button>
     <% end %>
   </div>
@@ -22,38 +30,52 @@
   <%= render "targets/target_modal", race: @race, target: @new_target %>
 
   <% if @target %>
-    <div class="race-map"
+    <div class="race-show-map"
       data-controller="map"
       data-map-lat-value="<%= @target.latitude %>"
       data-map-lng-value="<%= @target.longitude %>"
       data-map-buddies-value="<%= @buddy_pins.to_json %>">
     </div>
 
-    <div class="buddies-section">
-      <h2>Buddies disponibles</h2>
-      <% @buddies.each do |buddy| %>
-        <%= link_to buddy_path(buddy.user), class: "buddy-card-link" do %>
-          <div class="buddy-card">
-            <div class="avatar">
-              <% if buddy.user.avatar.attached? %><%= image_tag buddy.user.avatar %><% else %><% end %>
+    <div class="show-buddies-section">
+      <div class="show-buddies-section-header">
+        <i class="fa-solid fa-flag"></i>
+        <h2>Buddies disponibles</h2>
+      </div>
+
+      <% if @buddies.empty? %>
+        <p class="show-buddies-empty">
+          <strong>Aucun match pour le moment.</strong>
+          Nous n’avons trouvé aucun buddy correspondant à votre objectif dans cette zone. Essayez d’élargir votre recherche.
+        </p>
+      <% else %>
+        <% @buddies.each do |buddy| %>
+          <div class="show-buddy-card">
+            <div class="show-buddy-card-head">
+              <div class="show-buddy-card-avatar">
+                <% if buddy.user.avatar.attached? %>
+                  <%= image_tag buddy.user.avatar %>
+                <% else %>
+                  <span><%= buddy.user.first_name.first %><%= buddy.user.last_name.first %></span>
+                <% end %>
+              </div>
+
+              <div class="show-buddy-card-info">
+                <h1><strong><%= buddy.user.first_name %> <%= buddy.user.last_name.first %>.</strong></h1>
+                <p>Temps visé : <%= buddy.target_hour %>h<%= format("%02d", buddy.target_minute) %></p>
+                <p class="show-buddy-card-rating">
+                  <i class="fa-solid fa-thumbs-up"></i>
+                  <%= buddy.user.thumbs_up_percentage %>%
+                  <span>(<%= buddy.user.votes_count %>)</span>
+                </p>
+              </div>
             </div>
-            <div class="buddy-info">
-              <strong><%= buddy.user.first_name %> <%= buddy.user.last_name.first %>.</strong>
-              <p><%= buddy.address %> · <%= buddy.target_hour %>:<%= buddy.target_minute %></p>
-            </div>
-            <div>
-              <p class="buddy-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-              </p>
-            </div>
+
+            <%= link_to "Voir le profil", buddy_path(buddy.user),
+                  class: "show-buddy-card-btn" %>
           </div>
         <% end %>
       <% end %>
     </div>
   <% end %>
-
 </div>

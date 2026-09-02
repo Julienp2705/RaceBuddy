@@ -1,85 +1,427 @@
-.profile-container {
-  max-width: 530px;
-  margin: 0 auto;
-  padding: 20px;
+
+
+// ---------------------------------------------
+//  1. Conteneur de la page
+// ---------------------------------------------
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-top: 24px;
+  padding-bottom: 48px;
 }
 
+
+// ---------------------------------------------
+//  2. En-tête : avatar, nom, ville
+// ---------------------------------------------
 .profile-header {
   text-align: center;
 }
 
+// Le conteneur de l'avatar. "position: relative" sert
+// de point d'ancrage au bouton crayon placé en absolu.
+.profile-avatar {
+  position: relative;
+  display: inline-block;
+  padding: 4px;
+  background-color: $rb-light;
+  border: 2px solid $rb-accent;
+  border-radius: 20px;
+  line-height: 0; // supprime l'espace blanc sous l'image
+}
+
 .profile-avatar img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 14px;
   object-fit: cover;
 }
 
+// Pastille crayon en bas à droite de l'avatar.
+.profile-avatar-edit {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background-color: $rb-accent;
+  color: $rb-light;
+  border: 2px solid $rb-light;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.profile-avatar-edit:hover {
+  transform: scale(1.08);
+  color: $rb-light;
+}
+
+.profile-avatar-edit:focus-visible {
+  outline: 2px solid $rb-accent;
+  outline-offset: 2px;
+}
+
+.profile-name {
+  margin-top: 16px;
+  margin-bottom: 4px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $rb-dark;
+}
+
+.profile-location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  color: $rb-grey;
+}
+
+.profile-location i {
+  color: $rb-accent;
+}
+
+
+// ---------------------------------------------
+//  3. Statistiques (Recommandations / Buddies)
+// ---------------------------------------------
 .profile-stats {
   display: flex;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-.profile-section {
+  justify-content: center;
+  gap: 12px;
   margin-top: 20px;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.profile-section h2 {
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 120px;
+  padding: 12px 20px;
+  background-color: $rb-light;
+  border: 1px solid $rb-sand;
+  border-radius: 12px;
+}
+
+.profile-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
   color: $rb-dark;
-  margin-bottom: 8px;
 }
 
-.profile-box {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 12px;
+.profile-stat-label {
+  font-size: 0.75rem;
+  color: $rb-grey;
 }
 
-.show-profile-icon {
-  border: none;
-  background: transparent;
+// Variante : le chiffre des buddies est en couleur accent.
+.profile-stat-buddies .profile-stat-value {
+  color: $rb-accent;
+}
+
+
+// ---------------------------------------------
+//  4. Sections et titres
+//  Chaque section est séparée par un trait fin
+//  en haut plutôt que par une marge.
+// ---------------------------------------------
+.profile-section- {
+  padding-top: 24px;
+  border-top: 1px solid $rb-sand;
+}
+
+// Ligne contenant le titre à gauche et les icônes à droite.
+.profile-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.profile-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: $rb-dark;
+}
+
+.profile-section-title i {
+  font-size: 0.95em;
+  color: $rb-accent;
+}
+
+.profile-section-actions {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0; // empêche les icônes de se comprimer
+}
+
+
+// ---------------------------------------------
+//  5. Boutons icône (crayon, corbeille)
+// ---------------------------------------------
+.profile-icon-button {
   padding: 0;
   margin: 0;
+  background: transparent;
+  border: none;
   color: $rb-dark;
-  cursor: pointer;
   line-height: 1;
-
-  &:hover {
-    background: transparent;
-    color: $rb-accent;
-  }
-
-  &:focus,
-  &:active {
-    outline: none;
-    box-shadow: none;
-    background: transparent;
-  }
+  cursor: pointer;
 }
 
-.invite-card{
+.profile-icon-button:hover {
+  background: transparent;
+  color: $rb-accent;
+}
+
+.profile-icon-button:focus,
+.profile-icon-button:active {
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+
+// ---------------------------------------------
+//  6. Description
+// ---------------------------------------------
+.profile-description-text {
+  margin-bottom: 0;
+  padding: 16px;
+  background-color: $rb-light;
+  border: 1px solid $rb-sand;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: $rb-dark;
+}
+
+
+// ---------------------------------------------
+//  7. Invitations
+//  Cette section a son propre fond gris clair,
+//  donc pas de trait de séparation en haut.
+// ---------------------------------------------
+.profile-invites {
+  padding: 20px;
+  background-color: $rb-sand;
+  border: none;
+  border-radius: 16px;
+}
+
+.profile-invite-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-invite {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background-color: $rb-light;
+  border: 1px solid $rb-sand;
+  border-radius: 10px;
+}
+
+// Le lien occupe tout l'espace restant à gauche du bouton.
+.profile-invite-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0; // autorise le texte à se tronquer
+  color: inherit;
   text-decoration: none;
 }
 
-.rating-button{
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  color: $rb-accent;
-  cursor: pointer;
-  line-height: 1;
-  &:hover {
-    color: $rb-dark;
-    background: transparent;
-  }
+.profile-invite-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-.rating-buttons{
+.profile-invite-info {
+  min-width: 0;
+}
+
+.profile-invite-name {
+  margin-bottom: 2px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: $rb-dark;
+}
+
+// Nom de course et ancienneté : tronqués sur une ligne.
+.profile-invite-race,
+.profile-invite-time {
+  margin-bottom: 0;
+  font-size: 0.8125rem;
+  color: $rb-grey;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Taille du bouton Accepter. Les couleurs viennent de .btn-2.
+.profile-invite-button {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+// ---------------------------------------------
+//  8. Cartes objectif
+// ---------------------------------------------
+.profile-target-list {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-target {
+  overflow: hidden; // rogne l'image dans les coins arrondis
+  border: 1px solid $rb-sand;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background-color: white;
+}
+
+// Point d'ancrage du badge posé sur l'image.
+.profile-target-image {
+  position: relative;
+  aspect-ratio: 16 / 7;
+}
+
+.profile-target-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.profile-target-body {
+  padding: 16px;
+}
+
+// Petite étiquette encadrée avec la distance.
+.profile-target-distance {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+  border: 1px solid $rb-sand;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: $rb-dark;
+}
+
+.profile-target-title {
+  margin-bottom: 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $rb-dark;
+}
+
+.profile-target-time {
+  margin-bottom: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: $rb-dark;
+}
+
+.profile-target-date,
+.profile-target-place {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0;
+  font-size: 0.8125rem;
+  color: $rb-grey;
+}
+
+.profile-target-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.profile-target-form {
+  padding: 16px;
+  border-top: 1px solid $rb-sand;
+}
+
+.profile-target-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+// Les deux boutons se partagent la largeur à parts égales.
+.profile-target-button {
+  display: flex;
   align-items: center;
   justify-content: center;
-  ;
+  gap: 8px;
+  flex: 1;
+  min-height: 44px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+
+// ---------------------------------------------
+//  9. Notation (pouces)
+// ---------------------------------------------
+.profile-rating-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.profile-rating-button {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: $rb-accent;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.profile-rating-button:hover {
+  background: transparent;
+  color: $rb-dark;
 }

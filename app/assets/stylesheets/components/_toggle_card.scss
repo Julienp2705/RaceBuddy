@@ -1,0 +1,157 @@
+.form-panel {
+  display: none;
+}
+.form-panel.active {
+  display: block;
+}
+
+.toggle-card {
+  border-radius: $border-radius-xl;
+  background-color: $rb-sand;
+  color: $rb-grey;
+  margin-bottom: 2rem;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.12);
+  padding: .25rem 1.75rem;
+
+
+  &__tabs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &__tab {
+    border: none;
+    background-color: inherit;
+    color: $rb-grey;
+    padding: 0.75rem 0.5rem 1rem;
+
+    &.active {
+      border-bottom: $rb-accent solid 1px;
+      color: $rb-accent;
+      font-weight: 700;
+    }
+  }
+
+  &__panel {
+    padding-top: 1.5rem;
+
+    .toggle-card__create-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .form-control,
+      .form-select,
+      input,
+      select {
+        //border-radius: $border-radius-xl;
+        border-radius: 10px !important;
+        border: 1px solid $rb-sand;
+      }
+
+      .mb-3 {
+        margin-bottom: 0;
+      }
+    }
+
+    .toggle-card__date-field {
+      margin-bottom: 1rem;
+      display: flex;
+      gap: .5rem;
+    }
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 0.75rem 0.5rem 1rem;
+    }
+
+    &__date-field {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+
+      select {
+        min-width: 0;
+        flex: 1;
+
+        height: 38px; // Match Bootstrap .form-control
+        padding: 0.375rem 0.75rem;
+
+        border-radius: $border-radius-xl;
+        border: 1px solid $rb-sand;
+        background-color: $rb-light;
+        color: $rb-grey;
+      }
+
+      select:nth-of-type(2) {
+        flex: 3;
+      }
+    }
+  }
+
+
+  &__search-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__search-input {
+    flex: 1;
+    border-radius: $border-radius-xl;
+    border: 1px solid $rb-sand;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 1rem;
+    color: $rb-primary;
+    pointer-events: none;
+  }
+
+  &__search-submit {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  &__chips {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  &__chip {
+    border: 1px solid $rb-sand;
+    background-color: $rb-light;
+    color: $rb-grey;
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+
+    &.active {
+      background-color: rgba($rb-accent, 0.15);
+      border-color: $rb-accent;
+      color: $rb-accent;
+    }
+  }
+}
+
+.form-control,
+.form-select {
+  border-radius: $border-radius-xl;
+}
+
+select[id$="_2i"] {
+  min-width: 135px;
+}

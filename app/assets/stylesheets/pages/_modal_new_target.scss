@@ -7,7 +7,7 @@
 
 .target-modal-header {
   padding: 28px 30px 22px;
-  border-bottom: 1px solid rgba($rb-dark, 0.08);
+  border-bottom: 1px solid rgba($rb-dark, 0.15);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -54,7 +54,6 @@
 .target-form-section {
   padding-bottom: 28px;
   margin-bottom: 28px;
-  border-bottom: 1px solid rgba($rb-dark, 0.08);
 }
 
 .target-location-section {
@@ -77,7 +76,7 @@
 
   h3 {
     margin: 0 0 4px;
-    color: $rb-dark;
+    color: $rb-accent;
     font-size: 1.1rem;
   }
 
@@ -86,12 +85,6 @@
     color: rgba($rb-dark, 0.65);
     font-size: 0.9rem;
   }
-}
-
-.target-time-inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
 }
 
 .target-modal {
@@ -119,7 +112,7 @@
 .target-modal-footer {
   border: none;
   padding: 25px 0 0;
-  margin-top: 20px;
+  margin-top: 15px;
   display: flex;
   gap: 12px;
 }
@@ -136,6 +129,9 @@
 
 .target-modal-submit {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 @media (max-width: 576px) {
@@ -148,4 +144,37 @@
   .target-time-inputs {
     grid-template-columns: 1fr;
   }
+}
+
+.target-time-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  .form-select {
+    margin-bottom: 0;
+  }
+
+  .select {
+    width: 90%;
+  }
+
+}
+
+.white-card-modal-target {
+  background-color: white;
+  padding: 12px;
+  border-radius:4px;
+  border: 1px solid rgba($rb-grey, 0.3);
+}
+
+.modal-content.target-modal {
+  background-color: $rb-light;
+}
+
+.modal-subtitle {
+  color: $rb-dark;
+  dispaly: flex;
+  align-items: center;
+  gap: 4px;
 }

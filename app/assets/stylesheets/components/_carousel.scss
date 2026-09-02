@@ -1,0 +1,76 @@
+.race-carousel-section {
+  margin-bottom: 2rem;
+}
+
+.race-carousel-section__title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: $rb-dark;
+
+  i {
+    color: $rb-accent;
+  }
+}
+
+.race-carousel-card {
+  background-color: $rb-light;
+  border-radius: $border-radius-xl;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.race-carousel-card__image-wrap {
+  position: relative;
+}
+
+.race-carousel-card__image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.race-carousel-card__badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: $rb-accent;
+  color: $rb-light;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.race-carousel-card__body {
+  padding: 1.5rem;
+}
+
+.race-carousel-card__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.race-carousel-card__distance {
+  border: 1px solid $rb-grey;
+  border-radius: 0.75rem;
+  padding: 0.6rem 1.25rem;
+  font-weight: 700;
+  color: $rb-dark;
+}
+
+.race-carousel-card__title {
+  font-size: 1.4rem;
+  color: $rb-dark;
+  margin-bottom: 0.5rem;
+}
+
+.race-carousel-card__date {
+  color: $rb-grey;
+
+  i {
+    margin-right: 0.4rem;
+  }
+}

@@ -1,202 +1,259 @@
-<div class="profile-container main">
+<div class="my-container profile-page">
 
   <!-- SECTION PROFIL -->
   <section class="profile-header">
     <div class="profile-avatar">
       <%= image_tag @user.avatar_url, alt: "Photo de profil", id: "current_avatar" %>
+
       <% if @user == current_user %>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#avatarModal">
-          Modifier la photo
+        <button type="button"
+                class="profile-avatar-edit"
+                data-bs-toggle="modal"
+                data-bs-target="#avatarModal"
+                aria-label="Modifier la photo de profil">
+          <i class="fa-solid fa-pen"></i>
         </button>
       <% end %>
     </div>
 
-    <h1><%= @user.first_name %></h1>
+    <h1 class="profile-name"><%= @user.first_name %></h1>
 
-    <div class="profile-stats mb-4">
+    <% training_address = @upcoming_targets.first&.address %>
+    <% if training_address.present? %>
+      <p class="profile-location">
+        <i class="fa-solid fa-location-dot"></i>
+        <%= training_address %>
+      </p>
+    <% end %>
 
-      <div class="profile-stat">
-        👍 <%= @user.thumbs_up_percentage %>% (👥 <%= @user.votes_count %>)
-      </div>
-    </div>
-
+    <ul class="profile-stats">
+      <li class="profile-stat">
+        <span class="profile-stat-value"><%= @user.thumbs_up_percentage %>%</span>
+        <span class="profile-stat-label">Recommandations</span>
+      </li>
+      <li class="profile-stat profile-stat-buddies">
+        <span class="profile-stat-value"><%= @user.votes_count %></span>
+        <span class="profile-stat-label">Buddies</span>
+      </li>
+    </ul>
   </section>
-
 
   <!-- SECTION DESCRIPTION -->
-  <section class="profile-section" data-controller="description-edit">
-    <h2>Ma Description</h2>
+  <section class="profile-section profile-description" data-controller="description-edit">
 
-    <div class="profile-box">
+    <!-- AFFICHAGE -->
+    <div data-description-edit-target="display">
 
-      <!-- AFFICHAGE -->
-      <div
-        class="d-flex justify-content-between align-items-start"
-        data-description-edit-target="display">
-
-        <p
-          class="mb-0 text-muted"
-          data-description-edit-target="text">
-          Renseignez votre description...
-        </p>
+      <div class="profile-section-header">
+        <h2 class="profile-section-title">
+          <i class="fa-solid fa-address-card"></i>
+          Description
+        </h2>
 
         <% if @user == current_user %>
-          <button
-            type="button"
-            class="show-profile-icon"
-            data-action="click->description-edit#show">
-            <i class="fa-solid fa-pen"></i>
-          </button>
+          <div class="profile-section-actions">
+            <button type="button"
+                    class="profile-icon-button"
+                    data-action="click->description-edit#show"
+                    aria-label="Modifier la description">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
         <% end %>
-
       </div>
 
-      <!-- FORMULAIRE CACHÉ -->
-      <div
-        class="d-none"
-        data-description-edit-target="form">
+      <p class="profile-description-text" data-description-edit-target="text">
+        Renseignez votre description...
+      </p>
+    </div>
 
-        <textarea
-          class="form-control"
-          rows="4"
-          placeholder="Écrivez votre description..."
-          data-description-edit-target="input"></textarea>
+    <!-- FORMULAIRE CACHÉ -->
+    <div class="d-none" data-description-edit-target="form">
+      <textarea class="form-control"
+                rows="4"
+                placeholder="Écrivez votre description..."
+                data-description-edit-target="input"></textarea>
 
-        <div class="d-flex gap-2 mt-3">
+      <div class="d-flex gap-2 mt-3">
+        <button type="button"
+                class="btn btn-2"
+                data-action="click->description-edit#save">
+          Enregistrer
+        </button>
 
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-action="click->description-edit#save">
-            Enregistrer
-          </button>
-
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            data-action="click->description-edit#hide">
-            Annuler
-          </button>
-
-        </div>
-
+        <button type="button"
+                class="btn btn-outline-secondary"
+                data-action="click->description-edit#hide">
+          Annuler
+        </button>
       </div>
-
     </div>
   </section>
 
-  <h2>Invitations en attente (<%= @pending_invites.size %>)</h2>
+  <!-- SECTION INVITATIONS -->
+  <section class="profile-section profile-invites">
+    <div class="profile-section-header">
+      <h2 class="profile-section-title">
+        <i class="fa-solid fa-user-plus"></i>
+        Invitations en attente (<%= @pending_invites.size %>)
+      </h2>
+    </div>
 
-  <% if @pending_invites.empty? %>
-    <p class="text-muted">Aucune invitation pour le moment.</p>
-  <% else %>
-    <ul class="list-group">
-      <% @pending_invites.each do |invite| %>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <%= link_to buddy_path(invite.user), class:"invite-card" do %>
-            <div>
-                <strong><%= invite.user.first_name %> <%= invite.user.last_name.first %>.</strong> — <%= invite.target.race.name %>
-              <div class="text-muted small"><%= time_ago_in_words(invite.created_at) %></div>
+    <% if @pending_invites.empty? %>
+      <p class="text-muted">Aucune invitation pour le moment.</p>
+    <% else %>
+      <ul class="profile-invite-list">
+        <% @pending_invites.each do |invite| %>
+          <li class="profile-invite">
+            <%= link_to buddy_path(invite.user), class: "profile-invite-link" do %>
+              <%= image_tag invite.user.avatar_url,
+                    class: "profile-invite-avatar",
+                    alt: "Photo de profil de #{invite.user.first_name}" %>
+
+              <div class="profile-invite-info">
+                <p class="profile-invite-name">
+                  <%= invite.user.first_name %> <%= invite.user.last_name.first %>.
+                </p>
+                <p class="profile-invite-race"><%= invite.target.race.name %></p>
+                <p class="profile-invite-time"><%= time_ago_in_words(invite.created_at) %></p>
+              </div>
+            <% end %>
+
+            <button type="button"
+                    class="btn btn-2 profile-invite-button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#invite-<%= invite.id %>">
+              Accepter
+            </button>
+          </li>
+
+          <%= render "shared/modal", invite: invite %>
+        <% end %>
+      </ul>
+    <% end %>
+  </section>
+
+  <!-- SECTION OBJECTIF ACTUEL -->
+  <section class="profile-section profile-target-now">
+    <div class="profile-section-header">
+      <h2 class="profile-section-title">
+        <i class="fa-solid fa-flag"></i>
+        Objectif actuel
+      </h2>
+    </div>
+
+    <% if @upcoming_targets.empty? %>
+      <p class="text-muted">Aucun objectif en cours.</p>
+    <% else %>
+      <% @upcoming_targets.each do |target| %>
+
+        <article class="profile-target" data-controller="target-edit">
+
+          <div data-target-edit-target="display">
+            <div class="profile-target-image">
+              <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
             </div>
-          <% end %>
 
-          <button type="button"
-                  class="btn btn-outline-primary btn-sm"
-                  data-bs-toggle="modal"
-                  data-bs-target="#invite-<%= invite.id %>">
-            Voir l'invitation
-          </button>
-        </li>
+            <div class="profile-target-body">
+              <span class="profile-target-distance"><%= target.race.distance %> km</span>
 
-        <%= render "shared/modal", invite: invite %>
-      <% end %>
-    </ul>
-  <% end %>
+              <h3 class="profile-target-title">
+                <%= link_to target.race.name, race_path(target.race), class: "profile-target-link" %>
+              </h3>
 
-<!-- SECTION OBJECTIFS À VENIR -->
-<section class="profile-section">
-  <h2>Mes objectifs à venir</h2>
+              <p class="profile-target-time">
+                Temps visé : <%= target.target_hour %>h<%= format("%02d", target.target_minute) %>
+              </p>
 
-  <% if @upcoming_targets.empty? %>
-    <p class="text-muted">Aucun objectif en cours.</p>
-  <% else %>
-    <% @upcoming_targets.each do |target| %>
+              <p class="profile-target-date">
+                <i class="fa-regular fa-calendar"></i>
+                <%= l target.race.race_date, format: :long %>
+              </p>
 
-      <div class="race-info-card" data-controller="target-edit">
+              <p class="profile-target-place">
+                <i class="fa-solid fa-location-dot"></i>
+                <%= target.address %>
+              </p>
 
-        <div data-target-edit-target="display" class="row g-0">
-          <div class="col-4">
-            <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
-          </div>
+              <% if @user == current_user %>
+                <div class="profile-target-actions">
+                  <button type="button"
+                          class="btn btn-2 profile-target-button"
+                          data-action="click->target-edit#show">
+                    <i class="fa-solid fa-pen"></i>
+                    Modifier
+                  </button>
 
-          <div class="race-content col-8 p-3">
-            <p><%= target.race.name %></p>
-            <p>🏃 <%= target.race.distance %> km</p>
-            <p>📅 <%= l target.race.race_date, format: :long %></p>
-            <p>🎯 <%= target.target_hour %>h<%= format("%02d", target.target_minute) %></p>
-            <p>📍 <%= target.address %></p>
-
-            <div class="target-action d-flex gap-2 mt-2">
-              <button type="button" class="show-profile-icon"
-                      data-action="click->target-edit#show">
-                <i class="fa-solid fa-pen"></i>
-              </button>
-
-              <%= link_to target_path(target),
-                  data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
-                  },
-                  class: "show-profile-icon" do %>
-                <i class="fa-solid fa-trash"></i>
+                  <%= link_to target_path(target),
+                        class: "btn btn-3 profile-target-button",
+                        data: {
+                          turbo_method: :delete,
+                          turbo_confirm: "Voulez-vous vraiment supprimer cet objectif ?"
+                        } do %>
+                    <i class="fa-solid fa-trash"></i>
+                    Supprimer
+                  <% end %>
+                </div>
               <% end %>
             </div>
           </div>
-        </div>
 
-        <div data-target-edit-target="form" class="d-none mt-3">
-          <%= simple_form_for target do |f| %>
-            <%= f.input :target_hour, collection: 0..23, label: "Heures" %>
-            <%= f.input :target_minute,
-                  collection: [0,5,10,15,20,25,30,35,40,45,50,55],
-                  label: "Minutes" %>
-            <%= f.input :address, label: "Ville d'entraînement" %>
-            <%= f.button :submit, "Enregistrer" %>
-          <% end %>
-        </div>
+          <div class="d-none profile-target-form" data-target-edit-target="form">
+            <%= simple_form_for target do |f| %>
+              <%= f.input :target_hour, collection: 0..23, label: "Heures" %>
+              <%= f.input :target_minute,
+                    collection: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
+                    label: "Minutes" %>
+              <%= f.input :address, label: "Ville d'entraînement" %>
+              <%= f.button :submit, "Enregistrer", class: "btn btn-2" %>
+            <% end %>
+          </div>
 
-      </div>
+        </article>
 
+      <% end %>
     <% end %>
-  <% end %>
-</section>
+  </section>
 
-  <!-- SECTION COURSES TERMINÉES -->
-  <section class="profile-section">
-    <h2>Mes précédents objectifs</h2>
+  <!-- SECTION PRÉCÉDENTS OBJECTIFS -->
+  <section class="profile-section profile-past-targets">
+    <div class="profile-section-header">
+      <h2 class="profile-section-title">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        Précédents objectifs
+      </h2>
+    </div>
 
     <% if @past_targets.empty? %>
       <p class="text-muted">Aucun objectif précédent.</p>
     <% else %>
-      <% @past_targets.each do |target| %>
-        <div class="race-info-card">
-          <div class="race-image">
-            <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
-          </div>
+      <div class="profile-target-list">
+        <% @past_targets.each do |target| %>
+          <article class="profile-target">
+            <div class="profile-target-image">
+              <%= image_tag "race-placeholder.jpg", alt: target.race.name %>
+              <span class="profile-target-badge"><%= target.race.category %></span>
+            </div>
 
-          <div class="race-content">
-            <h3><%= target.race.name %></h3>
-            <p>🏃 <%= target.race.distance %> km</p>
-            <p>📅 <%= l target.race.race_date, format: :long %></p>
-            <p>🎯 <%= target.target_hour %>h<%= format("%02d", target.target_minute) %></p>
-            <p>📍 <%= target.address %></p>
-          </div>
-        </div>
-      <% end %>
+            <div class="profile-target-body">
+              <span class="profile-target-distance"><%= target.race.distance %> km</span>
+
+              <h3 class="profile-target-title"><%= target.race.name %></h3>
+
+              <p class="profile-target-date">
+                <i class="fa-regular fa-calendar"></i>
+                <%= l target.race.race_date, format: :long %>
+              </p>
+            </div>
+          </article>
+        <% end %>
+      </div>
     <% end %>
   </section>
+
 </div>
 
+<!-- MODALE AVATAR -->
 <% if @user == current_user %>
   <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
     <div class="modal-dialog">
