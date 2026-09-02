@@ -2,15 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["display", "form", "text", "input"]
-
-  connect() {
-    const savedDescription = localStorage.getItem("profileDescription")
-
-    if (savedDescription) {
-      this.textTarget.textContent = savedDescription
-      this.textTarget.classList.remove("text-muted")
-    }
-  }
+  static values = { url: String }
 
   show() {
     const currentText = this.textTarget.textContent.trim()
@@ -30,17 +22,29 @@ export default class extends Controller {
     this.displayTarget.classList.remove("d-none")
   }
 
-  save() {
+  async save() {
     const newDescription = this.inputTarget.value.trim()
 
-    if (newDescription === "") {
+    const response = await fetch(this.urlValue, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ user: { description: newDescription } })
+    })
+
+    if (!response.ok) return
+
+    const data = await response.json()
+
+    if (data.description) {
+      this.textTarget.textContent = data.description
+      this.textTarget.classList.remove("text-muted")
+    } else {
       this.textTarget.textContent = "Renseignez votre description..."
       this.textTarget.classList.add("text-muted")
-      localStorage.removeItem("profileDescription")
-    } else {
-      this.textTarget.textContent = newDescription
-      this.textTarget.classList.remove("text-muted")
-      localStorage.setItem("profileDescription", newDescription)
     }
 
     this.hide()
