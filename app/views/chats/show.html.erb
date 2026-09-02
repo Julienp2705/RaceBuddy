@@ -10,123 +10,84 @@
       <%= @other_user.first_name %>
       <%= @other_user.last_name.first %>.
     </h2>
-
-    <p>
-      <%= @chat.invite.target.race.name %>
-    </p>
+    <p><%= @chat.invite.target.race.name %></p>
   </div>
 
   <!-- MESSAGES -->
-
   <%= turbo_frame_tag "messages" do %>
-
     <div class="chat-messages">
 
       <% @messages.each do |message| %>
+        <% mine = message.user == current_user %>
 
-        <% unless message.user == current_user %>
-          <div class="avatar">
-            <% if message.user.avatar.attached? %>
-              <%= image_tag message.user.avatar,
-                  class: "chat-avatar",
-                  alt: "Avatar de #{message.user.first_name}" %>
-            <% end %>
-      </div>
-      <% end %>
+        <div class="message-row <%= mine ? "message-row-mine" : "message-row-other" %>">
 
-        <div class="message-wrapper">
-
-          <div class="message-bubble">
-
-            <% unless message.user == current_user %>
-              <div class="message-user">
-                <%= message.user.first_name %>
-                <%= @other_user.last_name.first %>.
-              </div>
-            <% end %>
-
-            <div class="message-time">
-              <%= message.created_at.strftime("%H:%M") %>
+          <% unless mine %>
+            <div class="avatar">
+              <% if message.user.avatar.attached? %>
+                <%= image_tag message.user.avatar,
+                    class: "chat-avatar",
+                    alt: "Avatar de #{message.user.first_name}" %>
+              <% end %>
             </div>
+          <% end %>
 
-              <% if message.user == current_user %>
-                <div class="message-actions">
+          <div class="message-wrapper">
+            <div class="message-bubble">
 
-                  <button
-                    type="button"
-                    class="message-action"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editMessageModal<%= message.id %>">
-                    <i class="fa-solid fa-pen"></i>
-                  </button>
-
-                  <%= link_to chat_message_path(@chat, message),
-                      data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Supprimer ce message ?"
-                      },
-                      class: "message-action message-delete" do %>
-                    <i class="fa-solid fa-trash"></i>
-                  <% end %>
-
+              <% unless mine %>
+                <div class="message-user">
+                  <%= message.user.first_name %>
+                  <%= message.user.last_name.first %>.
                 </div>
               <% end %>
 
-            </div>
+              <div class="message-content">
+                <%= message.content %>
+              </div>
 
-            <div class="message-time">
-              <%= message.created_at.strftime("%H:%M") %>
-            </div>
-
-          <% if message.user == current_user %>
-
-            <div class="message-actions">
-
-              <button
-                type="button"
-                class="message-action"
-                data-bs-toggle="modal"
-                data-bs-target="#editMessageModal<%= message.id %>">
-                <i class="fa-solid fa-pencil"></i>
-              </button>
-
-              <%= link_to chat_message_path(@chat, message),
-                  data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Supprimer ce message ?"
-                  },
-                  class: "message-action message-delete" do %>
-                <i class="fa-regular fa-trash-can"></i>
-              <% end %>
+              <div class="message-time">
+                <%= message.created_at.strftime("%H:%M") %>
+              </div>
 
             </div>
 
-          <% end %>
+            <% if mine %>
+              <div class="message-actions">
+                <button
+                  type="button"
+                  class="message-action"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editMessageModal<%= message.id %>">
+                  <i class="fa-solid fa-pencil"></i>
+                </button>
+
+                <%= link_to chat_message_path(@chat, message),
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Supprimer ce message ?"
+                    },
+                    class: "message-action message-delete" do %>
+                  <i class="fa-regular fa-trash-can"></i>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
 
         </div>
 
-      </div>
-
-      <%= render "messages/edit_modal",
-          message: message,
-          edit_error: message.id == @message.id && @message.errors.any? %>
-
-    <% end %>
-
+        <%= render "messages/edit_modal",
+            message: message,
+            edit_error: message.id == @message.id && @message.errors.any? %>
       <% end %>
 
     </div>
-
   <% end %>
 
   <!-- FORMULAIRE -->
-
   <div class="chat-form">
-
     <% if @message.errors.any? %>
-      <p class="text-danger">
-        <%= @message.errors[:content].first %>
-      </p>
+      <p class="text-danger"><%= @message.errors[:content].first %></p>
     <% end %>
 
     <%= form_with model: [@chat, @message],
@@ -140,15 +101,11 @@
           class: "form-control",
           autocomplete: "off" %>
 
-        <%= button_tag type: "submit", class: "btn chat-send-button" do %>
-          <i class="fa-solid fa-paper-plane"></i>
-        <% end %>
+      <%= button_tag type: "submit", class: "btn chat-send-button" do %>
+        <i class="fa-solid fa-paper-plane"></i>
+      <% end %>
     <% end %>
-
   </div>
-
-
-  <!-- REPÈRE POUR LE SCROLL EN BAS DU CHAT -->
 
   <div data-chat-scroll-target="bottom"></div>
 
