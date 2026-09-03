@@ -48,7 +48,8 @@
 }
 
 .target-modal-body {
-  padding: 28px 30px 30px;
+  padding: 40px;
+  border-radius: 20px;
 }
 
 .target-form-section {
@@ -170,6 +171,7 @@
 
 .modal-content.target-modal {
   background-color: $rb-light;
+  border-radius: 20px;
 }
 
 .modal-subtitle {
