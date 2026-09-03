@@ -22,7 +22,7 @@ class Message < ApplicationRecord
       locals: { chat: chat, current_user: recipient }
 
     broadcast_replace_to recipient,
-      target: "chat-messages",
+      target: "chat-messages-#{chat.id}",
       partial: "messages/messages",
       locals: {
         messages: chat.messages.includes(:user).order(created_at: :asc),
