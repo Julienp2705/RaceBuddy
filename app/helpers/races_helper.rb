@@ -21,8 +21,8 @@ module RacesHelper
   def article_category_image(id)
     {
       "safety"    => "https://res.cloudinary.com/en57d7v3/image/upload/v1788359890/ChatGPT_Image_2_sept._2026_16_37_46.png",
-      "injury"    => "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.squarespace-cdn.com%2Fcontent%2Fv1%2F55b7f4ffe4b0a286c4c3499e%2F9030b28c-d59c-4f02-9527-f407a30de90d%2Fcommon-running-injuries&f=1&nofb=1&ipt=715df990e795aad8f283d4f00dc08f93da7d524eed7b18ffa8163c3756cc5a50",
-      "nutrition" => "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fnutritiongeeks.com%2Fwp-content%2Fuploads%2F2025%2F12%2Fnutrition-for-marathon-runners-runner-nutrition.jpg&f=1&nofb=1&ipt=27dc8a28c9777e3e246fd4fec008e36c91311a627ef6aae81128a1df565e4a11"
+      "injury"    => "https://res.cloudinary.com/en57d7v3/image/upload/v1788428659/blessures.jpg",
+      "nutrition" => "https://res.cloudinary.com/en57d7v3/image/upload/v1788427894/nutrition.png"
     }[id]
   end
 end

@@ -8,7 +8,7 @@
   <div class="chat-header">
     <h2>
       <%= @other_user.first_name %>
-      <%= @other_user.last_name.first %>.
+      <%= @other_user.last_name %>.
     </h2>
 
     <p class="chat-race-name">
@@ -17,17 +17,19 @@
   </div>
 
   <!-- MESSAGES -->
+  <%= turbo_stream_from @chat %>
   <%= turbo_frame_tag "messages" do %>
-    <%= render "messages/messages", messages: @messages, other_user: @other_user, chat: @chat, message: @message %>
+    <%= render "messages/messages", messages: @messages, other_user: @other_user, chat: @chat, message: @message, viewer: current_user %>
   <% end %>
 
   <!-- FORMULAIRE -->
-  <div class="chat-form">
-    <% if @message.errors.any? %>
-      <p class="text-danger"><%= @message.errors[:content].first %></p>
-    <% end %>
+    <div class="chat-form">
+      <% if @new_message.errors.any? %>
+          <p class="text-danger"><%= @new_message.errors[:content].first %></p>
+      <% end %>
+    </div>
 
-    <%= form_with model: [@chat, @message],
+    <%= form_with model: [@chat, @new_message],
         data: {
           controller: "reset-form",
           action: "turbo:submit-end->reset-form#reset",
@@ -45,5 +47,3 @@
   </div>
 
   <div data-chat-scroll-target="bottom"></div>
-
-</div>

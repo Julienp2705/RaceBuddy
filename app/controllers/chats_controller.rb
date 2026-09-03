@@ -1,6 +1,7 @@
 class ChatsController < ApplicationController
   def show
     @chat = Chat.find(params[:id])
+    @chat.mark_read_for!(current_user)
 
     unless chat_users.include?(current_user)
       redirect_to root_path, alert: "Vous n'avez pas accès à cette conversation."
@@ -8,7 +9,8 @@ class ChatsController < ApplicationController
     end
 
     @messages = @chat.messages.includes(:user).order(created_at: :asc)
-    @message = Message.new
+    @new_message = Message.new
+    @message = nil
 
     @other_user = @chat.other_user(current_user)
   end

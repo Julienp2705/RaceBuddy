@@ -1,7 +1,7 @@
-<div class="chat-messages">
+<div class="chat-messages" id="chat-messages">
 
       <% messages.each do |mes| %>
-        <% mine = mes.user == current_user %>
+        <% mine = mes.user == viewer %>
 
         <div class="message-row <%= mine ? "message-row-mine" : "message-row-other" %>">
           <% unless mine %>
@@ -53,10 +53,10 @@
           </div>
 
         </div>
-
+        <% errored = message&.id == mes.id && message.errors.any? %>
         <%= render "messages/edit_modal",
-            message: mes,
-            edit_error: mes.id == message.id && message.errors.any? %>
-      <% end %>
-
-    </div>
+            message: errored ? message : mes,
+            chat: mes.chat,
+            edit_error: errored %>
+        <% end %>
+</div>

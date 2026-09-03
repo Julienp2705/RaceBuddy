@@ -17,10 +17,9 @@
             Modifie ton message
           </h5>
         </div>
-
       </div>
 
-      <%= simple_form_for [@chat, message], data: { turbo: false } do |f| %>
+      <%= simple_form_for [chat, message], data: { turbo: false } do |f| %>
 
         <div class="modal-body edit-message-body">
 
@@ -31,12 +30,6 @@
                 class: "edit-message-input"
               } %>
 
-          <% if edit_error %>
-            <div class="message-form-error">
-              <i class="fa-solid fa-circle-exclamation"></i>
-              <%= @message.errors[:content].first %>
-            </div>
-          <% end %>
 
         </div>
 

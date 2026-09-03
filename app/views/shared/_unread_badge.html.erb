@@ -1,0 +1,5 @@
+<% return if user.nil? %>
+<% count = user.unread_messages_count %>
+<% if count > 0 %>
+  <span class="nav-badge"><%= count %></span>
+<% end %>
