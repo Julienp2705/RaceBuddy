@@ -408,14 +408,14 @@ puts "✅ #{targets.count} objectifs créés"
 # INVITES
 # ============================================================
 
-puts "🤝 Création des invitations..."
-
 invites = []
+invited_pairs = Set.new
 
 targets.each do |target|
 
   possible_users = users.reject do |user|
-    user.id == target.user_id
+    user.id == target.user_id ||
+      invited_pairs.include?([user.id, target.user_id].sort)
   end
 
   # Entre 1 et 3 invitations
@@ -427,6 +427,7 @@ targets.each do |target|
       status: ["pending", "accepted"].sample
     )
 
+    invited_pairs << [user.id, target.user_id].sort
     invites << invite
   end
 end
