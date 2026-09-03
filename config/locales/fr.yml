@@ -51,6 +51,7 @@ fr:
 
             distance:
               blank: "La distance est obligatoire"
+              not_a_number: "La distance doit être un nombre"
               greater_than: "La distance doit être supérieure à %{count}"
 
             url:
