@@ -1,20 +1,103 @@
-<h2>Resend confirmation instructions</h2>
+<%# app/views/devise/confirmations/new.html.erb %>
 
-<%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= f.error_notification %>
-  <%= f.full_error :confirmation_token %>
+<div class="devise-page">
+  <aside class="devise-aside">
+    <p class="devise-aside__brand">RaceBuddy</p>
 
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
+    <div>
+      <p class="devise-aside__pitch">
+        Plus qu'une <em>confirmation</em> et tu es dans la course.
+      </p>
+      <ul class="devise-aside__points">
+        <li>Le lien arrive dans les minutes qui suivent</li>
+        <li>Pense à regarder dans tes spams</li>
+        <li>Il reste valable quelques jours</li>
+      </ul>
+    </div>
+
+    <p class="devise-aside__footnote">
+      Confirmer ton adresse permet aux autres coureurs de te contacter en toute confiance.
+    </p>
+  </aside>
+
+  <main class="devise-main">
+    <div class="devise-card">
+      <p class="devise-card__brand">RaceBuddy</p>
+
+      <p class="devise-card__eyebrow">Confirmation</p>
+      <h1 class="devise-card__title">Renvoyer le lien</h1>
+      <p class="devise-card__subtitle">
+        Indique l'adresse utilisée à l'inscription, on te renvoie le message de confirmation.
+      </p>
+
+      <% if flash[:alert].present? %>
+        <div class="devise-alert devise-alert--error" role="alert">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3.25a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V5a.75.75 0 01.75-.75zM8 11.75a.9.9 0 110-1.8.9.9 0 010 1.8z" />
+          </svg>
+          <span><%= flash[:alert] %></span>
+        </div>
+      <% end %>
+
+      <% if flash[:notice].present? %>
+        <div class="devise-alert devise-alert--notice" role="status">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.03 5.28l-3.5 4a.75.75 0 01-1.11.03L4.72 8.78a.75.75 0 111.06-1.06l1.13 1.13 2.99-3.42a.75.75 0 011.13.99z" />
+          </svg>
+          <span><%= flash[:notice] %></span>
+        </div>
+      <% end %>
+
+      <% if resource.errors.any? %>
+        <div class="devise-errors" role="alert">
+          <p class="devise-errors__title">
+            <%= pluralize(resource.errors.count, "erreur") %> à corriger :
+          </p>
+          <ul class="devise-errors__list">
+            <% resource.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: resource,
+                    scope: resource_name,
+                    url: confirmation_path(resource_name),
+                    class: "devise-form" do |f| %>
+
+        <div class="devise-field">
+          <%= f.label :email, "Adresse e-mail", class: "devise-field__label" %>
+          <%= f.email_field :email,
+                value: resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email,
                 autofocus: true,
-                value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),
-                input_html: { autocomplete: "email" } %>
-  </div>
+                autocomplete: "email",
+                required: true,
+                inputmode: "email",
+                placeholder: "toi@exemple.fr",
+                class: "devise-field__input",
+                "aria-invalid": resource.errors[:email].any?.to_s %>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Resend confirmation instructions" %>
-  </div>
-<% end %>
+          <% if resource.errors[:email].any? %>
+            <p class="devise-field__error">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3.25a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V5a.75.75 0 01.75-.75zM8 11.75a.9.9 0 110-1.8.9.9 0 010 1.8z" />
+              </svg>
+              <span><%= resource.errors[:email].join(", ") %></span>
+            </p>
+          <% end %>
+        </div>
 
-<%= render "devise/shared/links" %>
+        <%= f.submit "Renvoyer le lien de confirmation", class: "devise-btn" %>
+      <% end %>
+
+      <p class="devise-footer">
+        Déjà confirmé ?
+        <%= link_to "Se connecter", new_session_path(resource_name), class: "devise-link" %>
+        <br>
+        Pas encore inscrit ?
+        <%= link_to "Créer un compte", new_registration_path(resource_name), class: "devise-link" %>
+      </p>
+    </div>
+  </main>
+</div>
