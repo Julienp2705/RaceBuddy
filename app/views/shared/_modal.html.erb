@@ -1,6 +1,6 @@
 <div class="modal fade" id="invite-<%= invite.id %>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content" style="border-radius: 20px;">
 
       <div class="modal-header">
         <h5 class="modal-title">Invitation de <%= invite.user.first_name %></h5>
@@ -16,12 +16,12 @@
       <div class="modal-footer">
         <%= button_to "Refuser", invite_path(invite),
         method: :delete,
-        class: "btn btn-outline-danger",
+        class: "btn-cancel",
         form: { data: { turbo_confirm: "Refuser cette invitation ?" } } %>
 
         <%= button_to "Accepter", accept_invite_path(invite),
         method: :patch,
-        class: "btn btn-primary" %>
+        class: "btn-2" %>
       </div>
 
     </div>
