@@ -1,7 +1,22 @@
-<p>Hello <%= @resource.email %>!</p>
+<% content_for :preheader, "Ton compte RaceBuddy a été verrouillé." %>
 
-<p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
+<h1 class="rb-h1" style="margin:0 0 16px; font-family:Helvetica,Arial,sans-serif; font-size:28px; font-weight:700; line-height:1.2; letter-spacing:-0.02em; color:#1B263B;">
+  Compte verrouillé
+</h1>
 
-<p>Click the link below to unlock your account:</p>
+<p style="margin:0; font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; color:#444844;">
+  Ton compte a été verrouillé après plusieurs tentatives de connexion infructueuses. C'est une sécurité automatique.
+</p>
 
-<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>
+<%= render "devise/mailer/button",
+      label: "Déverrouiller mon compte",
+      url: unlock_url(@resource, unlock_token: @token) %>
+
+<p style="margin:0; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6; color:#444844;">
+  Si le bouton ne fonctionne pas, copie ce lien dans ton navigateur :<br>
+  <a href="<%= unlock_url(@resource, unlock_token: @token) %>" style="color:#415A77; word-break:break-all;"><%= unlock_url(@resource, unlock_token: @token) %></a>
+</p>
+
+<p style="margin:24px 0 0; padding-top:24px; border-top:1px solid #E0E1DD; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6; color:#444844;">
+  Ces tentatives ne viennent pas de toi ? Déverrouille ton compte puis change ton mot de passe par précaution.
+</p>

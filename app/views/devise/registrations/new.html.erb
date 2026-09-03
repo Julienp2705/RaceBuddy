@@ -1,31 +1,123 @@
-<h2>Sign up</h2>
+<%# app/views/devise/registrations/new.html.erb %>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+<div class="devise-page">
+  <aside class="devise-aside">
+    <p class="devise-aside__brand">RaceBuddy</p>
 
-  <div class="form-inputs">
-    <%= f.input :first_name,
-                required: true,
-                input_html: { autocomplete: "given-name" } %>
-    <%= f.input :last_name,
-                required: true,
-                input_html: { autocomplete: "family-name" } %>
-    <%= f.input :email,
-                required: true,
+    <div>
+      <p class="devise-aside__pitch">
+        Ton prochain <em>dossard</em> mérite un binôme.
+      </p>
+      <ul class="devise-aside__points">
+        <li>Renseigne tes objectifs de course</li>
+        <li>Croise les coureurs qui visent les mêmes</li>
+        <li>Échangez avant de vous caler une sortie</li>
+      </ul>
+    </div>
+
+    <p class="devise-aside__footnote">
+      Inscription gratuite. Ton profil reste visible uniquement des coureurs inscrits.
+    </p>
+  </aside>
+
+  <main class="devise-main">
+    <div class="devise-card">
+      <p class="devise-card__brand">RaceBuddy</p>
+
+      <p class="devise-card__eyebrow">Inscription</p>
+      <h1 class="devise-card__title">Crée ton profil coureur</h1>
+      <p class="devise-card__subtitle">
+        Quelques secondes suffisent. Tu compléteras ton profil et tes objectifs juste après.
+      </p>
+
+      <% if resource.errors.any? %>
+        <div class="devise-errors" role="alert">
+          <p class="devise-errors__title">
+            <%= pluralize(resource.errors.count, "erreur") %> à corriger :
+          </p>
+          <ul class="devise-errors__list">
+            <% resource.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: resource,
+                    scope: resource_name,
+                    url: registration_path(resource_name),
+                    class: "devise-form" do |f| %>
+
+        <div class="devise-field">
+          <%= f.label :email, "Adresse e-mail", class: "devise-field__label" %>
+          <%= f.email_field :email,
                 autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
+                autocomplete: "email",
                 required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
+                inputmode: "email",
+                placeholder: "toi@exemple.fr",
+                class: "devise-field__input",
+                "aria-invalid": resource.errors[:email].any?.to_s %>
+
+          <% if resource.errors[:email].any? %>
+            <p class="devise-field__error">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3.25a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V5a.75.75 0 01.75-.75zM8 11.75a.9.9 0 110-1.8.9.9 0 010 1.8z" />
+              </svg>
+              <span><%= resource.errors[:email].join(", ") %></span>
+            </p>
+          <% end %>
+        </div>
+
+        <div class="devise-field">
+          <%= f.label :password, "Mot de passe", class: "devise-field__label" %>
+          <%= f.password_field :password,
+                autocomplete: "new-password",
                 required: true,
-                input_html: { autocomplete: "new-password" } %>
-  </div>
+                minlength: (@minimum_password_length || Devise.password_length.min),
+                class: "devise-field__input",
+                "aria-describedby": "password-hint",
+                "aria-invalid": resource.errors[:password].any?.to_s %>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
+          <% if resource.errors[:password].any? %>
+            <p class="devise-field__error">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3.25a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V5a.75.75 0 01.75-.75zM8 11.75a.9.9 0 110-1.8.9.9 0 010 1.8z" />
+              </svg>
+              <span><%= resource.errors[:password].join(", ") %></span>
+            </p>
+          <% else %>
+            <p class="devise-field__hint" id="password-hint">
+              <%= @minimum_password_length || Devise.password_length.min %> caractères minimum. Une phrase de plusieurs mots vaut mieux qu'un mot compliqué.
+            </p>
+          <% end %>
+        </div>
 
-<%= render "devise/shared/links" %>
+        <div class="devise-field">
+          <%= f.label :password_confirmation, "Confirme le mot de passe", class: "devise-field__label" %>
+          <%= f.password_field :password_confirmation,
+                autocomplete: "new-password",
+                required: true,
+                class: "devise-field__input",
+                "aria-invalid": resource.errors[:password_confirmation].any?.to_s %>
+
+          <% if resource.errors[:password_confirmation].any? %>
+            <p class="devise-field__error">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3.25a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V5a.75.75 0 01.75-.75zM8 11.75a.9.9 0 110-1.8.9.9 0 010 1.8z" />
+              </svg>
+              <span><%= resource.errors[:password_confirmation].join(", ") %></span>
+            </p>
+          <% end %>
+        </div>
+
+        <%= f.submit "Créer mon compte", class: "devise-btn devise-btn--accent" %>
+      <% end %>
+
+      <p class="devise-footer">
+        Déjà inscrit ?
+        <%= link_to "Se connecter", new_session_path(resource_name), class: "devise-link" %>
+      </p>
+    </div>
+  </main>
+</div>
