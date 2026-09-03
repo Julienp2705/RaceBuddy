@@ -9,7 +9,8 @@ class ChatsController < ApplicationController
     end
 
     @messages = @chat.messages.includes(:user).order(created_at: :asc)
-    @message = Message.new
+    @new_message = Message.new
+    @message = nil
 
     @other_user = @chat.other_user(current_user)
   end

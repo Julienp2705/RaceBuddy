@@ -8,11 +8,11 @@ class MessagesController < ApplicationController
       redirect_to root_path, alert: "Vous n'avez pas accès à cette conversation."
       return
     end
+    @message = nil
+    @new_message = @chat.messages.new(message_params)
+    @new_message.user = current_user
 
-    @message = @chat.messages.new(message_params)
-    @message.user = current_user
-
-    if @message.save
+    if @new_message.save
       @messages = @chat.messages.includes(:user).order(created_at: :asc)
       @other_user = @chat.other_user(current_user)
 
@@ -32,6 +32,7 @@ class MessagesController < ApplicationController
     if @message.update(message_params)
       redirect_to chat_path(@chat), notice: "Message modifié."
     else
+      @new_message = Message.new
       @messages = @chat.messages.includes(:user).order(created_at: :asc)
       @other_user = @chat.other_user(current_user)
       render "chats/show", status: :unprocessable_entity
