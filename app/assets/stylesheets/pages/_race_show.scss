@@ -61,8 +61,8 @@ border-radius: 999px;
   background-color: $rb-primary;
   color: $rb-light;
 
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
 
   display: flex;
   align-items: center;
@@ -71,7 +71,7 @@ border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
 
-  border: 3px solid $rb-light;
+  border: 2px solid $rb-light;
   box-shadow: 0 2px 6px rgba($rb-dark, 0.35);
 }
 
