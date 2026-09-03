@@ -27,7 +27,6 @@
       <% if @new_message.errors.any? %>
           <p class="text-danger"><%= @new_message.errors[:content].first %></p>
       <% end %>
-    </div>
 
     <%= form_with model: [@chat, @new_message],
         data: {
@@ -44,6 +43,7 @@
         <i class="fa-solid fa-paper-plane"></i>
       <% end %>
     <% end %>
+    </div>
   </div>
 
   <div data-chat-scroll-target="bottom"></div>
