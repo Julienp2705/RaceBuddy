@@ -2,7 +2,6 @@
 
 <div class="devise-page">
   <aside class="devise-aside">
-    <p class="devise-aside__brand">RaceBuddy</p>
 
     <div>
       <p class="devise-aside__pitch">
@@ -51,6 +50,7 @@
       <%= form_with model: resource,
                     scope: resource_name,
                     url: session_path(resource_name),
+                    novalidate: true,
                     class: "devise-form" do |f| %>
 
         <div class="devise-field">
