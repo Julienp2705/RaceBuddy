@@ -1,22 +1,25 @@
 {
   "name": "RaceBuddy",
-  "icons": [
-    {
-      "src": "/icon.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "/icon.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable"
-    }
-  ],
+  "short_name": "RaceBuddy",
+  "description": "Trouve des coureurs qui partagent tes objectifs de course, échange avec eux et prépare tes prochaines épreuves ensemble.",
   "start_url": "/",
-  "display": "standalone",
   "scope": "/",
-  "description": "RaceBuddy.",
-  "theme_color": "red",
-  "background_color": "red"
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#111111",
+  "lang": "fr-FR",
+  "icons": [
+    <%
+      files = Dir.glob(Rails.root.join("app/assets/images/icons/*.png")).map { |f| File.basename(f) }.sort
+    %>
+    <% files.each_with_index do |file, index| %>
+      <% match = file.match(/-(?<size>\d{2,4}x\d{2,4})\.png\z/) %>
+      {
+        "src": "<%= image_path "icons/#{file}" %>",
+        "sizes": "<%= match && match[:size] %>",
+        "type": "image/png"
+      }<%= "," unless (files.size - 1) == index %>
+    <% end %>
+  ]
 }
