@@ -21,6 +21,7 @@ export default class extends Controller {
     this.buddiesValue.forEach((buddy) => {
       const el = document.createElement("div")
 
+    /*
     if (buddy.avatar_url) {
       const img = document.createElement("img")
       img.src = buddy.avatar_url
@@ -28,8 +29,11 @@ export default class extends Controller {
       el.appendChild(img)
     } else {
       el.classList.add("buddy-pin-fallback")
-      el.textContent = buddy.initials
+    el.textContent = buddy.initials
     }
+    */
+    el.classList.add("buddy-pin-fallback")
+    el.textContent = buddy.initials
 
       new mapboxgl.Marker(el)
         .setLngLat([buddy.lng, buddy.lat])
