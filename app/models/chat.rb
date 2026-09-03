@@ -10,6 +10,9 @@ class Chat < ApplicationRecord
     end
   end
 
+  def users
+    [invite.user, invite.target.user]
+  end
   def read_column_for(user)
     invite.user == user ? :inviter_read_at : :invitee_read_at
   end
