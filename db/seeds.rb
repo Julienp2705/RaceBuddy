@@ -408,14 +408,6 @@ puts "✅ #{targets.count} objectifs créés"
 # INVITES
 # ============================================================
 
-puts "🤝 Création des invitations..."
-
-# ============================================================
-# INVITES
-# ============================================================
-
-puts "🤝 Création des invitations..."
-
 invites = []
 invited_pairs = Set.new
 
