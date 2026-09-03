@@ -1,0 +1,453 @@
+// ============================================================
+//  Devise — styles partagés par toutes les pages d'authentification
+//  sessions/new · registrations/new · registrations/edit
+//  passwords/new · passwords/edit · confirmations/new · unlocks/new
+//
+//  Classes préfixées `devise-` : aucun conflit possible avec Bootstrap.
+// ============================================================
+
+// ── Palette RaceBuddy ────────────────────────────────────────
+$rb-dark:    #1B263B; // bleu nuit profond
+$rb-primary: #415A77; // bleu ardoise
+$rb-accent:  #E76F51; // corail sportif
+$rb-light:   #F8F9FA; // blanc cassé
+$rb-sand:    #E0E1DD; // gris clair chaud
+$rb-grey:    #444844;
+
+$rb-danger:  #B42318;
+$rb-success: #157347;
+
+// ── Tokens dérivés ───────────────────────────────────────────
+$devise-radius:     10px;
+$devise-radius-lg:  16px;
+$devise-field-h:    48px;  // ≥ 44px : cible tactile conforme
+$devise-transition: 160ms ease;
+
+// ============================================================
+//  1. Gabarit deux colonnes
+// ============================================================
+
+.devise-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100dvh;
+  background: $rb-light;
+  color: $rb-grey;
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
+
+// Panneau de marque — masqué sur mobile, où il n'apporte rien
+.devise-aside {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  padding: 64px 48px;
+  background: $rb-dark;
+  color: $rb-sand;
+
+  @media (min-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  // Motif de marquage au sol — texture plutôt que dégradé abstrait
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto -20% -30% -20%;
+    height: 60%;
+    background: repeating-linear-gradient(
+      -68deg,
+      rgba($rb-sand, 0.06) 0 2px,
+      transparent 2px 26px
+    );
+    pointer-events: none;
+  }
+}
+
+.devise-aside__brand {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.devise-aside__pitch {
+  position: relative;
+  z-index: 1;
+  max-width: 22ch;
+  margin: 0;
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fff;
+
+  em {
+    font-style: normal;
+    color: $rb-accent;
+  }
+}
+
+.devise-aside__points {
+  position: relative;
+  z-index: 1;
+  max-width: 34ch;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba($rb-sand, 0.82);
+
+  li + li { margin-top: 8px; }
+
+  li {
+    padding-left: 20px;
+    background-image: linear-gradient($rb-accent, $rb-accent);
+    background-size: 8px 2px;
+    background-position: 0 0.75em;
+    background-repeat: no-repeat;
+  }
+}
+
+.devise-aside__footnote {
+  position: relative;
+  z-index: 1;
+  max-width: 32ch;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba($rb-sand, 0.7);
+}
+
+// ============================================================
+//  2. Colonne formulaire
+// ============================================================
+
+.devise-main {
+  display: flex;
+  align-items: center;
+  padding: 40px 24px;
+
+  @media (min-width: 600px)  { padding: 64px 48px; }
+  @media (min-width: 1200px) { padding: 64px 96px; }
+}
+
+.devise-card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.devise-card__eyebrow {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $rb-primary;
+}
+
+.devise-card__title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: $rb-dark;
+}
+
+.devise-card__subtitle {
+  max-width: 46ch;
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: $rb-grey;
+}
+
+// Logo de repli, visible seulement quand le panneau latéral est masqué
+.devise-card__brand {
+  margin: 0 0 32px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $rb-dark;
+
+  @media (min-width: 900px) { display: none; }
+}
+
+// ============================================================
+//  3. Formulaire
+// ============================================================
+
+.devise-form {
+  margin-top: 32px;
+}
+
+.devise-field + .devise-field,
+.devise-field + .devise-check,
+.devise-check + .devise-field {
+  margin-top: 20px;
+}
+
+.devise-field__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.devise-field__label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: $rb-dark;
+}
+
+.devise-field__input {
+  display: block;
+  width: 100%;
+  height: $devise-field-h;
+  padding: 0 14px;
+  font-size: 16px; // < 16px déclenche un zoom automatique sur iOS
+  font-family: inherit;
+  color: $rb-dark;
+  background: #fff;
+  border: 1px solid darken($rb-sand, 6%);
+  border-radius: $devise-radius;
+  transition: border-color $devise-transition, box-shadow $devise-transition;
+  appearance: none;
+
+  &::placeholder { color: rgba($rb-grey, 0.55); }
+
+  &:hover { border-color: rgba($rb-primary, 0.5); }
+
+  &:focus-visible {
+    outline: 2px solid $rb-primary;
+    outline-offset: 1px;
+    border-color: $rb-primary;
+    box-shadow: 0 0 0 4px rgba($rb-accent, 0.18);
+  }
+
+  &[aria-invalid="true"] {
+    border-color: $rb-danger;
+    box-shadow: 0 0 0 3px rgba($rb-danger, 0.12);
+  }
+
+  &:disabled {
+    background: $rb-sand;
+    color: rgba($rb-grey, 0.6);
+    cursor: not-allowed;
+  }
+}
+
+// Lien secondaire aligné sur le label (« Mot de passe oublié ? »)
+.devise-field__link {
+  font-size: 13px;
+  font-weight: 500;
+  color: $rb-primary;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover { color: $rb-dark; }
+
+  &:focus-visible {
+    outline: 2px solid $rb-primary;
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+
+// Erreur sous un champ
+.devise-field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $rb-danger;
+
+  svg { flex: none; margin-top: 2px; }
+}
+
+// ── Case à cocher ────────────────────────────────────────────
+.devise-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px; // cible tactile
+}
+
+.devise-check__input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  accent-color: $rb-primary;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $rb-primary;
+    outline-offset: 2px;
+  }
+}
+
+.devise-check__label {
+  font-size: 14px;
+  color: $rb-grey;
+  cursor: pointer;
+}
+
+// ============================================================
+//  4. Boutons
+// ============================================================
+
+.devise-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: $devise-field-h;
+  margin-top: 24px;
+  padding: 0 24px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: $rb-primary;
+  border: 0;
+  border-radius: $devise-radius;
+  cursor: pointer;
+  transition: background $devise-transition, transform $devise-transition;
+
+  &:hover  { background: darken($rb-primary, 7%); }
+  &:active { transform: translateY(1px); }
+
+  &:focus-visible {
+    outline: 2px solid $rb-dark;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background: rgba($rb-primary, 0.45);
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Variante corail — pour l'action d'inscription, jamais deux à l'écran
+.devise-btn--accent {
+  color: $rb-dark; // texte foncé : le corail sur blanc n'atteint pas 4,5:1
+  background: $rb-accent;
+
+  &:hover    { background: darken($rb-accent, 6%); }
+  &:disabled { background: rgba($rb-accent, 0.5); }
+}
+
+// ============================================================
+//  5. Alertes et récapitulatif d'erreurs
+// ============================================================
+
+.devise-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: $devise-radius;
+  border-left: 3px solid;
+
+  svg { flex: none; margin-top: 2px; }
+}
+
+.devise-alert--error {
+  color: $rb-danger;
+  background: rgba($rb-danger, 0.06);
+  border-left-color: $rb-danger;
+}
+
+.devise-alert--notice {
+  color: $rb-success;
+  background: rgba($rb-success, 0.07);
+  border-left-color: $rb-success;
+}
+
+// Bloc d'erreurs de validation (registrations, passwords/edit…)
+.devise-errors {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba($rb-danger, 0.06);
+  border-left: 3px solid $rb-danger;
+  border-radius: $devise-radius;
+
+  &__title {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $rb-danger;
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: $rb-danger;
+  }
+}
+
+// ============================================================
+//  6. Liens de bas de carte
+// ============================================================
+
+.devise-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid $rb-sand;
+  font-size: 15px;
+  line-height: 1.6;
+  color: $rb-grey;
+}
+
+.devise-link {
+  font-weight: 600;
+  color: $rb-primary;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover { color: $rb-dark; }
+
+  &:focus-visible {
+    outline: 2px solid $rb-primary;
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+.devise-field__hint {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba($rb-grey, 0.85);
+}
+
+// ============================================================
+//  7. Préférences de mouvement
+// ============================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .devise-field__input,
+  .devise-btn {
+    transition: none;
+  }
+  .devise-btn:active { transform: none; }
+}

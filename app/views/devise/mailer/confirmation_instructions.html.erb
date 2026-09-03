@@ -1,5 +1,22 @@
-<p>Welcome <%= @email %>!</p>
+<% content_for :preheader, "Confirme ton adresse pour activer ton compte RaceBuddy." %>
 
-<p>You can confirm your account email through the link below:</p>
+<h1 class="rb-h1" style="margin:0 0 16px; font-family:Helvetica,Arial,sans-serif; font-size:28px; font-weight:700; line-height:1.2; letter-spacing:-0.02em; color:#1B263B;">
+  Bienvenue<%= ", #{@resource.first_name}" if @resource.respond_to?(:first_name) && @resource.first_name.present? %>
+</h1>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p style="margin:0; font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; color:#444844;">
+  Plus qu'une étape avant de trouver tes premiers partenaires d'entraînement : confirme ton adresse e-mail.
+</p>
+
+<%= render "devise/mailer/button",
+      label: "Confirmer mon adresse",
+      url: confirmation_url(@resource, confirmation_token: @token) %>
+
+<p style="margin:0; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6; color:#444844;">
+  Si le bouton ne fonctionne pas, copie ce lien dans ton navigateur :<br>
+  <a href="<%= confirmation_url(@resource, confirmation_token: @token) %>" style="color:#415A77; word-break:break-all;"><%= confirmation_url(@resource, confirmation_token: @token) %></a>
+</p>
+
+<p style="margin:24px 0 0; padding-top:24px; border-top:1px solid #E0E1DD; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6; color:#444844;">
+  Tu n'es pas à l'origine de cette inscription ? Ignore ce message, aucun compte ne sera activé.
+</p>

@@ -1,20 +1,92 @@
-<h2>Log in</h2>
+<%# app/views/devise/sessions/new.html.erb %>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: false,
+<div class="devise-page">
+  <aside class="devise-aside">
+
+    <div>
+      <p class="devise-aside__pitch">
+        Personne ne court vraiment <em>seul</em>.
+      </p>
+      <ul class="devise-aside__points">
+        <li>Trouve des coureurs qui visent la même course que toi</li>
+        <li>Cale tes sorties longues avec quelqu'un de ton niveau</li>
+        <li>Échange avant le jour J, débriefe après</li>
+      </ul>
+    </div>
+
+    <p class="devise-aside__footnote">
+      Des binômes déjà formés sur les prochaines courses en France.
+    </p>
+  </aside>
+
+  <main class="devise-main">
+    <div class="devise-card">
+      <p class="devise-card__brand">RaceBuddy</p>
+
+      <p class="devise-card__eyebrow">Connexion</p>
+      <h1 class="devise-card__title">Content de te revoir</h1>
+      <p class="devise-card__subtitle">
+        Retrouve tes objectifs, tes messages et les coureurs qui t'ont contacté.
+      </p>
+
+
+      <% if flash[:notice].present? %>
+        <div class="devise-alert devise-alert--notice" role="status">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.03 5.28l-3.5 4a.75.75 0 01-1.11.03L4.72 8.78a.75.75 0 111.06-1.06l1.13 1.13 2.99-3.42a.75.75 0 011.13.99z" />
+          </svg>
+          <span><%= flash[:notice] %></span>
+        </div>
+      <% end %>
+
+      <%= form_with model: resource,
+                    scope: resource_name,
+                    url: session_path(resource_name),
+                    novalidate: true,
+                    class: "devise-form" do |f| %>
+
+        <div class="devise-field">
+          <%= f.label :email, "Adresse e-mail", class: "devise-field__label" %>
+          <%= f.email_field :email,
                 autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password" } %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-  </div>
+                autocomplete: "username",
+                required: true,
+                inputmode: "email",
+                placeholder: "toi@exemple.fr",
+                class: "devise-field__input" %>
+        </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
-  </div>
-<% end %>
+        <div class="devise-field">
+          <div class="devise-field__head">
+            <%= f.label :password, "Mot de passe", class: "devise-field__label" %>
+            <% if devise_mapping.recoverable? %>
+              <%= link_to "Oublié ?",
+                    new_password_path(resource_name),
+                    class: "devise-field__link" %>
+            <% end %>
+          </div>
+          <%= f.password_field :password,
+                autocomplete: "current-password",
+                required: true,
+                class: "devise-field__input" %>
+        </div>
 
-<%= render "devise/shared/links" %>
+        <% if devise_mapping.rememberable? %>
+          <div class="devise-check">
+            <%= f.check_box :remember_me, class: "devise-check__input" %>
+            <%= f.label :remember_me, "Rester connecté", class: "devise-check__label" %>
+          </div>
+        <% end %>
+
+        <%= f.submit "Se connecter", class: "devise-btn" %>
+      <% end %>
+
+      <p class="devise-footer">
+        Pas encore de compte ?
+        <%= link_to "Crée ton profil coureur",
+              new_registration_path(resource_name),
+              class: "devise-link" %>
+      </p>
+    </div>
+  </main>
+</div>
