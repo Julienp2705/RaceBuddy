@@ -30,5 +30,4 @@ class Chat < ApplicationRecord
   def mark_read_for!(user)
     update_column(read_column_for(user), Time.current)
   end
-
 end

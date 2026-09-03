@@ -17,7 +17,6 @@
   </div>
 
   <!-- MESSAGES -->
-  <%= turbo_stream_from @chat %>
   <%= turbo_frame_tag "messages" do %>
     <%= render "messages/messages", messages: @messages, other_user: @other_user, chat: @chat, message: @message, viewer: current_user %>
   <% end %>

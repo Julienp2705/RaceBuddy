@@ -21,17 +21,15 @@ class Message < ApplicationRecord
       partial: "chats/chat_card",
       locals: { chat: chat, current_user: recipient }
 
-    chat.users.each do |user|
-      broadcast_replace_to chat,
+    broadcast_replace_to recipient,
       target: "chat-messages",
       partial: "messages/messages",
       locals: {
         messages: chat.messages.includes(:user).order(created_at: :asc),
-        other_user: chat.other_user(recipient),
+        other_user: user,
         chat: chat,
         message: nil,
         viewer: recipient
       }
-    end
   end
 end
