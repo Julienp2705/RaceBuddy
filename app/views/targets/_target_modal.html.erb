@@ -64,11 +64,12 @@
 
             <div class="white-card-modal-target">
 
-              <p>Dans quelle ville souhaitez-vous vous entraîner ?</p>
+              <p>Quel est le code postal de votre lieu d'entraînement ?</p>
 
               <%= f.input :address,
-                  label: "Ville",
-                  placeholder: "Ex. Paris" %>
+                  label: "Code postal",
+                  placeholder: "Ex. 75007",
+                  input_html: { maxlength: 5, inputmode: "numeric", pattern: "[0-9]{5}" } %>
             </div>
           </div>
           <div class="modal-footer target-modal-footer">

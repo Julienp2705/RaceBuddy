@@ -6,9 +6,12 @@ class Target < ApplicationRecord
   validates :target_hour, presence: true, inclusion: { in: 0..23 }
   validates :target_minute, presence: true, inclusion: { in: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55] }
   validates :address, presence: true
-  validates :address, format: { with: /\A(?:[0-9]{5}|[\p{L}\p{M}\s\-']+)\z/ }, allow_blank: true
+  validates :address, format: {
+    with: /\A(?:(?:0[1-9]|[1-8]\d|9[0-5])\d{3}|(?:97[1-6]|98[0-8])\d{2})\z/,
+    message: "doit être un code postal français valide"
+    }, allow_blank: true
 
-  geocoded_by :address
+  geocoded_by :address, params: { country: "fr" }
   after_validation :geocode, if: ->(record) { record.address.present? && record.address_changed? }
 
   def similar(minutes: 15, radius_km: 5)
