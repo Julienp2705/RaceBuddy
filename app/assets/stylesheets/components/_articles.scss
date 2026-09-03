@@ -13,6 +13,7 @@
   text-align: left;
   display: block;
   width: 100%;
+  position: relative;
 }
 
 .article-card__image {
@@ -20,6 +21,8 @@
   height: 180px;
   object-fit: cover;
   display: block;
+  transform: scale(1.2) translate(8%, -8%);
+  transform-origin: center;
 }
 
 .article-card__overlay {
