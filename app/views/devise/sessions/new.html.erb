@@ -29,14 +29,6 @@
         Retrouve tes objectifs, tes messages et les coureurs qui t'ont contacté.
       </p>
 
-      <% if flash[:alert].present? %>
-        <div class="devise-alert devise-alert--error" role="alert">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3.25a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V5a.75.75 0 01.75-.75zM8 11.75a.9.9 0 110-1.8.9.9 0 010 1.8z" />
-          </svg>
-          <span><%= flash[:alert] %></span>
-        </div>
-      <% end %>
 
       <% if flash[:notice].present? %>
         <div class="devise-alert devise-alert--notice" role="status">
