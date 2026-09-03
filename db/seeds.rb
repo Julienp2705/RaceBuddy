@@ -241,7 +241,21 @@ locations = {
   "Montpellier" => [43.6108, 3.8767]
 }
 
-
+postcodes = {
+  "Bordeaux" => "33000",
+  "Mérignac" => "33700",
+  "Pessac" => "33600",
+  "Talence" => "33400",
+  "Bègles" => "33130",
+  "Cenon" => "33150",
+  "Paris" => "75001",
+  "Lyon" => "69001",
+  "Toulouse" => "31000",
+  "Nantes" => "44000",
+  "Nice" => "06000",
+  "Lille" => "59000",
+  "Montpellier" => "34000"
+}
 # ============================================================
 # TARGETS
 # ============================================================
@@ -264,7 +278,7 @@ raise "❌ Marathon de Bordeaux introuvable !" unless bordeaux_race
 bordeaux_buddies = [
   {
     first_name: "Laurie",
-    address: "Bordeaux Centre",
+    address: "33000", # Bordeaux Centre
     latitude: 44.8378,
     longitude: -0.5792,
     target_hour: 3,
@@ -272,49 +286,49 @@ bordeaux_buddies = [
   },
   {
     first_name: "Alex",
-    address: "Bordeaux",
-    latitude: 44.8400,
-    longitude: -0.5850,
+    address: "33400", # Talence
+    latitude: 44.8048,
+    longitude: -0.5952,
     target_hour: 3,
     target_minute: 20
   },
   {
     first_name: "Julien",
-    address: "Talence",
-    latitude: 44.8250,
-    longitude: -0.5870,
+    address: "33100", # Bastide
+    latitude: 44.8410,
+    longitude: -0.5520,
     target_hour: 3,
     target_minute: 25
   },
   {
     first_name: "Emma",
-    address: "Bordeaux Saint-Augustin",
-    latitude: 44.8320,
-    longitude: -0.6040,
+    address: "33200", # Caudéran
+    latitude: 44.8480,
+    longitude: -0.6110,
     target_hour: 3,
     target_minute: 30
   },
   {
     first_name: "Hugo",
-    address: "Bordeaux Chartrons",
-    latitude: 44.8550,
-    longitude: -0.5730,
+    address: "33800", # Saint-Michel
+    latitude: 44.8270,
+    longitude: -0.5700,
     target_hour: 3,
     target_minute: 35
   },
   {
     first_name: "Clara",
-    address: "Bordeaux Bastide",
-    latitude: 44.8425,
-    longitude: -0.5520,
+    address: "33110", # Le Bouscat
+    latitude: 44.8626,
+    longitude: -0.6003,
     target_hour: 3,
     target_minute: 40
   },
   {
     first_name: "Chloé",
-    address: "Bordeaux Caudéran",
-    latitude: 44.8460,
-    longitude: -0.6100,
+    address: "33270", # Floirac
+    latitude: 44.8422,
+    longitude: -0.5385,
     target_hour: 3,
     target_minute: 45
   }
@@ -343,7 +357,7 @@ puts "✅ #{bordeaux_buddies.count} buddies Marathon de Bordeaux créés"
 
 users.each_with_index do |user, index|
 
-  # 
+  #
   next if ["Robert","Laurie","Alex","Julien","Emma","Hugo","Clara","Chloé"].include?(user.first_name)
 
   city = users_data[index][:city]
@@ -359,7 +373,7 @@ users.each_with_index do |user, index|
       0, 5, 10, 15, 20, 25,
       30, 35, 40, 45, 50, 55
     ].sample,
-    address: city,
+    address: postcodes.fetch(city, city),
     latitude: latitude,
     longitude: longitude
   )
@@ -378,7 +392,7 @@ users.each_with_index do |user, index|
       target_minute: [
         0, 10, 20, 30, 40, 50
       ].sample,
-      address: city,
+      address: postcodes.fetch(city, city),
       latitude: latitude,
       longitude: longitude
     )
