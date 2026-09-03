@@ -21,6 +21,8 @@
   height: 180px;
   object-fit: cover;
   display: block;
+}
+.article-card:first-of-type .article-card__image {
   transform: scale(1.2) translate(8%, -8%);
   transform-origin: center;
 }
