@@ -2,17 +2,17 @@
 <!-- ########## TOGGLE SEARCH CARD ########## -->
   <div data-controller="toggle" class="toggle-card">
     <div class="card-toggle toggle-card__tabs">
-      <button class="toggle-option active toggle-card__tab"
+      <button class="toggle-option toggle-card__tab <%= 'active' unless @race.errors.any? %>"
               data-action="toggle#show"
               data-toggle-index-param="0"
               data-toggle-target="option">Rechercher une course</button>
-      <button class="toggle-option toggle-card__tab"
+      <button class="toggle-option toggle-card__tab <%= 'active' if @race.errors.any? %>"
               data-action="toggle#show"
               data-toggle-index-param="1"
               data-toggle-target="option">Créer une course</button>
     </div>
 
-    <div class="form-panel active toggle-card__panel" data-toggle-target="panel">
+    <div class="form-panel toggle-card__panel <%= 'active' unless @race.errors.any? %>" data-toggle-target="panel">
       <!-- search form -->
       <%= form_with url: races_path, method: :get, class: "race-search-form toggle-card__search-row" do |f| %>
         <i class="fa-solid fa-magnifying-glass toggle-card__search-icon"></i>
@@ -33,7 +33,7 @@
       </div>
       -->
     </div>
-    <div class="form-panel toggle-card__panel" data-toggle-target="panel">
+    <div class="form-panel toggle-card__panel <%= 'active' if @race.errors.any? %>" data-toggle-target="panel">
       <!-- create form -->
       <%= simple_form_for @race do |f| %>
         <%= f.input :name,

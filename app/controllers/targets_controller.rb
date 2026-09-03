@@ -1,9 +1,4 @@
 class TargetsController < ApplicationController
-  def new
-    @race = Race.find(params[:race_id])
-    @target = Target.new
-  end
-
   def create
     @race = Race.find(params[:race_id])
     @target = @race.targets.new(target_params)
@@ -12,8 +7,9 @@ class TargetsController < ApplicationController
     if @target.save
       redirect_to @race
     else
-      puts @target.errors.full_messages
-      render :new, status: :unprocessable_entity
+      @new_target = @target
+      @target = nil
+      render "races/show", status: :unprocessable_entity
     end
   end
 

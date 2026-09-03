@@ -66,9 +66,9 @@ class MessagesController < ApplicationController
   end
 end
 
-def authorize_message!
-  return if @message.user == current_user
+  def authorize_message!
+    return if @message.user == current_user
 
-  redirect_to chat_path(@chat),
-              alert: "Vous ne pouvez pas modifier ce message."
-end
+    redirect_to chat_path(@chat),
+    alert: "Vous ne pouvez pas modifier ce message."
+  end
