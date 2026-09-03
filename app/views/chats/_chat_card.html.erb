@@ -1,0 +1,29 @@
+<div class="chat-card <%= "chat-card-unread" if chat.unread_for?(current_user) %>" id="chat-card-<%= chat.id %>">
+  <% other_user = chat.other_user(current_user) %>
+  <%= link_to buddy_path(other_user) do %>
+    <div class="chat-card-avatar">
+      <% if other_user.avatar.attached? %>
+        <%= image_tag other_user.avatar %>
+      <% else %>
+        <span><%= other_user.first_name.first %><%= other_user.last_name.first %></span>
+      <% end %>
+      <i class="fa-solid fa-eye"></i>
+    </div>
+    <% end %>
+  <div class="chat-card-body">
+    <h3 class="chat-card-title">
+      <span><%= other_user.first_name %> <%= other_user.last_name.first %>.</span> <br>
+      <%= chat.invite.target.race.name %>
+    </h3>
+
+    <%= link_to "Ouvrir la discussion", chat_path(chat),
+          class: "chat-card-btn" %>
+  </div>
+
+  <%= link_to chat_path(chat),
+        data: { turbo_method: :delete,
+                turbo_confirm: "Supprimer cette conversation ?" },
+        class: "chat-card-delete" do %>
+    <i class="fa-solid fa-trash"></i>
+  <% end %>
+</div>

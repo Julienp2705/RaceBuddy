@@ -7,6 +7,11 @@
   <%= link_to chats_path, class: "bottom-navbar__item #{'bottom-navbar__item--active' if current_page?(chats_path)}" do %>
   <i class="fa-solid fa-comments"></i>
   <span>Messages</span>
+  <span id="nav-unread-badge">
+    <% if user_signed_in? %>
+      <%= render "shared/unread_badge", user: current_user %>
+    <% end %>
+  </span>
   <% end %>
 
   <%= link_to profile_path, class: "bottom-navbar__item #{'bottom-navbar__item--active' if current_page?(profile_path)}" do %>

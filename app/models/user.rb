@@ -41,6 +41,7 @@ class User < ApplicationRecord
     last  = last_name.present? ? last_name.first : ""
     "#{first}#{last}".upcase
   end
+
   def votes_count
     received_ratings.count
   end
@@ -49,6 +50,13 @@ class User < ApplicationRecord
     return 0 if votes_count.zero?
 
     (received_ratings.where(rating: 1).count * 100.0 / votes_count).round
+  end
+
+  def unread_messages_count
+    Chat.joins(invite: :target)
+        .where("invites.user_id = :id OR targets.user_id = :id", id: id)
+        .includes(:invite, :messages)
+        .sum { |chat| chat.unread_count_for(self) }
   end
 
   private

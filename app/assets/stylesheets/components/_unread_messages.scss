@@ -1,0 +1,39 @@
+.chat-card.chat-card-unread {
+  border-color: $rb-accent;
+  background: rgba($rb-accent, 0.06);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 10px;
+    height: 10px;
+    background: $rb-accent;
+    border-radius: 50%;
+  }
+}
+
+.bottom-navbar a {
+  position: relative;
+}
+
+#nav-unread-badge {
+  white-space: nowrap;
+  position: absolute;
+  top: -4px;
+  right: 20px;
+  z-index: 2;
+}
+
+.nav-badge {
+  display: block;
+  min-width: 18px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: $rb-accent;
+  color: $rb-light;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-align: center;
+}

@@ -34,7 +34,6 @@ class MessagesController < ApplicationController
     else
       @messages = @chat.messages.includes(:user).order(created_at: :asc)
       @other_user = @chat.other_user(current_user)
-
       render "chats/show", status: :unprocessable_entity
     end
   end
@@ -64,11 +63,11 @@ class MessagesController < ApplicationController
       @chat.invite.target.user
     ]
   end
-end
 
-def authorize_message!
-  return if @message.user == current_user
+  def authorize_message!
+    return if @message.user == current_user
 
-  redirect_to chat_path(@chat),
-              alert: "Vous ne pouvez pas modifier ce message."
+    redirect_to chat_path(@chat),
+                alert: "Vous ne pouvez pas modifier ce message."
+  end
 end

@@ -32,6 +32,9 @@
   <body>
     <%= render "shared/top_header" %>      <%# mobile only %>
     <%= render "shared/flashes" %>
+    <% if user_signed_in? %>
+      <%= turbo_stream_from current_user %>
+    <% end %>
     <%= yield %>
     <%= render "shared/bottom_navbar" %>   <%# mobile only, fixed to bottom %>
   </body>
