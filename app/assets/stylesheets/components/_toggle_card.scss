@@ -11,7 +11,7 @@
   color: $rb-grey;
   margin-bottom: 2rem;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.12);
-  padding: .25rem 1.75rem;
+  padding: 1.75rem 1.75rem;
 
 
   &__tabs {
@@ -25,7 +25,7 @@
     border: none;
     background-color: inherit;
     color: $rb-grey;
-    padding: 0.75rem 0.5rem 1rem;
+    padding: 0rem 0rem .75rem 0rem;
 
     &.active {
       border-bottom: $rb-accent solid 1px;
@@ -67,7 +67,7 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      padding: 0.75rem 0.5rem 1rem;
+      padding: 0.75rem 0 0 0;
     }
 
     &__date-field {
@@ -106,7 +106,7 @@
     flex: 1;
     border-radius: $border-radius-xl;
     border: 1px solid $rb-sand;
-    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    padding: 0.75rem 0rem 0.75rem 2.75rem;
   }
 
   &__search-icon {

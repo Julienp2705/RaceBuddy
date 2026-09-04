@@ -69,10 +69,12 @@
 }
 
 .top-header__avatar {
-  width: 64px;
+  width: 46px;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: $border-radius-xl;
+
+
 }
 
 .top-header__monogram {

@@ -37,7 +37,7 @@
                   class="message-action"
                   data-bs-toggle="modal"
                   data-bs-target="#editMessageModal<%= mes.id %>">
-                  <i class="fa-solid fa-pencil"></i>
+                  <i class="fa-solid fa-pen"></i>
                 </button>
 
                 <%= link_to chat_message_path(chat, mes),
@@ -46,7 +46,7 @@
                       turbo_confirm: "Supprimer ce message ?"
                     },
                     class: "message-action message-delete" do %>
-                  <i class="fa-regular fa-trash-can"></i>
+                  <i class="fa-solid fa-trash"></i>
                 <% end %>
               </div>
             <% end %>
