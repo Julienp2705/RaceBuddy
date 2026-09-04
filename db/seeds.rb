@@ -2,19 +2,48 @@
 
 puts "🌱 Nettoyage des données..."
 
-# ============================================================
-# NETTOYAGE
-# ============================================================
-
-Message.destroy_all
-Chat.destroy_all
-BuddyRating.destroy_all
-Invite.destroy_all
-Target.destroy_all
-Race.destroy_all
-User.destroy_all
+Message.delete_all
+Chat.delete_all
+BuddyRating.delete_all
+Invite.delete_all
+Target.delete_all
+Race.delete_all
+User.delete_all
 
 puts "✅ Base nettoyée"
+
+
+# ============================================================
+# LIEUX (codes postaux de la métropole bordelaise)
+# ============================================================
+
+BORDEAUX_SPOTS = {
+  "33000" => [44.8378, -0.5792], # Bordeaux centre
+  "33100" => [44.8410, -0.5520], # La Bastide
+  "33110" => [44.8626, -0.6003], # Le Bouscat
+  "33130" => [44.8085, -0.5505], # Bègles
+  "33150" => [44.8558, -0.5238], # Cenon
+  "33170" => [44.7725, -0.6156], # Gradignan
+  "33200" => [44.8480, -0.6110], # Caudéran
+  "33270" => [44.8422, -0.5385], # Floirac
+  "33300" => [44.8650, -0.5650], # Bordeaux Nord
+  "33400" => [44.8048, -0.5952], # Talence
+  "33600" => [44.8067, -0.6312], # Pessac
+  "33700" => [44.8378, -0.6435], # Mérignac
+  "33800" => [44.8270, -0.5700]  # Saint-Michel
+}.freeze
+
+OTHER_SPOTS = {
+  "75011" => [48.8566, 2.3522],  # Paris
+  "69003" => [45.7640, 4.8357],  # Lyon
+  "31000" => [43.6047, 1.4442],  # Toulouse
+  "44000" => [47.2184, -1.5536], # Nantes
+  "06000" => [43.7102, 7.2620],  # Nice
+  "59000" => [50.6292, 3.0573],  # Lille
+  "34000" => [43.6108, 3.8767]   # Montpellier
+}.freeze
+
+ALL_SPOTS = BORDEAUX_SPOTS.merge(OTHER_SPOTS).freeze
 
 
 # ============================================================
@@ -23,149 +52,60 @@ puts "✅ Base nettoyée"
 
 puts "👤 Création des utilisateurs..."
 
-users_data = [
-  # ----------------------------------------------------------
-  # BORDEAUX ET ALENTOURS
-  # ----------------------------------------------------------
-
-  {
-    first_name: "Alex",
-    last_name: "Kerespars",
-    email: "alex@example.com",
-    city: "Bordeaux"
-  },
-  {
-    first_name: "Laurie",
-    last_name: "Lescos",
-    email: "laurie@example.com",
-    city: "Bordeaux"
-  },
-  {
-    first_name: "Julien",
-    last_name: "Poulain",
-    email: "julien@example.com",
-    city: "Talence"
-  },
-  {
-    first_name: "Robert",
-    last_name: "Delaoutre",
-    email: "robert@example.com",
-    city: "Pessac"
-  },
-  {
-    first_name: "Emma",
-    last_name: "Robert",
-    email: "emma.robert@example.com",
-    city: "Talence"
-  },
-  {
-    first_name: "Hugo",
-    last_name: "Richard",
-    email: "hugo.richard@example.com",
-    city: "Bordeaux"
-  },
-  {
-    first_name: "Clara",
-    last_name: "Durand",
-    email: "clara.durand@example.com",
-    city: "Bordeaux"
-  },
-  {
-    first_name: "Maxime",
-    last_name: "Moreau",
-    email: "maxime.moreau@example.com",
-    city: "Bègles"
-  },
-  {
-    first_name: "Chloé",
-    last_name: "Simon",
-    email: "chloe.simon@example.com",
-    city: "Bordeaux"
-  },
-  {
-    first_name: "Nathan",
-    last_name: "Laurent",
-    email: "nathan.laurent@example.com",
-    city: "Cenon"
-  },
-
-  # ----------------------------------------------------------
-  # AUTRES VILLES
-  # ----------------------------------------------------------
-
-  {
-    first_name: "Camille",
-    last_name: "Lefèvre",
-    email: "camille.lefevre@example.com",
-    city: "Paris"
-  },
-  {
-    first_name: "Louis",
-    last_name: "Michel",
-    email: "louis.michel@example.com",
-    city: "Lyon"
-  },
-  {
-    first_name: "Sarah",
-    last_name: "Garcia",
-    email: "sarah.garcia@example.com",
-    city: "Toulouse"
-  },
-  {
-    first_name: "Antoine",
-    last_name: "David",
-    email: "antoine.david@example.com",
-    city: "Nantes"
-  },
-  {
-    first_name: "Laura",
-    last_name: "Bertrand",
-    email: "laura.bertrand@example.com",
-    city: "Montpellier"
-  }
+named_users = [
+  { first_name: "Laurie",  last_name: "Lescos" },
+  { first_name: "Robert",  last_name: "Delaoutre" },
+  { first_name: "Julien",  last_name: "Poulain" },
+  { first_name: "Alex",    last_name: "Kerespars" },
+  { first_name: "Emma",    last_name: "Robert" },
+  { first_name: "Hugo",    last_name: "Richard" },
+  { first_name: "Clara",   last_name: "Durand" },
+  { first_name: "Chloé",   last_name: "Simon" },
+  { first_name: "Maxime",  last_name: "Moreau" },
+  { first_name: "Nathan",  last_name: "Laurent" },
+  { first_name: "Camille", last_name: "Lefèvre" },
+  { first_name: "Louis",   last_name: "Michel" },
+  { first_name: "Sarah",   last_name: "Garcia" },
+  { first_name: "Antoine", last_name: "David" },
+  { first_name: "Laura",   last_name: "Bertrand" }
 ]
 
-first_names = [
-  "Paul", "Marie", "Arthur", "Léa", "Gabriel",
-  "Manon", "Nathan", "Inès", "Jules", "Zoé",
-  "Romain", "Eva", "Alexandre", "Louise", "Mathis",
-  "Sophie", "Baptiste", "Élodie", "Théo", "Margot"
+filler_first_names = %w[
+  Paul Marie Arthur Léa Gabriel Manon Inès Jules Zoé Romain
+  Eva Alexandre Louise Mathis Sophie Baptiste Élodie Théo Margot Lucas
 ]
 
-last_names = [
-  "Leroy", "Roux", "Faure", "Blanc", "Garnier",
-  "Chevalier", "Robin", "Masson", "Henry", "Marchand",
-  "Noël", "Meyer", "Girard", "André", "Mercier"
+filler_last_names = %w[
+  Leroy Roux Faure Blanc Garnier Chevalier Robin Masson Henry Marchand
+  Noël Meyer Girard André Mercier
 ]
 
-cities = [
-  "Paris",
-  "Lyon",
-  "Toulouse",
-  "Nantes",
-  "Nice",
-  "Lille"
-]
-
-while users_data.length < 50
-  index = users_data.length
-
-  users_data << {
-    first_name: first_names[index % first_names.length],
-    last_name: last_names[index % last_names.length],
-    email: "runner#{index + 1}@example.com",
-    city: cities.sample
+30.times do |i|
+  named_users << {
+    first_name: filler_first_names[i % filler_first_names.length],
+    last_name: filler_last_names[i % filler_last_names.length]
   }
 end
 
-users = users_data.map do |data|
+users = named_users.each_with_index.map do |data, index|
+  email = index < 15 ? "#{data[:first_name].parameterize}@example.com"
+                     : "runner#{index}@example.com"
+
   User.create!(
     first_name: data[:first_name],
     last_name: data[:last_name],
-    email: data[:email],
+    email: email,
     password: "password"
   )
 end
+
+def find_user(users, first_name)
+  users.find { |u| u.first_name == first_name }
+end
+
+laurie = find_user(users, "Laurie")
+robert = find_user(users, "Robert")
+julien = find_user(users, "Julien")
 
 puts "✅ #{users.count} utilisateurs créés"
 
@@ -176,86 +116,74 @@ puts "✅ #{users.count} utilisateurs créés"
 
 puts "🏃 Création des courses..."
 
-races_data = [
-  ["Marathon de Bordeaux", 42.195],
-  ["Semi-Marathon de Bordeaux", 21.1],
-  ["10 km de Bordeaux", 10],
-  ["Marathon de Paris", 42.195],
-  ["Semi-Marathon de Paris", 21.1],
-  ["Marathon de Lyon", 42.195],
-  ["Semi-Marathon de Lyon", 21.1],
-  ["Marathon de Toulouse", 42.195],
-  ["10 km de Toulouse", 10],
-  ["Marathon de Nantes", 42.195],
-  ["Semi-Marathon de Nantes", 21.1],
-  ["Marathon de Nice", 42.195],
-  ["Trail des Vignes", 25],
-  ["Trail du Médoc", 30],
-  ["Course des Lumières", 10],
-  ["Urban Trail Bordeaux", 15],
-  ["Les Foulées de Pessac", 10],
-  ["Les Foulées de Mérignac", 10],
-  ["Run & Wine", 12],
-  ["Bordeaux Night Run", 10],
-  ["Marathon des Landes", 42.195],
-  ["Trail du Bassin", 32],
-  ["Course du Lac", 15],
-  ["Semi-Marathon de La Rochelle", 21.1],
-  ["Marathon de La Rochelle", 42.195],
-  ["Trail de la Dune", 20],
-  ["Les 20 km de Paris", 20],
-  ["Ekiden de Bordeaux", 42.195],
-  ["Bordeaux Relais Running", 10],
-  ["Gironde Running Challenge", 21.1]
-]
+# --- La course vedette de la démo -------------------------------------------
 
-races = races_data.each_with_index.map do |(name, distance), index|
+bordeaux_marathon = Race.create!(
+  name: "Marathon de Bordeaux",
+  distance: 42.195,
+  race_date: Date.new(2026, 11, 8),
+  url: "https://www.marathon-de-bordeaux-ag2r-la-mondiale.fr/"
+)
+
+# --- Courses passées (pour l'historique de Laurie et Robert) ----------------
+
+past_races = [
+  ["Semi-Marathon de Bordeaux",    21.1,  Date.current - 12.months],
+  ["10 km de Bordeaux",            10.0,  Date.current - 11.months],
+  ["Marathon de La Rochelle",      42.195, Date.current - 8.months],
+  ["Trail du Médoc",               30.0,  Date.current - 6.months],
+  ["Les Foulées de Pessac",        10.0,  Date.current - 2.months]
+].map do |name, distance, date|
   Race.create!(
     name: name,
     distance: distance,
-    url: "https://example.com/races/#{name.parameterize}",
-    race_date: Date.current + (index + 1).months
+    race_date: date,
+    url: "https://example.com/courses/#{name.parameterize}"
   )
 end
 
-puts "✅ #{races.count} courses créées"
+semi_bordeaux    = past_races[0]
+dix_km_bordeaux  = past_races[1]
+marathon_rochelle = past_races[2]
+trail_medoc      = past_races[3]
+
+# --- Autres courses à venir -------------------------------------------------
+
+upcoming_races = [
+  ["Marathon de Paris",             42.195, 2],
+  ["Semi-Marathon de Paris",        21.1,   3],
+  ["Marathon de Lyon",              42.195, 4],
+  ["Semi-Marathon de Lyon",         21.1,   5],
+  ["Marathon de Toulouse",          42.195, 6],
+  ["10 km de Toulouse",             10.0,   1],
+  ["Marathon de Nantes",            42.195, 7],
+  ["Semi-Marathon de Nantes",       21.1,   8],
+  ["Marathon de Nice",              42.195, 9],
+  ["Trail des Vignes",              25.0,   3],
+  ["Urban Trail Bordeaux",          15.0,   5],
+  ["Les Foulées de Mérignac",       10.0,   2],
+  ["Run & Wine",                    12.0,   6],
+  ["Bordeaux Night Run",            10.0,   4],
+  ["Marathon des Landes",           42.195, 10],
+  ["Trail du Bassin",               32.0,   7],
+  ["Course du Lac",                 15.0,   3],
+  ["Semi-Marathon de La Rochelle",  21.1,   8],
+  ["Trail de la Dune",              20.0,   9],
+  ["Les 20 km de Paris",            20.0,   11]
+].map do |name, distance, months|
+  Race.create!(
+    name: name,
+    distance: distance,
+    race_date: Date.current + months.months,
+    url: "https://example.com/courses/#{name.parameterize}"
+  )
+end
+
+all_races = [bordeaux_marathon] + past_races + upcoming_races
+
+puts "✅ #{Race.count} courses créées"
 
 
-# ============================================================
-# LOCATIONS
-# ============================================================
-
-locations = {
-  "Bordeaux" => [44.8378, -0.5792],
-  "Mérignac" => [44.8378, -0.6435],
-  "Pessac" => [44.8067, -0.6312],
-  "Talence" => [44.8048, -0.5952],
-  "Bègles" => [44.8085, -0.5505],
-  "Cenon" => [44.8558, -0.5238],
-  "Paris" => [48.8566, 2.3522],
-  "Lyon" => [45.7640, 4.8357],
-  "Toulouse" => [43.6047, 1.4442],
-  "Nantes" => [47.2184, -1.5536],
-  "Nice" => [43.7102, 7.2620],
-  "Lille" => [50.6292, 3.0573],
-  "Montpellier" => [43.6108, 3.8767]
-}
-
-postcodes = {
-  "Bordeaux" => "33000",
-  "Mérignac" => "33700",
-  "Pessac" => "33600",
-  "Talence" => "33400",
-  "Bègles" => "33130",
-  "Cenon" => "33150",
-  "Paris" => "75001",
-  "Lyon" => "69001",
-  "Toulouse" => "31000",
-  "Nantes" => "44000",
-  "Nice" => "06000",
-  "Lille" => "59000",
-  "Montpellier" => "34000"
-}
 # ============================================================
 # TARGETS
 # ============================================================
@@ -264,171 +192,155 @@ puts "🎯 Création des objectifs..."
 
 targets = []
 
-
-# ============================================================
-# OBJECTIFS BORDEAUX
-#.
-# ============================================================
-bordeaux_race = races.find do |race|
-  race.name == "Marathon de Bordeaux"
-end
-
-raise "❌ Marathon de Bordeaux introuvable !" unless bordeaux_race
-
-bordeaux_buddies = [
-  {
-    first_name: "Laurie",
-    address: "33000", # Bordeaux Centre
-    latitude: 44.8378,
-    longitude: -0.5792,
-    target_hour: 3,
-    target_minute: 15
-  },
-  {
-    first_name: "Alex",
-    address: "33400", # Talence
-    latitude: 44.8048,
-    longitude: -0.5952,
-    target_hour: 3,
-    target_minute: 20
-  },
-  {
-    first_name: "Julien",
-    address: "33100", # Bastide
-    latitude: 44.8410,
-    longitude: -0.5520,
-    target_hour: 3,
-    target_minute: 25
-  },
-  {
-    first_name: "Emma",
-    address: "33200", # Caudéran
-    latitude: 44.8480,
-    longitude: -0.6110,
-    target_hour: 3,
-    target_minute: 30
-  },
-  {
-    first_name: "Hugo",
-    address: "33800", # Saint-Michel
-    latitude: 44.8270,
-    longitude: -0.5700,
-    target_hour: 3,
-    target_minute: 35
-  },
-  {
-    first_name: "Clara",
-    address: "33110", # Le Bouscat
-    latitude: 44.8626,
-    longitude: -0.6003,
-    target_hour: 3,
-    target_minute: 40
-  },
-  {
-    first_name: "Chloé",
-    address: "33270", # Floirac
-    latitude: 44.8422,
-    longitude: -0.5385,
-    target_hour: 3,
-    target_minute: 45
-  }
-]
-
-bordeaux_buddies.each do |buddy_data|
-  user = users.find { |u| u.first_name == buddy_data[:first_name] }
-
-  target = Target.create!(
-    user: user,
-    race: bordeaux_race,
-    target_hour: buddy_data[:target_hour],
-    target_minute: buddy_data[:target_minute],
-    address: buddy_data[:address],
-    latitude: buddy_data[:latitude],
-    longitude: buddy_data[:longitude]
-  )
-  targets << target
-end
-
-puts "✅ #{bordeaux_buddies.count} buddies Marathon de Bordeaux créés"
-
-# ============================================================
-# AUTRES OBJECTIFS
-# ============================================================
-
-users.each_with_index do |user, index|
-
-  #
-  next if ["Robert","Laurie","Alex","Julien","Emma","Hugo","Clara","Chloé"].include?(user.first_name)
-
-  city = users_data[index][:city]
-  latitude, longitude = locations[city]
-
-  race = races[index % races.length]
+def build_target(targets, user:, race:, hour:, minute:, postcode:, spots:)
+  latitude, longitude = spots.fetch(postcode)
 
   target = Target.create!(
     user: user,
     race: race,
-    target_hour: [2, 2, 3, 3, 4].sample,
-    target_minute: [
-      0, 5, 10, 15, 20, 25,
-      30, 35, 40, 45, 50, 55
-    ].sample,
-    address: postcodes.fetch(city, city),
+    target_hour: hour,
+    target_minute: minute,
+    address: postcode,
     latitude: latitude,
     longitude: longitude
   )
 
   targets << target
-
-  # Un deuxième objectif pour certains utilisateurs
-  if index % 4 == 0
-
-    second_race = races[(index + 7) % races.length]
-
-    second_target = Target.create!(
-      user: user,
-      race: second_race,
-      target_hour: [2, 3, 4].sample,
-      target_minute: [
-        0, 10, 20, 30, 40, 50
-      ].sample,
-      address: postcodes.fetch(city, city),
-      latitude: latitude,
-      longitude: longitude
-    )
-
-    targets << second_target
-  end
+  target
 end
 
-puts "✅ #{targets.count} objectifs créés"
+# --- Laurie : deux courses passées + le marathon à venir --------------------
+
+build_target(targets, user: laurie, race: semi_bordeaux,
+             hour: 1, minute: 50, postcode: "33000", spots: ALL_SPOTS)
+
+build_target(targets, user: laurie, race: marathon_rochelle,
+             hour: 3, minute: 55, postcode: "33000", spots: ALL_SPOTS)
+
+laurie_target = build_target(targets, user: laurie, race: bordeaux_marathon,
+                             hour: 3, minute: 45, postcode: "33000", spots: ALL_SPOTS)
+
+# --- Robert : une course passée + le marathon à venir -----------------------
+
+build_target(targets, user: robert, race: trail_medoc,
+             hour: 3, minute: 20, postcode: "33200", spots: ALL_SPOTS)
+
+build_target(targets, user: robert, race: dix_km_bordeaux,
+             hour: 0, minute: 50, postcode: "33200", spots: ALL_SPOTS)
+
+robert_target = build_target(targets, user: robert, race: bordeaux_marathon,
+                             hour: 3, minute: 45, postcode: "33200", spots: ALL_SPOTS)
+
+# --- Julien : aucun objectif (profil neuf, à remplir pendant la démo) -------
+
+# --- Les autres buddies du Marathon de Bordeaux, autour de 3h45 -------------
+
+bordeaux_buddies = [
+  { name: "Alex",   hour: 3, minute: 30, postcode: "33400" }, # -15 min
+  { name: "Chloé",  hour: 3, minute: 35, postcode: "33270" }, # -10 min
+  { name: "Hugo",   hour: 3, minute: 40, postcode: "33800" }, # -5 min
+  { name: "Maxime", hour: 3, minute: 40, postcode: "33130" }, # -5 min
+  { name: "Clara",  hour: 3, minute: 50, postcode: "33110" }, # +5 min
+  { name: "Emma",   hour: 3, minute: 55, postcode: "33600" }, # +10 min
+  { name: "Nathan", hour: 4, minute: 0,  postcode: "33150" }  # +15 min
+]
+
+bordeaux_targets = bordeaux_buddies.map do |buddy|
+  build_target(targets,
+               user: find_user(users, buddy[:name]),
+               race: bordeaux_marathon,
+               hour: buddy[:hour],
+               minute: buddy[:minute],
+               postcode: buddy[:postcode],
+               spots: ALL_SPOTS)
+end
+
+puts "✅ #{targets.count} objectifs sur le Marathon de Bordeaux et l'historique"
+
+# --- Le reste des utilisateurs, réparti sur les autres courses --------------
+
+reserved = ["Laurie", "Robert", "Julien"] + bordeaux_buddies.map { |b| b[:name] }
+
+users.reject { |u| reserved.include?(u.first_name) }.each_with_index do |user, index|
+  postcode = ALL_SPOTS.keys[index % ALL_SPOTS.keys.length]
+  race = upcoming_races[index % upcoming_races.length]
+
+  build_target(targets,
+               user: user,
+               race: race,
+               hour: [2, 3, 3, 4].sample,
+               minute: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].sample,
+               postcode: postcode,
+               spots: ALL_SPOTS)
+
+  next unless index % 3 == 0
+
+  build_target(targets,
+               user: user,
+               race: upcoming_races[(index + 5) % upcoming_races.length],
+               hour: [2, 3, 4].sample,
+               minute: [0, 10, 20, 30, 40, 50].sample,
+               postcode: postcode,
+               spots: ALL_SPOTS)
+end
+
+puts "✅ #{targets.count} objectifs créés au total"
 
 
 # ============================================================
 # INVITES
 # ============================================================
+# La validation du modèle interdit deux invitations entre les mêmes
+# personnes, quel que soit le sens. On suit donc les paires déjà utilisées.
+# ============================================================
+
+puts "🤝 Création des invitations..."
 
 invites = []
-invited_pairs = Set.new
+paired = Set.new
 
-targets.each do |target|
+create_invite = lambda do |sender, target, status|
+  pair = [sender.id, target.user_id].sort
 
-  possible_users = users.reject do |user|
+  return nil if sender.id == target.user_id
+  return nil if paired.include?(pair)
+
+  invite = Invite.create!(user: sender, target: target, status: status)
+
+  paired << pair
+  invites << invite
+  invite
+end
+
+# --- Laurie et Robert sont connectés à plusieurs buddies --------------------
+
+laurie_accepted = [
+  create_invite.call(find_user(users, "Alex"),   laurie_target, "accepted"),
+  create_invite.call(find_user(users, "Clara"),  laurie_target, "accepted"),
+  create_invite.call(find_user(users, "Emma"),   laurie_target, "accepted")
+].compact
+
+robert_accepted = [
+  create_invite.call(find_user(users, "Hugo"),   robert_target, "accepted"),
+  create_invite.call(find_user(users, "Nathan"), robert_target, "accepted")
+].compact
+
+# --- Quelques invitations en attente pour la démo ---------------------------
+
+create_invite.call(find_user(users, "Chloé"),  laurie_target, "pending")
+create_invite.call(find_user(users, "Maxime"), robert_target, "pending")
+
+# --- Invitations aléatoires entre les autres --------------------------------
+
+targets.reject { |t| [laurie_target, robert_target].include?(t) }.each do |target|
+  candidates = users.reject do |user|
     user.id == target.user_id ||
-      invited_pairs.include?([user.id, target.user_id].sort)
+      user == julien ||
+      paired.include?([user.id, target.user_id].sort)
   end
 
-  # Entre 1 et 3 invitations
-  possible_users.sample(rand(1..3)).each do |user|
-
-    invite = Invite.create!(
-      user: user,
-      target: target,
-      status: ["pending", "accepted"].sample
-    )
-
-    invited_pairs << [user.id, target.user_id].sort
-    invites << invite
+  candidates.sample(rand(0..2)).each do |sender|
+    create_invite.call(sender, target, ["pending", "accepted"].sample)
   end
 end
 
@@ -441,20 +353,13 @@ puts "✅ #{invites.count} invitations créées"
 
 puts "💬 Création des conversations..."
 
-chats = []
+accepted_invites = invites.select { |invite| invite.status == "accepted" }
 
-accepted_invites = invites.select do |invite|
-  invite.status == "accepted"
-end
-
-accepted_invites.each do |invite|
-
-  chat = Chat.create!(
+chats = accepted_invites.map do |invite|
+  Chat.create!(
     invite: invite,
-    title: "#{invite.target.user.first_name} #{invite.target.user.last_name}"
+    title: invite.target.race.name
   )
-
-  chats << chat
 end
 
 puts "✅ #{chats.count} conversations créées"
@@ -464,51 +369,54 @@ puts "✅ #{chats.count} conversations créées"
 # MESSAGES
 # ============================================================
 
-puts "✉️ Création des messages..."
+puts "✉️  Création des messages..."
 
-messages_content = [
-  "Salut ! Tu t'entraînes pour cette course ?",
-  "Oui, je prépare la course depuis quelques semaines !",
-  "Tu vises quel temps ?",
-  "J'aimerais passer sous les 2 heures.",
-  "Ça serait top de faire une sortie ensemble !",
-  "Carrément, je suis disponible ce week-end.",
+conversation = [
+  "Salut ! Tu prépares aussi cette course ?",
+  "Oui, j'ai commencé le plan il y a six semaines.",
+  "Tu vises quel temps au final ?",
+  "J'aimerais bien tenir l'allure jusqu'au bout cette fois.",
+  "Ça te dirait une sortie longue ensemble ce week-end ?",
+  "Carrément, samedi matin je suis libre.",
   "Tu cours plutôt le matin ou le soir ?",
-  "Je préfère courir le matin quand il ne fait pas trop chaud.",
-  "On peut se retrouver sur les quais ?",
-  "Oui, ça me va parfaitement.",
-  "Tu fais combien de kilomètres par semaine ?",
-  "Environ 35 à 40 km actuellement.",
-  "Ça progresse bien alors !",
-  "Oui, je commence à sentir une vraie différence.",
-  "On se tient au courant pour la prochaine sortie.",
-  "Avec plaisir ! À bientôt 🏃",
-  "Bonne préparation pour la course !",
-  "Merci, toi aussi ! 💪"
+  "Le matin, il fait beaucoup trop chaud l'après-midi.",
+  "On se retrouve sur les quais alors ?",
+  "Parfait, disons 8h devant le miroir d'eau.",
+  "Tu tournes à combien de kilomètres par semaine ?",
+  "Entre 40 et 45 en ce moment.",
+  "Beau volume, ça va payer le jour J.",
+  "J'espère ! Le fractionné commence à rentrer.",
+  "On se cale ça pour la semaine prochaine.",
+  "Ça marche, à samedi 🏃"
 ]
 
-chats.each do |chat|
-
+chats.each_with_index do |chat, chat_index|
   user_one = chat.invite.user
   user_two = chat.invite.target.user
 
-  number_of_messages = rand(4..12)
+  count = rand(4..10)
+  start = rand(3..25).days.ago
 
-  number_of_messages.times do |message_index|
-
-    sender = message_index.even? ? user_one : user_two
-
-    # On crée un historique progressif
-    created_at = rand(1..30).days.ago + rand(0..12).hours
+  count.times do |i|
+    sender = i.even? ? user_one : user_two
+    sent_at = start + (i * rand(20..180)).minutes
 
     Message.create!(
       chat: chat,
       user: sender,
-      content: messages_content.sample,
-      created_at: created_at,
-      updated_at: created_at
+      content: conversation[i % conversation.length],
+      created_at: sent_at,
+      updated_at: sent_at
     )
   end
+
+  # Une conversation sur trois reste non lue, pour voir les pastilles.
+  next if chat_index % 3 == 0
+
+  chat.update_columns(
+    inviter_read_at: Time.current,
+    invitee_read_at: Time.current
+  )
 end
 
 puts "✅ #{Message.count} messages créés"
@@ -518,32 +426,48 @@ puts "✅ #{Message.count} messages créés"
 # BUDDY RATINGS
 # ============================================================
 
-puts "👍 Création des évaluations des buddies..."
+puts "👍 Création des évaluations..."
 
-buddy_ratings = []
+ratings = []
 
-accepted_invites = invites.select do |invite|
-  invite.status == "accepted"
+rate = lambda do |author, buddy, value|
+  return if author.nil? || buddy.nil? || author == buddy
+  return if BuddyRating.exists?(user: author, buddy: buddy)
+
+  ratings << BuddyRating.create!(user: author, buddy: buddy, rating: value)
 end
 
-accepted_invites.sample([accepted_invites.length, 15].min).each do |invite|
+# --- Laurie : bien notée, quelques votes ------------------------------------
 
-  user = invite.target.user
-  buddy = invite.user
+rate.call(find_user(users, "Alex"),   laurie,  1)
+rate.call(find_user(users, "Clara"),  laurie,  1)
+rate.call(find_user(users, "Emma"),   laurie,  1)
+rate.call(find_user(users, "Hugo"),   laurie,  1)
+rate.call(find_user(users, "Nathan"), laurie, -1)
 
-  next if user == buddy
-  next if BuddyRating.exists?(user: user, buddy: buddy)
+# --- Robert : très bien noté ------------------------------------------------
 
-  buddy_rating = BuddyRating.create!(
-    user: user,
-    buddy: buddy,
-    rating: [1, 1, 1, 1, -1].sample
-  )
+rate.call(find_user(users, "Hugo"),   robert, 1)
+rate.call(find_user(users, "Nathan"), robert, 1)
+rate.call(find_user(users, "Chloé"),  robert, 1)
+rate.call(find_user(users, "Maxime"), robert, 1)
 
-  buddy_ratings << buddy_rating
+# --- Laurie et Robert notent aussi leurs buddies ----------------------------
+
+rate.call(laurie, find_user(users, "Alex"),  1)
+rate.call(laurie, find_user(users, "Clara"), 1)
+rate.call(robert, find_user(users, "Hugo"),  1)
+
+# --- Les autres buddies du marathon reçoivent quelques avis -----------------
+
+bordeaux_targets.each do |target|
+  voters = users.reject { |u| u == target.user || u == julien }.sample(rand(2..4))
+
+  voters.each { |voter| rate.call(voter, target.user, [1, 1, 1, -1].sample) }
 end
 
-puts "✅ #{buddy_ratings.count} évaluations créées"
+puts "✅ #{ratings.count} évaluations créées"
+
 
 # ============================================================
 # RÉCAPITULATIF
@@ -551,28 +475,28 @@ puts "✅ #{buddy_ratings.count} évaluations créées"
 
 puts ""
 puts "======================================"
-puts "🎉 SEEDS TERMINÉS !"
+puts "🎉 SEEDS TERMINÉS"
 puts "======================================"
 puts "👤 Users    : #{User.count}"
 puts "🏃 Races    : #{Race.count}"
 puts "🎯 Targets  : #{Target.count}"
 puts "🤝 Invites  : #{Invite.count}"
 puts "💬 Chats    : #{Chat.count}"
-puts "✉️ Messages : #{Message.count}"
+puts "✉️  Messages : #{Message.count}"
 puts "👍 Ratings  : #{BuddyRating.count}"
 puts "======================================"
 puts ""
-puts "🔐 Mot de passe des utilisateurs : password"
+puts "🔐 Mot de passe : password"
 puts ""
-puts "🏃 Démo Marathon de Bordeaux :"
-puts "   Laurie  → 3h15"
-puts "   Alex    → 3h20"
-puts "   Julien  → 3h25"
-puts "   Emma    → 3h30"
-puts "   Hugo    → 3h35"
-puts "   Clara   → 3h40"
-puts "   Chloé   → 3h45"
+puts "🏁 #{bordeaux_marathon.name} — #{bordeaux_marathon.race_date.strftime('%d/%m/%Y')}"
 puts ""
-puts "   Robert  → aucun objectif"
-puts "   👉 À créer pendant la démo : Marathon de Bordeaux → 3h30"
+puts "   Laurie  (#{laurie.email})  → 3h45  depuis le 33000"
+puts "   Robert  (#{robert.email})  → 3h45  depuis le 33200"
+puts "   Alex    → 3h30   |  Chloé  → 3h35"
+puts "   Hugo    → 3h40   |  Maxime → 3h40"
+puts "   Clara   → 3h50   |  Emma   → 3h55"
+puts "   Nathan  → 4h00"
+puts ""
+puts "   Julien  (#{julien.email}) → profil neuf, aucun objectif"
+puts "   👉 À créer en démo : Marathon de Bordeaux Métropole → 3h45"
 puts "======================================"
